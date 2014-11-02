@@ -18,6 +18,7 @@ public class SerializatorsTest {
                 {new IntegerSerializator(), 300_000_000                     , new byte[]{17, -31, -93, 0}},
                 {new LongSerializator()   , 300_000_000_000_000_000l        , new byte[]{4, 41, -48, 105, 24, -98, 0, 0}},
                 {new CharSerializator()   , 'l'                             , new byte[]{0, 108}},
+                {new FloatSerializator()  , .99f                            , new byte[]{63, 125, 112, -92}},
         } ;
     }
 
