@@ -39,6 +39,9 @@ class PrimitiveFieldSerializator implements ISerializator<Field> {
             } else if (field.getType() == Double.TYPE) {
                 final Double value = field.getDouble(instance);
                 return IPrimitiveSerializator.Type.DOUBLE.getSerializator().serialize(value);
+            } else if (field.getType() == Character.TYPE) {
+                final Character value = field.getChar(instance);
+                return IPrimitiveSerializator.Type.CHAR.getSerializator().serialize(value);
             }
             throw new SerializationException("Primitive type unrecognized");
         } catch (IllegalAccessException e) {
