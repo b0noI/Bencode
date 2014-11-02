@@ -7,7 +7,7 @@ abstract class AbstractToByteStringSerializator<T> implements ISerializator<T> {
     private static final byte BYTE_STRING_SEPARATOR = ':';
 
     @Override
-    public byte[] serialize(final T instance) {
+    final public byte[] serialize(final T instance) {
         final byte[] bytes = convertToBytes(instance);
         final byte[] result = new byte[bytes.length + 2];
         System.arraycopy(bytes, 0, result, 2, bytes.length);
