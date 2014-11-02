@@ -16,7 +16,7 @@ abstract class AbstractToByteStringSerializator<T> implements ISerializator<T> {
         }
         result[0] = (byte)bytes.length;
         result[1] = BYTE_STRING_SEPARATOR;
-        return new byte[0];
+        return result;
     }
 
     abstract protected byte[] convertToBytes(final T instance);
