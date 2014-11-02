@@ -1,8 +1,8 @@
 package com.bencode.serialization.serializator;
 
 
-public interface ISerializator {
+public interface ISerializator<T> {
 
-    public <T>byte[] serialize(final T instance);
+    public byte[] serialize(final T instance);
 
 }
