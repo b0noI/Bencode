@@ -7,7 +7,7 @@ class FloatSerializator extends AbstractToByteStringSerializator<Float> {
     private static final int FLOAT_SIZE_IN_BYTES = 4;
 
     @Override
-    protected byte[] convertToBytes(Float instance) {
+    protected byte[] convertToBytes(final Float instance) {
         final ByteBuffer byteBuffer = ByteBuffer.allocate(FLOAT_SIZE_IN_BYTES);
         byteBuffer.putFloat(instance);
         return byteBuffer.array();
