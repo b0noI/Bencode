@@ -21,7 +21,7 @@ public class AbstractToByteStringSerializatorTest {
         final AbstractToByteStringSerializator<Byte> testInstance = new ByteSerializator();
 
         // execution test
-        final byte[] actualResult = testInstance.serialize(inputValue);
+        final byte[] actualResult = testInstance.serialize(inputValue).getElement();
 
         // result assert
         assertArrayEquals(expectedResult, actualResult);
