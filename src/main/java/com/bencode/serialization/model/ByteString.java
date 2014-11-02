@@ -1,15 +1,18 @@
 package com.bencode.serialization.model;
 
-public class ByteString implements IBEncodeElement{
+import java.nio.ByteBuffer;
+import java.util.Arrays;
 
-    private static  final byte      BYTE_STRING_SEPARATOR           = ':';
+public class ByteString implements IBEncodeElement, Comparable<ByteString> {
 
-    private static  final String    ILLEGAL_ARGUMENT_ERROR_STRING   = "Instance length in bytes to long!";
+    private static  final byte       BYTE_STRING_SEPARATOR           = ':';
 
-    private         final byte[]    value;
+    private static  final String     ILLEGAL_ARGUMENT_ERROR_STRING   = "Instance length in bytes to long!";
+
+    private         final ByteBuffer value;
 
     private ByteString(byte[] value) {
-        this.value = value;
+        this.value = ByteBuffer.wrap(value);
     }
 
     public static ByteString buildElement(final byte[] value) {
@@ -20,7 +23,7 @@ public class ByteString implements IBEncodeElement{
     }
 
     public byte[] getValue() {
-        return value;
+        return value.array();
     }
 
     @Override
@@ -32,6 +35,28 @@ public class ByteString implements IBEncodeElement{
         result[0] = (byte)getValue().length;
         result[1] = BYTE_STRING_SEPARATOR;
         return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ByteString that = (ByteString) o;
+
+        if (!Arrays.equals(value.array(), that.value.array())) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return value != null ? Arrays.hashCode(value.array()) : 0;
+    }
+
+    @Override
+    public int compareTo(final ByteString that) {
+        return this.value.compareTo(that.value);
     }
 
 }
