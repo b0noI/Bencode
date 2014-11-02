@@ -14,7 +14,9 @@ public interface IPrimitiveSerializator<T> extends ISerializator<T> {
         SHORT(new ShortSerializator()),
         CHAR(new CharSerializator()),
         INTEGER(new IntegerSerializator()),
-        LONG(new LongSerializator());
+        LONG(new LongSerializator()),
+        FLOAT(new FloatSerializator()),
+        DOUBLE(new DoubleSerializator());
 
         private final IPrimitiveSerializator primitiveSerializator;
 
