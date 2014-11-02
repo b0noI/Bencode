@@ -20,10 +20,10 @@ public class ByteSerializatorTest {
         final ByteSerializator testInstance = new ByteSerializator();
 
         // execution test
-        final byte[] actaulResult = testInstance.convertToBytes(inputValue);
+        final byte[] actualResult = testInstance.convertToBytes(inputValue);
 
         // result assert
-        assertArrayEquals(expectedResult, actaulResult);
+        assertArrayEquals(expectedResult, actualResult);
 
         // mocks verify
     }
