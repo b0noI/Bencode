@@ -1,8 +1,9 @@
 package com.bencode.serialization.serializator;
 
-import org.junit.Test;
 
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+
+import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;
 
 public class AbstractToByteStringSerializatorTest {
 
