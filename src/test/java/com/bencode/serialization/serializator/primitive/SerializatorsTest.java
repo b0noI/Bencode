@@ -1,6 +1,7 @@
-package com.bencode.serialization.serializator;
+package com.bencode.serialization.serializator.primitive;
 
 
+import com.bencode.serialization.serializator.primitive.*;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 

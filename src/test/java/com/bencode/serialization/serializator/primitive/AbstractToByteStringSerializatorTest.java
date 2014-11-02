@@ -1,6 +1,8 @@
-package com.bencode.serialization.serializator;
+package com.bencode.serialization.serializator.primitive;
 
 
+import com.bencode.serialization.serializator.primitive.AbstractToByteStringSerializator;
+import com.bencode.serialization.serializator.primitive.ByteSerializator;
 import org.testng.annotations.Test;
 
 import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;

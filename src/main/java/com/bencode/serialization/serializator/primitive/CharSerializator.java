@@ -1,6 +1,5 @@
-package com.bencode.serialization.serializator;
+package com.bencode.serialization.serializator.primitive;
 
-import java.nio.ByteBuffer;
 
 class CharSerializator extends AbstractToByteStringSerializator<Character> {
 

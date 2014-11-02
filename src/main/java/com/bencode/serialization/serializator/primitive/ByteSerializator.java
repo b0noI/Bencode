@@ -1,4 +1,4 @@
-package com.bencode.serialization.serializator;
+package com.bencode.serialization.serializator.primitive;
 
 
 class ByteSerializator extends AbstractToByteStringSerializator<Byte> {
