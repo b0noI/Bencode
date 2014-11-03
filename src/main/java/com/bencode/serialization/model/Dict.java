@@ -1,11 +1,12 @@
 package com.bencode.serialization.model;
 
+import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-public class Dict implements IBEncodeElement {
+public class Dict extends AbstractBEncodeElement {
 
     private final Map<ByteString, IBEncodeElement> values = new ConcurrentHashMap<>();
 
@@ -29,7 +30,7 @@ public class Dict implements IBEncodeElement {
         final ByteBuffer resultByteBuffer = ByteBuffer.allocate(sizeInBytes + 2);
         resultByteBuffer.put((byte)'d');
         results.forEach(result -> resultByteBuffer.put(result.array()));
-        resultByteBuffer.put((byte)'e');
+        resultByteBuffer.put((byte) 'e');
         return resultByteBuffer.array();
     }
 

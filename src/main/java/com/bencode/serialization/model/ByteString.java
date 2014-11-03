@@ -1,9 +1,12 @@
 package com.bencode.serialization.model;
 
+import com.sun.xml.internal.messaging.saaj.packaging.mime.util.BEncoderStream;
+
+import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 
-public class ByteString implements IBEncodeElement, Comparable<ByteString> {
+public class ByteString extends AbstractBEncodeElement implements Comparable<ByteString> {
 
     private static  final byte       BYTE_STRING_SEPARATOR           = ':';
 

@@ -1,10 +1,12 @@
 package com.bencode.serialization.model;
 
 
+import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.List;
 
-public class BencodeList extends ArrayList<IBEncodeElement> implements IBEncodeElement{
+public class BencodeList extends ArrayList<IBEncodeElement> implements IBEncodeElement {
 
     @Override
     public byte[] getElement() {
@@ -12,7 +14,7 @@ public class BencodeList extends ArrayList<IBEncodeElement> implements IBEncodeE
         final ByteBuffer result = ByteBuffer.allocate(sizeInBytes + 2);
         result.put((byte)'l');
         this.forEach(element -> result.put(element.getElement()));
-        result.put((byte)'e');
+        result.put((byte) 'e');
         return result.array();
     }
 

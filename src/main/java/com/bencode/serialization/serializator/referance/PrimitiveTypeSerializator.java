@@ -16,29 +16,30 @@ class PrimitiveTypeSerializator {
         this.instance = instance;
     }
 
-    public <T>IBEncodeElement serializeElement(final T instance) {
-        if (!instance.getClass().isPrimitive()) {
+    public IBEncodeElement serializeElement(final Field field) throws IllegalAccessException {
+        if (!field.getType().isPrimitive()) {
             throw new SerializationException("Field is not primitive");
         }
-        if (instance.getClass() == Byte.TYPE) {
+        final Object instance = field.get(this.instance);
+        if (instance.getClass() == Byte.class) {
             final Byte value = (Byte)instance;
             return IPrimitiveSerializator.Type.BYTE.getSerializator().serialize(value);
-        } else if (instance.getClass() == Short.TYPE) {
+        } else if (instance.getClass() == Short.class) {
             final Short value = (Short)instance;
             return IPrimitiveSerializator.Type.SHORT.getSerializator().serialize(value);
-        } else if (instance.getClass() == Integer.TYPE) {
+        } else if (instance.getClass() == Integer.class) {
             final Integer value = (Integer)instance;
             return IPrimitiveSerializator.Type.INTEGER.getSerializator().serialize(value);
-        } else if (instance.getClass() == Long.TYPE) {
+        } else if (instance.getClass() == Long.class) {
             final Long value = (Long)instance;
             return IPrimitiveSerializator.Type.LONG.getSerializator().serialize(value);
-        } else if (instance.getClass() == Float.TYPE) {
+        } else if (instance.getClass() == Float.class) {
             final Float value = (Float)instance;
             return IPrimitiveSerializator.Type.FLOAT.getSerializator().serialize(value);
-        } else if (instance.getClass() == Double.TYPE) {
+        } else if (instance.getClass() == Double.class) {
             final Double value = (Double)instance;
             return IPrimitiveSerializator.Type.DOUBLE.getSerializator().serialize(value);
-        } else if (instance.getClass() == Character.TYPE) {
+        } else if (instance.getClass() == Character.class) {
             final Character value = (Character)instance;
             return IPrimitiveSerializator.Type.CHAR.getSerializator().serialize(value);
         }

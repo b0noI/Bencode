@@ -9,6 +9,7 @@ import com.bencode.serialization.serializator.primitive.IPrimitiveSerializator;
 import com.sun.xml.internal.ws.encoding.soap.SerializationException;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,6 +49,11 @@ class RecursiveObjectSerializator {
         final Field[] fields = instance.getClass().getDeclaredFields();
         for (Field field : fields) {
             field.setAccessible(true);
+            int foundMods = field.getModifiers();
+            int transcientMod = Modifier.TRANSIENT;
+            if ((foundMods & transcientMod) == transcientMod) {
+                continue;
+            }
             final ByteString key = ByteString.buildElement(field.getName().getBytes());
             if (field.getClass().isArray()) {
                 final Class componentType = field.getType().getComponentType();
@@ -67,7 +73,7 @@ class RecursiveObjectSerializator {
                 }
             }
             if (field.getType().isPrimitive()) {
-                result.putValue(key, primitiveFieldSerializator.serializeElement(field.get(instance)));
+                result.putValue(key, primitiveFieldSerializator.serializeElement(field));
             } else {
                 final Object fieldObj = field.get(instance);
                 final ObjectKey fieldObjectKey = new ObjectKey(fieldObj);
