@@ -11,7 +11,7 @@ class PrimitiveFieldSerializator implements ISerializator<Field> {
 
     private final Object instance;
 
-    public PrimitiveFieldSerializator(final Object instance) {
+    PrimitiveFieldSerializator(final Object instance) {
         this.instance = instance;
     }
 

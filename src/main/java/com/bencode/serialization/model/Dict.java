@@ -26,8 +26,10 @@ public class Dict implements IBEncodeElement {
         final int sizeInBytes = results.stream()
                 .mapToInt(byteBuffer -> byteBuffer.array().length)
                 .sum();
-        final ByteBuffer resultByteBuffer = ByteBuffer.allocate(sizeInBytes);
+        final ByteBuffer resultByteBuffer = ByteBuffer.allocate(sizeInBytes + 2);
+        resultByteBuffer.put((byte)'d');
         results.forEach(result -> resultByteBuffer.put(result.array()));
+        resultByteBuffer.put((byte)'e');
         return resultByteBuffer.array();
     }
 
