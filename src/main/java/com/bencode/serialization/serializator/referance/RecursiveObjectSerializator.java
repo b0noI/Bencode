@@ -1,6 +1,7 @@
 package com.bencode.serialization.serializator.referance;
 
 
+import com.bencode.serialization.model.BencodeList;
 import com.bencode.serialization.model.ByteString;
 import com.bencode.serialization.model.Dict;
 import com.bencode.serialization.model.IBEncodeElement;
@@ -43,13 +44,30 @@ class RecursiveObjectSerializator {
         serializedObjectsIds.put(objectKey, currentId);
 
         final Dict result = new Dict();
-        final PrimitiveFieldSerializator primitiveFieldSerializator = new PrimitiveFieldSerializator(instance);
+        final PrimitiveTypeSerializator primitiveFieldSerializator = new PrimitiveTypeSerializator(instance);
         final Field[] fields = instance.getClass().getDeclaredFields();
         for (Field field : fields) {
             field.setAccessible(true);
             final ByteString key = ByteString.buildElement(field.getName().getBytes());
+            if (field.getClass().isArray()) {
+                final Class componentType = field.getType().getComponentType();
+                if (componentType.isPrimitive()) {
+                    result.putValue(key, primitiveFieldSerializator.serializeArray(instance));
+                } else {
+                    final Object[] values = (Object[])field.get(instance);
+                    final BencodeList tmpResult = new BencodeList();
+                    for (Object element : values) {
+                        final ObjectKey fieldObjectKey = new ObjectKey(element);
+                        final int objectId = serializedObjectsIds.containsKey(fieldObjectKey) ?
+                                serializedObjectsIds.get(fieldObjectKey) :
+                                serializeRecursive(element);
+                        tmpResult.add(IPrimitiveSerializator.Type.INTEGER.getSerializator().serialize(objectId));
+                    }
+                    result.putValue(key, tmpResult);
+                }
+            }
             if (field.getType().isPrimitive()) {
-                result.putValue(key, primitiveFieldSerializator.serialize(field));
+                result.putValue(key, primitiveFieldSerializator.serializeElement(field.get(instance)));
             } else {
                 final Object fieldObj = field.get(instance);
                 final ObjectKey fieldObjectKey = new ObjectKey(fieldObj);
