@@ -7,11 +7,16 @@ import com.bencode.serialization.serializator.ISerializator;
 import com.bencode.serialization.serializator.primitive.IPrimitiveSerializator;
 import com.sun.xml.internal.ws.encoding.soap.SerializationException;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 
 class PrimitiveArrayFieldSerializator implements ISerializator<Field>{
 
-    private final Object instance;
+    private static  final String FIELD_IS_NOT_PRIMITIVE_ERROR_STRING    = "Field is not primitive"  ;
+
+    private static  final String FIELD_IS_NOT_ARRAY_ERROR_STRING        = "Field is not array"      ;
+
+    private         final Object instance                                                           ;
 
     PrimitiveArrayFieldSerializator(final Object instance) {
         this.instance = instance;
@@ -21,12 +26,11 @@ class PrimitiveArrayFieldSerializator implements ISerializator<Field>{
     public IBEncodeElement serialize(Field field) {
         final Class componentType = field.getType().getComponentType();
         if (!componentType.isPrimitive()) {
-            throw new SerializationException("Field is not primitive");
+            throw new SerializationException(FIELD_IS_NOT_PRIMITIVE_ERROR_STRING);
         }
         if (!field.getType().isArray()) {
-            throw new SerializationException("Field is not array");
+            throw new SerializationException(FIELD_IS_NOT_ARRAY_ERROR_STRING);
         }
-        final BencodeList result = new BencodeList();
         final Object instance;
         try {
             instance = field.get(this.instance);
@@ -34,50 +38,17 @@ class PrimitiveArrayFieldSerializator implements ISerializator<Field>{
             e.printStackTrace();
             throw new SerializationException(e);
         }
-        if (componentType == Byte.TYPE) {
-            final byte[] values = (byte[])instance;
-            for (byte element : values) {
-                result.add(IPrimitiveSerializator.Type.BYTE.getSerializator().serialize(element));
-            }
-            return result;
-        } else if (componentType == Short.TYPE) {
-            final short[] values = (short[])instance;
-            for (short element : values) {
-                result.add(IPrimitiveSerializator.Type.SHORT.getSerializator().serialize(element));
-            }
-            return result;
-        } else if (componentType == Integer.TYPE) {
-            final int[] values = (int[])instance;
-            for (int element : values) {
-                result.add(IPrimitiveSerializator.Type.INTEGER.getSerializator().serialize(element));
-            }
-            return result;
-        } else if (componentType == Long.TYPE) {
-            final long[] values = (long[])instance;
-            for (long element : values) {
-                result.add(IPrimitiveSerializator.Type.LONG.getSerializator().serialize(element));
-            }
-            return result;
-        } else if (componentType == Float.TYPE) {
-            final float[] values = (float[])instance;
-            for (float element : values) {
-                result.add(IPrimitiveSerializator.Type.FLOAT.getSerializator().serialize(element));
-            }
-            return result;
-        } else if (componentType == Double.TYPE) {
-            final double[] values = (double[])instance;
-            for (double element : values) {
-                result.add(IPrimitiveSerializator.Type.DOUBLE.getSerializator().serialize(element));
-            }
-            return result;
-        } else if (componentType == Character.TYPE) {
-            final char[] values = (char[])instance;
-            for (char element : values) {
-                result.add(IPrimitiveSerializator.Type.CHAR.getSerializator().serialize(element));
-            }
-            return result;
+        return serialize(IPrimitiveSerializator.Type.findSerializator(componentType), instance);
+    }
+
+    private <T> IBEncodeElement serialize(final ISerializator<T> serializator, final Object target) {
+        final BencodeList result = new BencodeList();
+        final int length = Array.getLength(target);
+        for (int i = 0; i < length; i++) {
+            final T element = (T)Array.get(target, i);
+            result.add(serializator.serialize(element));
         }
-        throw new SerializationException("Primitive type unrecognized");
+        return result;
     }
 
 }

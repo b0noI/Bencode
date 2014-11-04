@@ -45,46 +45,58 @@ class RecursiveObjectSerializator {
         serializedObjectsIds.put(objectKey, currentId);
 
         final Dict result = new Dict();
-        final PrimitiveTypeFieldSerializator primitiveFieldSerializator = new PrimitiveTypeFieldSerializator(instance);
         final Field[] fields = instance.getClass().getDeclaredFields();
         for (Field field : fields) {
             field.setAccessible(true);
-            int foundMods = field.getModifiers();
-            int transcientMod = Modifier.TRANSIENT;
-            if ((foundMods & transcientMod) == transcientMod) {
-                continue;
-            }
+
+            if (!shouldBeSerialized(field)) continue;
+
             final ByteString key = ByteString.buildElement(field.getName().getBytes());
-            if (field.getType().isArray()) {
-                final Class componentType = field.getType().getComponentType();
-                if (componentType.isPrimitive()) {
-                    result.putValue(key, new PrimitiveArrayFieldSerializator(instance).serialize(field));
-                } else {
-                    final Object[] values = (Object[])field.get(instance);
-                    final BencodeList tmpResult = new BencodeList();
-                    for (Object element : values) {
-                        final ObjectKey fieldObjectKey = new ObjectKey(element);
-                        final int objectId = serializedObjectsIds.containsKey(fieldObjectKey) ?
-                                serializedObjectsIds.get(fieldObjectKey) :
-                                serializeRecursive(element);
-                        tmpResult.add(IPrimitiveSerializator.Type.INTEGER.getSerializator().serialize(objectId));
-                    }
-                    result.putValue(key, tmpResult);
-                }
-            }
-            if (field.getType().isPrimitive()) {
-                result.putValue(key, primitiveFieldSerializator.serialize(field));
-            } else {
-                final Object fieldObj = field.get(instance);
-                final ObjectKey fieldObjectKey = new ObjectKey(fieldObj);
-                final int objectId = serializedObjectsIds.containsKey(fieldObjectKey) ?
-                        serializedObjectsIds.get(fieldObjectKey) :
-                        serializeRecursive(fieldObj);
-                result.putValue(key, IPrimitiveSerializator.Type.INTEGER.getSerializator().serialize(objectId));
-            }
+            final IBEncodeElement serializedField = serializeField(field, instance);
+
         }
         serializedObjects.put(currentId, result);
         return currentId;
+    }
+
+    private IBEncodeElement serializeField(final Field field, final Object instance) throws IllegalAccessException {
+        if (field.getType().isArray()) {
+            final Class componentType = field.getType().getComponentType();
+            if (componentType.isPrimitive()) {
+                return new PrimitiveArrayFieldSerializator(instance).serialize(field);
+            } else {
+                final Object[] values = (Object[])field.get(instance);
+                final BencodeList tmpResult = new BencodeList();
+                for (Object element : values) {
+                    final ObjectKey fieldObjectKey = new ObjectKey(element);
+                    final int objectId = serializedObjectsIds.containsKey(fieldObjectKey) ?
+                            serializedObjectsIds.get(fieldObjectKey) :
+                            serializeRecursive(element);
+                    tmpResult.add(IPrimitiveSerializator.Type.INTEGER.getSerializator().serialize(objectId));
+                }
+                return tmpResult;
+            }
+        }
+        final PrimitiveTypeFieldSerializator primitiveFieldSerializator = new PrimitiveTypeFieldSerializator(instance);
+        if (field.getType().isPrimitive()) {
+            return primitiveFieldSerializator.serialize(field);
+        } else {
+            final Object fieldObj = field.get(instance);
+            final ObjectKey fieldObjectKey = new ObjectKey(fieldObj);
+            final int objectId = serializedObjectsIds.containsKey(fieldObjectKey) ?
+                    serializedObjectsIds.get(fieldObjectKey) :
+                    serializeRecursive(fieldObj);
+            return IPrimitiveSerializator.Type.INTEGER.getSerializator().serialize(objectId);
+        }
+    }
+
+    private boolean shouldBeSerialized(final Field field) {
+        final int foundMods = field.getModifiers();
+        final int transcientMod = Modifier.TRANSIENT;
+        if ((foundMods & transcientMod) == transcientMod) {
+            return false;
+        }
+        return true;
     }
 
     private int getCurrentId() {
@@ -93,10 +105,10 @@ class RecursiveObjectSerializator {
 
     private static class ObjectKey {
 
-        private final Object intsnace;
+        private final Object instance;
 
-        private ObjectKey(Object intsnace) {
-            this.intsnace = intsnace;
+        private ObjectKey(Object instance) {
+            this.instance = instance;
         }
 
         @Override
@@ -106,7 +118,7 @@ class RecursiveObjectSerializator {
 
         @Override
         public int hashCode() {
-            return System.identityHashCode(intsnace);
+            return System.identityHashCode(instance);
         }
 
     }

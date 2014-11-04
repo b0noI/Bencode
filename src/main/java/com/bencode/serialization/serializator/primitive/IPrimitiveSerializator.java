@@ -10,27 +10,29 @@ public interface IPrimitiveSerializator<T> extends ISerializator<T> {
     public ByteString serialize(final T instance);
 
     public enum Type {
-        BYTE(new ByteSerializator(), Byte.class),
-        SHORT(new ShortSerializator(), Short.class),
-        CHAR(new CharSerializator(), Character.class),
-        INTEGER(new IntegerSerializator(), Integer.class),
-        LONG(new LongSerializator(), Long.class),
-        FLOAT(new FloatSerializator(), Float.class),
-        DOUBLE(new DoubleSerializator(), Double.class);
+        BYTE    (new ByteSerializator()     , Byte.class,       byte.class),
+        SHORT   (new ShortSerializator()    , Short.class,      short.class),
+        CHAR    (new CharSerializator()     , Character.class,  char.class),
+        INTEGER (new IntegerSerializator()  , Integer.class,    int.class),
+        LONG    (new LongSerializator()     , Long.class,       long.class),
+        FLOAT   (new FloatSerializator()    , Float.class,      float.class),
+        DOUBLE  (new DoubleSerializator()   , Double.class,     double.class);
 
         private final IPrimitiveSerializator primitiveSerializator;
 
-        private final Class objectClass;
+        private final Class[] objectClasses;
 
-        Type(IPrimitiveSerializator primitiveSerializator, Class objectClass) {
+        Type(IPrimitiveSerializator primitiveSerializator, Class... objectClasses) {
             this.primitiveSerializator = primitiveSerializator;
-            this.objectClass = objectClass;
+            this.objectClasses = objectClasses;
         }
 
         public static <T> IPrimitiveSerializator<T> findSerializator(final Class<T> targetClass) {
-            for (Type value: values()) {
-                if (value.objectClass == targetClass) {
-                    return value.getSerializator();
+            for (Type type: values()) {
+                for (Class typeClass : type.objectClasses) {
+                    if (typeClass == targetClass) {
+                        return type.getSerializator();
+                    }
                 }
             }
             return null;
