@@ -46,15 +46,16 @@ class PrimitiveTypeSerializator {
         throw new SerializationException("Primitive type unrecognized");
     }
 
-    public <T>IBEncodeElement serializeArray(final T instance) {
-        final Class componentType = instance.getClass().getComponentType();
+    public <T>IBEncodeElement serializeArray(final Field field) throws IllegalAccessException {
+        final Class componentType = field.getType().getComponentType();
         if (!componentType.isPrimitive()) {
             throw new SerializationException("Field is not primitive");
         }
-        if (!instance.getClass().isArray()) {
+        if (!field.getType().isArray()) {
             throw new SerializationException("Field is not array");
         }
         final BencodeList result = new BencodeList();
+        final Object instance = field.get(this.instance);
         if (componentType == Byte.TYPE) {
             final byte[] values = (byte[])instance;
             for (byte element : values) {
