@@ -45,7 +45,7 @@ class RecursiveObjectSerializator {
         serializedObjectsIds.put(objectKey, currentId);
 
         final Dict result = new Dict();
-        final PrimitiveTypeSerializator primitiveFieldSerializator = new PrimitiveTypeSerializator(instance);
+        final PrimitiveTypeFieldSerializator primitiveFieldSerializator = new PrimitiveTypeFieldSerializator(instance);
         final Field[] fields = instance.getClass().getDeclaredFields();
         for (Field field : fields) {
             field.setAccessible(true);
@@ -58,7 +58,7 @@ class RecursiveObjectSerializator {
             if (field.getType().isArray()) {
                 final Class componentType = field.getType().getComponentType();
                 if (componentType.isPrimitive()) {
-                    result.putValue(key, new PrimitiveArraySerializator(instance).serialize(field));
+                    result.putValue(key, new PrimitiveArrayFieldSerializator(instance).serialize(field));
                 } else {
                     final Object[] values = (Object[])field.get(instance);
                     final BencodeList tmpResult = new BencodeList();

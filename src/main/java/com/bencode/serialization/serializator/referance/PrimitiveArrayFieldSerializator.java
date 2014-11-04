@@ -9,11 +9,11 @@ import com.sun.xml.internal.ws.encoding.soap.SerializationException;
 
 import java.lang.reflect.Field;
 
-class PrimitiveArraySerializator implements ISerializator<Field>{
+class PrimitiveArrayFieldSerializator implements ISerializator<Field>{
 
     private final Object instance;
 
-    PrimitiveArraySerializator(final Object instance) {
+    PrimitiveArrayFieldSerializator(final Object instance) {
         this.instance = instance;
     }
 

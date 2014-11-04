@@ -10,18 +10,30 @@ public interface IPrimitiveSerializator<T> extends ISerializator<T> {
     public ByteString serialize(final T instance);
 
     public enum Type {
-        BYTE(new ByteSerializator()),
-        SHORT(new ShortSerializator()),
-        CHAR(new CharSerializator()),
-        INTEGER(new IntegerSerializator()),
-        LONG(new LongSerializator()),
-        FLOAT(new FloatSerializator()),
-        DOUBLE(new DoubleSerializator());
+        BYTE(new ByteSerializator(), Byte.class),
+        SHORT(new ShortSerializator(), Short.class),
+        CHAR(new CharSerializator(), Character.class),
+        INTEGER(new IntegerSerializator(), Integer.class),
+        LONG(new LongSerializator(), Long.class),
+        FLOAT(new FloatSerializator(), Float.class),
+        DOUBLE(new DoubleSerializator(), Double.class);
 
         private final IPrimitiveSerializator primitiveSerializator;
 
-        Type(IPrimitiveSerializator primitiveSerializator) {
+        private final Class objectClass;
+
+        Type(IPrimitiveSerializator primitiveSerializator, Class objectClass) {
             this.primitiveSerializator = primitiveSerializator;
+            this.objectClass = objectClass;
+        }
+
+        public static <T> IPrimitiveSerializator<T> findSerializator(final Class<T> targetClass) {
+            for (Type value: values()) {
+                if (value.objectClass == targetClass) {
+                    return value.getSerializator();
+                }
+            }
+            return null;
         }
 
         public <T> IPrimitiveSerializator<T> getSerializator() {
