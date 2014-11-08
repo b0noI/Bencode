@@ -34,8 +34,24 @@ public class Dict extends AbstractBEncodeElement {
         return resultByteBuffer.array();
     }
 
+    public IBEncodeElement getValue(final String key) {
+        final ByteString byteStringKey = ByteString.buildElement(key.getBytes());
+        return values.get(byteStringKey);
+    }
+
+    public IBEncodeElement getValue(final byte key) {
+        final ByteString byteStringKey = ByteString.buildElement(
+                new byte[]{key}
+        );
+        return values.get(byteStringKey);
+    }
+
     public void putValue(final ByteString key, final IBEncodeElement value) {
         values.put(key, value);
+    }
+
+    public Set<ByteString> keySet() {
+        return values.keySet();
     }
 
 }
