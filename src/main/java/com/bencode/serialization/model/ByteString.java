@@ -62,4 +62,12 @@ public class ByteString extends AbstractBEncodeElement implements Comparable<Byt
         return this.value.compareTo(that.value);
     }
 
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder(getElement().length);
+        for (byte element: getElement()) {
+            sb.append((char) element);
+        }
+        return sb.toString();
+    }
 }

@@ -9,13 +9,13 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.naming.OperationNotSupportedException;
 
-class RecursiveConverter implements IConverter<IBEncodeElement> {
+public class RecursiveConverter implements IConverter<IBEncodeElement> {
 
     private final static ByteStringConverter BYTE_STRING_CONVERTER = new ByteStringConverter();
 
     @Override
     public IBEncodeElement convert(final byte[] bytes, final int position) {
-        final byte firstByte = bytes[0];
+        final byte firstByte = bytes[position];
 
 
         switch (firstByte) {
@@ -24,7 +24,7 @@ class RecursiveConverter implements IConverter<IBEncodeElement> {
 
                 int newPosition = position + 1;
                 final Dict dict = new Dict();
-                while (bytes[position] != 'e') {
+                while (bytes[newPosition] != 'e') {
                     final ByteString key = (ByteString) convert(bytes, newPosition);
                     newPosition += key.getElement().length;
                     final IBEncodeElement value = convert(bytes, newPosition);
@@ -36,7 +36,7 @@ class RecursiveConverter implements IConverter<IBEncodeElement> {
             case 'l': {
                 int newPosition = position + 1;
                 final BencodeList list = new BencodeList();
-                while (bytes[position] != 'e') {
+                while (bytes[newPosition] != 'e') {
                     final IBEncodeElement element = convert(bytes, newPosition);
                     newPosition += element.getElement().length;
                     list.add(element);

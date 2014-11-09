@@ -13,7 +13,7 @@ import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 
-class RecursiveObjectSerializator {
+class RecursiveObjectSerealizator {
 
     private       Integer                       currentId               = 0;
 
@@ -22,7 +22,7 @@ class RecursiveObjectSerializator {
     private final Map<Integer, IBEncodeElement> serializedObjects       = new HashMap<>();
 
     public static IBEncodeElement serialize(final Object instance) {
-        final RecursiveObjectSerializator referanceFiledSerializator = new RecursiveObjectSerializator();
+        final RecursiveObjectSerealizator referanceFiledSerializator = new RecursiveObjectSerealizator();
         try {
             referanceFiledSerializator.serializeRecursive(instance);
         } catch (IllegalAccessException e) {

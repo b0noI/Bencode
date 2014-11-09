@@ -1,7 +1,13 @@
 package com.bencode.serialization.deserializator.primitive;
 
+import com.bencode.serialization.converter.IConverter;
+import com.bencode.serialization.converter.RecursiveConverter;
 import com.bencode.serialization.model.ByteString;
+import com.bencode.serialization.model.Dict;
+import com.bencode.serialization.model.IBEncodeElement;
+import com.bencode.serialization.serializator.ISerializator;
 import com.bencode.serialization.serializator.primitive.IPrimitiveSerializator;
+import com.bencode.serialization.serializator.referance.ReferanceSerializer;
 import org.testng.annotations.Test;
 
 import java.nio.ByteBuffer;
@@ -57,6 +63,39 @@ public class TypeTest {
         testSerAndDeser(IPrimitiveSerializator.Type.DOUBLE.getSerializator(),
                 IPrimitiveDeserializator.Type.DOUBLE.getDeserializator(),
                 999.9999999999);
+    }
+
+    @Test
+    public void testDesirializationOfObject() {
+        // input arguments
+        final MyTestObject myClass = new MyTestObject();
+        myClass.i = 12;
+        myClass.y = 42;
+
+        // mocks
+
+        // expected results
+
+        // creating test instance
+        ISerializator serializator = new ReferanceSerializer();
+        IReferanceDeserializator referanceDeserializator = new ReferanceDeserializator();
+        IConverter converter = new RecursiveConverter();
+
+        // execution test
+        byte[] bytes = serializator.serialize(myClass).getElement();
+        IBEncodeElement deserStage1 = converter.convert(bytes, 0);
+        MyTestObject afterSer = referanceDeserializator.deserialize(MyTestObject.class, (Dict)deserStage1);
+
+        // result assert
+        assertTrue(afterSer.i == 12);
+        assertTrue(afterSer.y == 42);
+
+        // mocks verify
+    }
+
+    public static class MyTestObject {
+        public int i;
+        public int y;
     }
 
     private<T> void testSerAndDeser(final IPrimitiveSerializator<T> primitiveSerializator, final IPrimitiveDeserializator<T> primitiveDeserializator, final T target) throws Exception {
