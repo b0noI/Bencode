@@ -1,5 +1,6 @@
 package com.bencode.serialization.deserializator.primitive;
 
+import com.bencode.serialization.model.BencodeList;
 import com.bencode.serialization.model.ByteString;
 import com.bencode.serialization.model.Dict;
 import com.bencode.serialization.model.IBEncodeElement;
@@ -14,11 +15,16 @@ import java.util.*;
  */
 public class ReferanceDeserializator implements IReferanceDeserializator {
 
+    private final ReferanceArrayFieldDeserializator REFERANCE_ARRAY_FIELD_DESERIALIZATOR = new ReferanceArrayFieldDeserializator(this);
+
+    private static final PrimitiveArrayFieldDeserializator PRIMITIVE_ARRAY_FIELD_DESERIALIZATOR = new PrimitiveArrayFieldDeserializator();
+
     @Override
     public <T> T deserialize(final Dict dict) {
         return deserialize(dict, 0, new HashMap<>());
     }
 
+    @Override
     public <T> T deserialize(final Dict dict,
                              final Integer key,
                              final Map<Integer, Object> objects) {
@@ -75,7 +81,12 @@ public class ReferanceDeserializator implements IReferanceDeserializator {
                         field.set(instnace, deserialize(dict, referance, objects));
                     }
                 } else if (field.getType().isArray()) {
-
+                    final Class<?> componentType = field.getType().getComponentType();
+                    if (!componentType.isPrimitive()) {
+                        field.set(instnace, REFERANCE_ARRAY_FIELD_DESERIALIZATOR.deserialize(componentType, (BencodeList)fieldElement, dict, objects));
+                    } else {
+                        field.set(instanceElement, PRIMITIVE_ARRAY_FIELD_DESERIALIZATOR.deserialize(componentType, (BencodeList)fieldElement));
+                    }
                 }
             }
             return instnace;

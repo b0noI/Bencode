@@ -1,46 +1,48 @@
 package com.bencode.serialization.deserializator.primitive;
 
 import com.bencode.serialization.model.BencodeList;
+import com.bencode.serialization.model.ByteString;
+import com.bencode.serialization.model.Dict;
 import com.bencode.serialization.model.IBEncodeElement;
-import com.bencode.serialization.serializator.ISerializator;
-import com.bencode.serialization.serializator.primitive.IPrimitiveSerializator;
-import com.sun.xml.internal.ws.encoding.soap.SerializationException;
 
 import java.lang.reflect.Array;
-import java.lang.reflect.Field;
 
+/**
+ * Created by b0noI on 09/11/14.
+ */
 public class PrimitiveArrayFieldDeserializator {
 
-    private static  final String                    FIELD_IS_NOT_PRIMITIVE_ERROR_STRING    = "Field is not primitive"  ;
+    public Object deserialize(final Class type, final BencodeList list) {
+        final Object array = Array.newInstance(type, list.size());
+        for (int i = 0; i < list.size(); i++) {
+            final IBEncodeElement element = list.get(i);
+            if (type == byte.class || type == Byte.class) {
+                final Object value = IPrimitiveDeserializator.Type.BYTE.getDeserializator().deserializator((ByteString)element);
+                Array.set(array, i, value);
+            }
+            if (type == short.class || type == Short.class) {
+                final Object value = IPrimitiveDeserializator.Type.SHORT.getDeserializator().deserializator((ByteString)element);
+                Array.set(array, i, value);
+            }
+            if (type == int.class || type == Integer.class) {
+                final Object value = IPrimitiveDeserializator.Type.INTEGER.getDeserializator().deserializator((ByteString)element);
+                Array.set(array, i, value);
+            }
+            if (type == long.class || type == Long.class) {
+                final Object value = IPrimitiveDeserializator.Type.LONG.getDeserializator().deserializator((ByteString)element);
+                Array.set(array, i, value);
+            }
+            if (type == float.class || type == Float.class) {
+                final Object value = IPrimitiveDeserializator.Type.FLOAT.getDeserializator().deserializator((ByteString)element);
+                Array.set(array, i, value);
+            }
+            if (type == double.class || type == Double.class) {
+                final Object value = IPrimitiveDeserializator.Type.DOUBLE   .getDeserializator().deserializator((ByteString)element);
+                Array.set(array, i, value);
+            }
 
-    private static  final String                    FIELD_IS_NOT_ARRAY_ERROR_STRING        = "Field is not array"      ;
-
-    private         final IReferanceDeserializator  referanceDeserializator                                            ;
-
-    PrimitiveArrayFieldDeserializator(final IReferanceDeserializator referanceDeserializator) {
-        this.referanceDeserializator = referanceDeserializator;
-    }
-
-    public IBEncodeElement deserialize(final Class type, final BencodeList list) {
-//        final Object instance;
-//        try {
-//            instance = field.get(this.instance);
-//        } catch (IllegalAccessException e) {
-//            e.printStackTrace();
-//            throw new SerializationException(e);
-//        }
-//        return serialize(IPrimitiveSerializator.Type.findSerializator(componentType), instance);
-        return null;
-    }
-
-    private <T> IBEncodeElement serialize(final ISerializator<T> serializator, final Object target) {
-        final BencodeList result = new BencodeList();
-        final int length = Array.getLength(target);
-        for (int i = 0; i < length; i++) {
-            final T element = (T)Array.get(target, i);
-            result.add(serializator.serialize(element));
         }
-        return result;
+        return array;
     }
 
 }

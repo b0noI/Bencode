@@ -93,9 +93,95 @@ public class TypeTest {
         // mocks verify
     }
 
+    @Test
+    public void testDesirializationOfObjectWithReferance() {
+        // input arguments
+        final MyTestObjectWithRef myClass = new MyTestObjectWithRef();
+        myClass.i = 12;
+        myClass.y = 42;
+        myClass.ref = new MyTestObject();
+        myClass.ref.i = 8;
+        myClass.ref.y = 10;
+
+        // mocks
+
+        // expected results
+
+        // creating test instance
+        ISerializator serializator = new ReferanceSerializer();
+        IReferanceDeserializator referanceDeserializator = new ReferanceDeserializator();
+        IConverter converter = new RecursiveConverter();
+
+        // execution test
+        byte[] bytes = serializator.serialize(myClass).getElement();
+        IBEncodeElement deserStage1 = converter.convert(bytes, 0);
+        MyTestObjectWithRef afterSer = referanceDeserializator.deserialize((Dict)deserStage1);
+
+        // result assert
+        assertTrue(afterSer.i == 12);
+        assertTrue(afterSer.y == 42);
+        assertNotNull(afterSer.ref);
+        assertTrue(afterSer.ref.i == 8);
+        assertTrue(afterSer.ref.y == 10);
+
+        // mocks verify
+    }
+
+    @Test
+    public void testDesirializationOfObjectWithArray() {
+        // input arguments
+        final MyTestObjectWithRefArray myClass = new MyTestObjectWithRefArray();
+        myClass.i = 12;
+        myClass.y = 42;
+        myClass.ref = new MyTestObject[2];
+        myClass.ref[0] = new MyTestObject();
+        myClass.ref[0].i = 8;
+        myClass.ref[0].y = 10;
+        myClass.ref[1] = new MyTestObject();
+        myClass.ref[1].i = 80;
+        myClass.ref[1].y = 100;
+
+        // mocks
+
+        // expected results
+
+        // creating test instance
+        ISerializator serializator = new ReferanceSerializer();
+        IReferanceDeserializator referanceDeserializator = new ReferanceDeserializator();
+        IConverter converter = new RecursiveConverter();
+
+        // execution test
+        byte[] bytes = serializator.serialize(myClass).getElement();
+        IBEncodeElement deserStage1 = converter.convert(bytes, 0);
+        MyTestObjectWithRefArray afterSer = referanceDeserializator.deserialize((Dict)deserStage1);
+
+        // result assert
+        assertTrue(afterSer.i == 12);
+        assertTrue(afterSer.y == 42);
+        assertNotNull(afterSer.ref);
+        assertTrue(afterSer.ref[0].i == 8);
+        assertTrue(afterSer.ref[0].y == 10);
+        assertTrue(afterSer.ref[1].i == 80);
+        assertTrue(afterSer.ref[1].y == 100);
+
+        // mocks verify
+    }
+
     public static class MyTestObject {
         public int i;
         public int y;
+    }
+
+    public static class MyTestObjectWithRef {
+        public int i;
+        public int y;
+        public MyTestObject ref;
+    }
+
+    public static class MyTestObjectWithRefArray {
+        public int i;
+        public int y;
+        public MyTestObject[] ref;
     }
 
     private<T> void testSerAndDeser(final IPrimitiveSerializator<T> primitiveSerializator, final IPrimitiveDeserializator<T> primitiveDeserializator, final T target) throws Exception {
