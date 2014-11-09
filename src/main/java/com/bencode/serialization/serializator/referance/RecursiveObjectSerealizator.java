@@ -10,6 +10,7 @@ import com.sun.xml.internal.ws.encoding.soap.SerializationException;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,6 +57,21 @@ class RecursiveObjectSerealizator {
             result.putValue(key, serializedField);
 
         }
+
+        final String typeKey = "$CLASS_TYPE";
+        ByteBuffer byteBuffer = ByteBuffer.allocate(typeKey.length());
+        for (char ch : typeKey.toCharArray()) {
+            byteBuffer.put((byte)ch);
+        }
+        final ByteString byteStringKey = ByteString.buildElement(byteBuffer.array());
+
+        final String className = instance.getClass().getName();
+        ByteBuffer byteBufferForCLassName = ByteBuffer.allocate(className.length());
+        for (char ch : className.toCharArray()) {
+            byteBufferForCLassName.put((byte)ch);
+        }
+        final ByteString byteStringValue = ByteString.buildElement(byteBufferForCLassName.array());
+        result.putValue(byteStringKey, byteStringValue);
 
         serializedObjects.put(currentId, result);
         return currentId;

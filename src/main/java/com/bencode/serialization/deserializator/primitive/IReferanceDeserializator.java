@@ -7,6 +7,6 @@ import com.bencode.serialization.model.Dict;
  */
 public interface IReferanceDeserializator {
 
-    public <T> T deserialize(final Class<T> targetClass, final Dict dict);
+    public <T> T deserialize(final Dict dict);
 
 }

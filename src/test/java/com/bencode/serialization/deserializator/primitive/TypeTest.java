@@ -84,7 +84,7 @@ public class TypeTest {
         // execution test
         byte[] bytes = serializator.serialize(myClass).getElement();
         IBEncodeElement deserStage1 = converter.convert(bytes, 0);
-        MyTestObject afterSer = referanceDeserializator.deserialize(MyTestObject.class, (Dict)deserStage1);
+        MyTestObject afterSer = referanceDeserializator.deserialize((Dict)deserStage1);
 
         // result assert
         assertTrue(afterSer.i == 12);

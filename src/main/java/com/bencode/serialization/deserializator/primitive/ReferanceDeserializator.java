@@ -15,18 +15,30 @@ import java.util.*;
 public class ReferanceDeserializator implements IReferanceDeserializator {
 
     @Override
-    public <T> T deserialize(final Class<T> targetClass, final Dict dict) {
-        return deserialize(targetClass, dict, 0, new HashMap<>());
+    public <T> T deserialize(final Dict dict) {
+        return deserialize(dict, 0, new HashMap<>());
     }
 
-    public <T> T deserialize(final Class<T> targetClass,
-                             final Dict dict,
+    public <T> T deserialize(final Dict dict,
                              final Integer key,
                              final Map<Integer, Object> objects) {
+        final Dict instanceElement = (Dict)dict.getValue((byte)(int)key);
+        final String typeKey = "$CLASS_TYPE";
+        final ByteString classNameValue = (ByteString)instanceElement.getValue(typeKey);
+        final StringBuilder sb = new StringBuilder(classNameValue.getValue().length);
+        for (byte element : classNameValue.getValue()) {
+            sb.append((char)element);
+        }
+        final Class<T> targetClass;
+        try {
+            targetClass = (Class<T>)Class.forName(sb.toString());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            throw new SerializationException(e);
+        }
         try {
             final T instnace = targetClass.newInstance();
             objects.put(key, instnace);
-            final Dict instanceElement = (Dict)dict.getValue((byte)(int)key);
             for (Field field : targetClass.getDeclaredFields()) {
                 field.setAccessible(true);
                 final IBEncodeElement fieldElement = instanceElement.getValue(field.getName());
@@ -60,7 +72,7 @@ public class ReferanceDeserializator implements IReferanceDeserializator {
                     if (objects.containsKey(referance)) {
                         field.set(instnace, objects.get(referance));
                     } else {
-                        field.set(instnace, deserialize(field.getType(), dict, referance, objects));
+                        field.set(instnace, deserialize(dict, referance, objects));
                     }
                 } else if (field.getType().isArray()) {
 
