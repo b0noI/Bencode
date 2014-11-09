@@ -232,6 +232,67 @@ public class TypeTest {
         // mocks verify
     }
 
+    @Test
+    public void testDesirializationOfObjectWithBoxedPrimitives() {
+        // input arguments
+        final MyTestObjectWithBoxedPrimitives myClass = new MyTestObjectWithBoxedPrimitives();
+        myClass.i = 12;
+        myClass.y = 42;
+
+        // mocks
+
+        // expected results
+
+        // creating test instance
+        ISerializator serializator = new ReferanceSerializer();
+        IReferanceDeserializator referanceDeserializator = new ReferanceDeserializator();
+        IConverter converter = new RecursiveConverter();
+
+        // execution test
+        byte[] bytes = serializator.serialize(myClass).getElement();
+        IBEncodeElement deserStage1 = converter.convert(bytes, 0);
+        MyTestObjectWithBoxedPrimitives afterSer = referanceDeserializator.deserialize((Dict)deserStage1);
+
+        // result assert
+        assertTrue(afterSer.i == 12);
+        assertTrue(afterSer.y == 42);
+
+        // mocks verify
+    }
+
+    @Test
+    public void testDesirializationOfObjectWith2DPrimitiveArrays() {
+        // input arguments
+        final MyTestObjectWith2DPrimitiveArray myClass = new MyTestObjectWith2DPrimitiveArray();
+        myClass.ref = new int[2][2];
+        myClass.ref[0][0] = 0;
+        myClass.ref[0][1] = 1;
+        myClass.ref[1][0] = 2;
+        myClass.ref[1][1] = 3;
+
+        // mocks
+
+        // expected results
+
+        // creating test instance
+        ISerializator serializator = new ReferanceSerializer();
+        IReferanceDeserializator referanceDeserializator = new ReferanceDeserializator();
+        IConverter converter = new RecursiveConverter();
+
+        // execution test
+        byte[] bytes = serializator.serialize(myClass).getElement();
+        IBEncodeElement deserStage1 = converter.convert(bytes, 0);
+        MyTestObjectWith2DPrimitiveArray afterSer = referanceDeserializator.deserialize((Dict)deserStage1);
+
+        // result assert
+        assertTrue(afterSer.ref[0][0] == 0);
+        assertTrue(afterSer.ref[0][1] == 1);
+        assertTrue(afterSer.ref[1][0] == 2);
+        assertTrue(afterSer.ref[1][1] == 3);
+
+        // mocks verify
+    }
+
     public static class MyTestObject {
         public int i;
         public int y;
@@ -255,10 +316,19 @@ public class TypeTest {
         public int[] ref;
     }
 
+    public static class MyTestObjectWith2DPrimitiveArray {
+        public int[][] ref;
+    }
+
     public static class MyTestObjectWithPrimitiveWithBoxedArray {
         public int i;
         public int y;
         public Integer[] ref;
+    }
+
+    public static class MyTestObjectWithBoxedPrimitives {
+        public Integer i;
+        public Integer y;
     }
 
     private<T> void testSerAndDeser(final IPrimitiveSerializator<T> primitiveSerializator, final IPrimitiveDeserializator<T> primitiveDeserializator, final T target) throws Exception {

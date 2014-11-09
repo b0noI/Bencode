@@ -15,6 +15,10 @@ public class PrimitiveArrayFieldDeserializator {
         final Object array = Array.newInstance(type, list.size());
         for (int i = 0; i < list.size(); i++) {
             final IBEncodeElement element = list.get(i);
+            if (element instanceof BencodeList) {
+                Array.set(array, i, deserialize(type.getComponentType(), (BencodeList) element));
+                continue;
+            }
             if (type == byte.class || type == Byte.class) {
                 final Object value = IPrimitiveDeserializator.Type.BYTE.getDeserializator().deserializator((ByteString)element);
                 Array.set(array, i, value);

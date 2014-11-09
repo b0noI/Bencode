@@ -25,7 +25,7 @@ class PrimitiveArrayFieldSerializator implements ISerializator<Field>{
 
     @Override
     public IBEncodeElement serialize(Field field) {
-        final Class componentType = field.getType().getComponentType();
+        final Class componentType = TypeHelper.getComponentType(field.getType());
         if (!componentType.isPrimitive() && !TypeHelper.typeCanBeUnboxedToPrimitive(componentType)) {
             throw new SerializationException(FIELD_IS_NOT_PRIMITIVE_ERROR_STRING);
         }
@@ -47,7 +47,11 @@ class PrimitiveArrayFieldSerializator implements ISerializator<Field>{
         final int length = Array.getLength(target);
         for (int i = 0; i < length; i++) {
             final T element = (T)Array.get(target, i);
-            result.add(serializator.serialize(element));
+            if (element.getClass().isArray()) {
+                result.add(serialize(serializator, element));
+            } else {
+                result.add(serializator.serialize(element));
+            }
         }
         return result;
     }

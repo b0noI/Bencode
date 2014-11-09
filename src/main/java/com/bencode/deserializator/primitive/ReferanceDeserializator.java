@@ -54,7 +54,7 @@ public class ReferanceDeserializator implements IReferanceDeserializator {
             for (Field field : targetClass.getDeclaredFields()) {
                 field.setAccessible(true);
                 final IBEncodeElement fieldElement = instanceElement.getValue(field.getName());
-                if (field.getType().isPrimitive()) {
+                if (field.getType().isPrimitive() || TypeHelper.typeCanBeUnboxedToPrimitive(field.getType())) {
                     if (field.getType() == byte.class || field.getType() == Byte.class) {
                         final Byte value = (Byte)IPrimitiveDeserializator.Type.BYTE.getDeserializator().deserializator((ByteString)fieldElement);
                         field.set(instnace, value);
@@ -79,6 +79,10 @@ public class ReferanceDeserializator implements IReferanceDeserializator {
                         final Double value = (Double)IPrimitiveDeserializator.Type.DOUBLE.getDeserializator().deserializator((ByteString)fieldElement);
                         field.set(instnace, value);
                     }
+                    if (field.getType() == boolean.class || field.getType() == Boolean.class) {
+                        final Boolean value = (Boolean)IPrimitiveDeserializator.Type.BOOLEAN.getDeserializator().deserializator((ByteString)fieldElement);
+                        field.set(instnace, value);
+                    }
                 } else if (!field.getType().isArray()) {
                     final Integer referance =  (Integer)IPrimitiveDeserializator.Type.INTEGER.getDeserializator().deserializator((ByteString)fieldElement);
                     if (objects.containsKey(referance)) {
@@ -87,11 +91,11 @@ public class ReferanceDeserializator implements IReferanceDeserializator {
                         field.set(instnace, deserialize(dict, referance, objects));
                     }
                 } else if (field.getType().isArray()) {
-                    final Class<?> componentType = field.getType().getComponentType();
+                    final Class<?> componentType = TypeHelper.getComponentType(field.getType());
                     if (!componentType.isPrimitive() && !TypeHelper.typeCanBeUnboxedToPrimitive(componentType)) {
-                        field.set(instnace, REFERANCE_ARRAY_FIELD_DESERIALIZATOR.deserialize(componentType, (BencodeList)fieldElement, dict, objects));
+                        field.set(instnace, REFERANCE_ARRAY_FIELD_DESERIALIZATOR.deserialize(field.getType().getComponentType(), (BencodeList)fieldElement, dict, objects));
                     } else {
-                        field.set(instnace, PRIMITIVE_ARRAY_FIELD_DESERIALIZATOR.deserialize(componentType, (BencodeList)fieldElement));
+                        field.set(instnace, PRIMITIVE_ARRAY_FIELD_DESERIALIZATOR.deserialize(field.getType().getComponentType(), (BencodeList)fieldElement));
                     }
                 }
             }

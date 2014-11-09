@@ -2,6 +2,7 @@ package com.bencode.serialization.serializator.referance;
 
 
 import com.bencode.common.FieldHelper;
+import com.bencode.common.TypeHelper;
 import com.bencode.serialization.model.BencodeList;
 import com.bencode.serialization.model.ByteString;
 import com.bencode.serialization.model.Dict;
@@ -108,7 +109,7 @@ class RecursiveObjectSerealizator {
     }
 
     private IBEncodeElement serializeArrayField(final Field field, final Object instance) throws IllegalAccessException {
-        final Class componentType = field.getType().getComponentType();
+        final Class componentType = TypeHelper.getComponentType(field.getType());
         if (componentType.isPrimitive() || typeCanBeUnboxedToPrimitive(componentType)) {
             return new PrimitiveArrayFieldSerializator(instance).serialize(field);
         } else {

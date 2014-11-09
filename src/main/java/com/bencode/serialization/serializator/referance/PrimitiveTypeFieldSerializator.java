@@ -1,5 +1,6 @@
 package com.bencode.serialization.serializator.referance;
 
+import com.bencode.common.TypeHelper;
 import com.bencode.serialization.model.IBEncodeElement;
 import com.bencode.serialization.serializator.ISerializator;
 import com.bencode.serialization.serializator.primitive.IPrimitiveSerializator;
@@ -19,7 +20,7 @@ class PrimitiveTypeFieldSerializator implements ISerializator<Field> {
 
     @Override
     public IBEncodeElement serialize(final Field field) {
-        if (!field.getType().isPrimitive()) {
+        if (!field.getType().isPrimitive() && !TypeHelper.typeCanBeUnboxedToPrimitive(field.getType())) {
             throw new SerializationException(FIELD_IS_NOT_PRIMITIVE_ERROR_STRING);
         }
         final Object instance;
