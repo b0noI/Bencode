@@ -1,5 +1,6 @@
-package com.bencode.serialization.deserializator.primitive;
+package com.bencode.deserializator.primitive;
 
+import com.bencode.common.TypeHelper;
 import com.bencode.serialization.model.BencodeList;
 import com.bencode.serialization.model.ByteString;
 import com.bencode.serialization.model.Dict;
@@ -7,7 +8,6 @@ import com.bencode.serialization.model.IBEncodeElement;
 import com.sun.xml.internal.ws.encoding.soap.SerializationException;
 
 import java.lang.reflect.Field;
-import java.nio.ByteBuffer;
 import java.util.*;
 
 /**
@@ -28,9 +28,15 @@ public class ReferanceDeserializator implements IReferanceDeserializator {
     public <T> T deserialize(final Dict dict,
                              final Integer key,
                              final Map<Integer, Object> objects) {
+        if (key == -1) return null;
         final Dict instanceElement = (Dict)dict.getValue((byte)(int)key);
+        if (instanceElement == null) {
+            return null;
+        }
         final String typeKey = "$CLASS_TYPE";
-        final ByteString classNameValue = (ByteString)instanceElement.getValue(typeKey);
+        final IBEncodeElement bElement = instanceElement.getValue(typeKey);
+        if (bElement == null) return null;
+        final ByteString classNameValue = (ByteString)bElement;
         final StringBuilder sb = new StringBuilder(classNameValue.getValue().length);
         for (byte element : classNameValue.getValue()) {
             sb.append((char)element);
@@ -82,10 +88,10 @@ public class ReferanceDeserializator implements IReferanceDeserializator {
                     }
                 } else if (field.getType().isArray()) {
                     final Class<?> componentType = field.getType().getComponentType();
-                    if (!componentType.isPrimitive()) {
+                    if (!componentType.isPrimitive() && !TypeHelper.typeCanBeUnboxedToPrimitive(componentType)) {
                         field.set(instnace, REFERANCE_ARRAY_FIELD_DESERIALIZATOR.deserialize(componentType, (BencodeList)fieldElement, dict, objects));
                     } else {
-                        field.set(instanceElement, PRIMITIVE_ARRAY_FIELD_DESERIALIZATOR.deserialize(componentType, (BencodeList)fieldElement));
+                        field.set(instnace, PRIMITIVE_ARRAY_FIELD_DESERIALIZATOR.deserialize(componentType, (BencodeList)fieldElement));
                     }
                 }
             }

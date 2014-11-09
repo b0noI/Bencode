@@ -1,4 +1,4 @@
-package com.bencode.serialization.deserializator.primitive;
+package com.bencode.deserializator.primitive;
 
 import com.bencode.serialization.model.Dict;
 

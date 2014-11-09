@@ -1,6 +1,7 @@
 package com.bencode.serialization.serializator.referance;
 
 
+import com.bencode.common.TypeHelper;
 import com.bencode.serialization.model.BencodeList;
 import com.bencode.serialization.model.IBEncodeElement;
 import com.bencode.serialization.serializator.ISerializator;
@@ -25,7 +26,7 @@ class PrimitiveArrayFieldSerializator implements ISerializator<Field>{
     @Override
     public IBEncodeElement serialize(Field field) {
         final Class componentType = field.getType().getComponentType();
-        if (!componentType.isPrimitive()) {
+        if (!componentType.isPrimitive() && !TypeHelper.typeCanBeUnboxedToPrimitive(componentType)) {
             throw new SerializationException(FIELD_IS_NOT_PRIMITIVE_ERROR_STRING);
         }
         if (!field.getType().isArray()) {

@@ -1,8 +1,6 @@
-package com.bencode.serialization.deserializator.primitive;
+package com.bencode.deserializator.primitive;
 
 import com.bencode.serialization.model.ByteString;
-import com.bencode.serialization.model.IBEncodeElement;
-import com.bencode.serialization.serializator.primitive.*;
 
 import java.nio.ByteBuffer;
 
@@ -20,7 +18,8 @@ public interface IPrimitiveDeserializator<T> {
         INTEGER (new ByteStringToPrimitiveDeserializator<>(ByteBuffer::getInt)),
         LONG    (new ByteStringToPrimitiveDeserializator<>(ByteBuffer::getLong)),
         FLOAT   (new ByteStringToPrimitiveDeserializator<>(ByteBuffer::getFloat)),
-        DOUBLE  (new ByteStringToPrimitiveDeserializator<>(ByteBuffer::getDouble));
+        DOUBLE  (new ByteStringToPrimitiveDeserializator<>(ByteBuffer::getDouble)),
+        BOOLEAN (new ByteStringToBooleanDeserializator());
 
         private final IPrimitiveDeserializator primitiveSerializator;
 

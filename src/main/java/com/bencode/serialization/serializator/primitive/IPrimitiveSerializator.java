@@ -16,7 +16,8 @@ public interface IPrimitiveSerializator<T> extends ISerializator<T> {
         INTEGER (new IntegerSerializator()  , Integer.class,    int.class),
         LONG    (new LongSerializator()     , Long.class,       long.class),
         FLOAT   (new FloatSerializator()    , Float.class,      float.class),
-        DOUBLE  (new DoubleSerializator()   , Double.class,     double.class);
+        DOUBLE  (new DoubleSerializator()   , Double.class,     double.class),
+        BOOLEAN (new BooleanSerializator()  , Boolean.class,    boolean.class);
 
         private final IPrimitiveSerializator primitiveSerializator;
 

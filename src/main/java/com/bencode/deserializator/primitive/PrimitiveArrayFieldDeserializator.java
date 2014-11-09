@@ -1,8 +1,7 @@
-package com.bencode.serialization.deserializator.primitive;
+package com.bencode.deserializator.primitive;
 
 import com.bencode.serialization.model.BencodeList;
 import com.bencode.serialization.model.ByteString;
-import com.bencode.serialization.model.Dict;
 import com.bencode.serialization.model.IBEncodeElement;
 
 import java.lang.reflect.Array;
@@ -37,7 +36,11 @@ public class PrimitiveArrayFieldDeserializator {
                 Array.set(array, i, value);
             }
             if (type == double.class || type == Double.class) {
-                final Object value = IPrimitiveDeserializator.Type.DOUBLE   .getDeserializator().deserializator((ByteString)element);
+                final Object value = IPrimitiveDeserializator.Type.DOUBLE.getDeserializator().deserializator((ByteString)element);
+                Array.set(array, i, value);
+            }
+            if (type == boolean.class || type == Boolean.class) {
+                final Object value = IPrimitiveDeserializator.Type.BOOLEAN.getDeserializator().deserializator((ByteString)element);
                 Array.set(array, i, value);
             }
 

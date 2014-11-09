@@ -1,6 +1,7 @@
 package com.bencode.serialization.serializator.referance;
 
 
+import com.bencode.common.FieldHelper;
 import com.bencode.serialization.model.BencodeList;
 import com.bencode.serialization.model.ByteString;
 import com.bencode.serialization.model.Dict;
@@ -9,7 +10,6 @@ import com.bencode.serialization.serializator.primitive.IPrimitiveSerializator;
 import com.sun.xml.internal.ws.encoding.soap.SerializationException;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,8 +41,11 @@ class RecursiveObjectSerealizator {
 
     private int serializeRecursive(final Object instance) throws IllegalAccessException {
 
+        if (instance == null) return -1;
+
         final ObjectKey objectKey = new ObjectKey(instance);
         final int       currentId = getCurrentId();
+
         serializedObjectsIds.put(objectKey, currentId);
 
         final Dict result = new Dict();
@@ -50,7 +53,7 @@ class RecursiveObjectSerealizator {
         for (Field field : fields) {
             field.setAccessible(true);
 
-            if (!shouldBeSerialized(field)) continue;
+            if (!FieldHelper.shouldBeSerialized(field)) continue;
 
             final ByteString key = ByteString.buildElement(field.getName().getBytes());
             final IBEncodeElement serializedField = serializeField(field, instance);
@@ -86,7 +89,7 @@ class RecursiveObjectSerealizator {
     }
 
     private IBEncodeElement serializeNonArrayField(final Field field, final Object instance) throws IllegalAccessException {
-        if (field.getType().isPrimitive()) {
+        if (field.getType().isPrimitive() || typeCanBeUnboxedToPrimitive(field.getType())) {
             final PrimitiveTypeFieldSerializator primitiveFieldSerializator = new PrimitiveTypeFieldSerializator(instance);
             return primitiveFieldSerializator.serialize(field);
         } else {
@@ -95,9 +98,18 @@ class RecursiveObjectSerealizator {
         }
     }
 
+    private boolean typeCanBeUnboxedToPrimitive(final Class type) {
+        return type == Byte.class ||
+                type == Short.class ||
+                type == Integer.class ||
+                type == Long.class ||
+                type == Float.class  ||
+                type == Double.class;
+    }
+
     private IBEncodeElement serializeArrayField(final Field field, final Object instance) throws IllegalAccessException {
         final Class componentType = field.getType().getComponentType();
-        if (componentType.isPrimitive()) {
+        if (componentType.isPrimitive() || typeCanBeUnboxedToPrimitive(componentType)) {
             return new PrimitiveArrayFieldSerializator(instance).serialize(field);
         } else {
             final Object[] values = (Object[])field.get(instance);
@@ -115,15 +127,6 @@ class RecursiveObjectSerealizator {
                 serializedObjectsIds.get(fieldObjectKey) :
                 serializeRecursive(target);
         return IPrimitiveSerializator.Type.INTEGER.getSerializator().serialize(objectId);
-    }
-
-    private boolean shouldBeSerialized(final Field field) {
-        final int foundMods = field.getModifiers();
-        final int transcientMod = Modifier.TRANSIENT;
-        if ((foundMods & transcientMod) == transcientMod) {
-            return false;
-        }
-        return true;
     }
 
     private int getCurrentId() {
