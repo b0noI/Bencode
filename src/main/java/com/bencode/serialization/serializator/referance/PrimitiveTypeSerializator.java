@@ -8,27 +8,14 @@ import com.sun.xml.internal.ws.encoding.soap.SerializationException;
 
 import java.lang.reflect.Field;
 
-class PrimitiveTypeFieldSerializator implements ISerializator<Field> {
+class PrimitiveTypeSerializator implements ISerializator<Object> {
 
     private static  final String FIELD_IS_NOT_PRIMITIVE_ERROR_STRING = "Field is not primitive";
 
-    private         final Object instance;
-
-    PrimitiveTypeFieldSerializator(final Object instance) {
-        this.instance = instance;
-    }
-
     @Override
-    public IBEncodeElement serialize(final Field field) {
-        if (!field.getType().isPrimitive() && !TypeHelper.typeCanBeUnboxedToPrimitive(field.getType())) {
+    public IBEncodeElement serialize(final Object instance) {
+        if (!instance.getClass().isPrimitive() && !TypeHelper.typeCanBeUnboxedToPrimitive(instance.getClass())) {
             throw new SerializationException(FIELD_IS_NOT_PRIMITIVE_ERROR_STRING);
-        }
-        final Object instance;
-        try {
-            instance = field.get(this.instance);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-            throw new SerializationException(e);
         }
         return serialize(IPrimitiveSerializator.Type.findSerializator(instance.getClass()), instance);
     }

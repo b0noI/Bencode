@@ -1,8 +1,8 @@
 package com.bencode;
 
 import com.bencode.common.FieldHelper;
-import com.bencode.deserializator.primitive.IReferanceDeserializator;
-import com.bencode.deserializator.primitive.ReferanceDeserializator;
+import com.bencode.deserializator.referance.IReferanceDeserializator;
+import com.bencode.deserializator.referance.ReferanceDeserializator;
 import com.bencode.serialization.converter.IConverter;
 import com.bencode.serialization.converter.RecursiveConverter;
 import com.bencode.serialization.model.Dict;

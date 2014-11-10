@@ -1,5 +1,7 @@
 package com.bencode.deserializator.primitive;
 
+import com.bencode.deserializator.referance.IReferanceDeserializator;
+import com.bencode.deserializator.referance.ReferanceDeserializator;
 import com.bencode.serialization.converter.IConverter;
 import com.bencode.serialization.converter.RecursiveConverter;
 import com.bencode.serialization.model.Dict;
@@ -221,8 +223,8 @@ public class TypeTest {
         IConverter converter = new RecursiveConverter();
 
         // execution test
-        byte[] bytes = serializator.serialize(myClass).getElement();
-        IBEncodeElement deserStage1 = converter.convert(bytes, 0);
+        final byte[] bytes = serializator.serialize(myClass).getElement();
+        final IBEncodeElement deserStage1 = converter.convert(bytes, 0);
         MyTestObjectWithPrimitiveWithBoxedArray afterSer = referanceDeserializator.deserialize((Dict)deserStage1);
 
         // result assert

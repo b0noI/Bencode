@@ -1,5 +1,6 @@
-package com.bencode.deserializator.primitive;
+package com.bencode.deserializator.referance;
 
+import com.bencode.deserializator.primitive.IPrimitiveDeserializator;
 import com.bencode.serialization.model.BencodeList;
 import com.bencode.serialization.model.ByteString;
 import com.bencode.serialization.model.Dict;

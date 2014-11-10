@@ -20,7 +20,7 @@ public class RecursiveObjectSerealizatorTest {
         // creating test instance
 
         // execution test
-        final IBEncodeElement actualResult = RecursiveObjectSerealizator.serialize(inputForSerialization);
+        final IBEncodeElement actualResult = new RecursiveObjectSerealizator().serialize(inputForSerialization);
 
         // result assert
         assertEquals(actualResult.getElement(), expectedResult);

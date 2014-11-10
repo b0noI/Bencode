@@ -8,6 +8,8 @@ import java.util.Arrays;
 
 public class ByteString extends AbstractBEncodeElement implements Comparable<ByteString> {
 
+    private static  final ByteString NULL_BYTE_STRING                = ByteString.buildElement(new byte[]{-1});
+
     private static  final byte       BYTE_STRING_SEPARATOR           = ':';
 
     private static  final String     ILLEGAL_ARGUMENT_ERROR_STRING   = "Instance length in bytes to long!";
@@ -23,6 +25,18 @@ public class ByteString extends AbstractBEncodeElement implements Comparable<Byt
             throw new IllegalArgumentException(ILLEGAL_ARGUMENT_ERROR_STRING);
         }
         return new ByteString(value);
+    }
+
+    public static ByteString buildElement(final String from) {
+        ByteBuffer byteBuffer = ByteBuffer.allocate(from.length());
+        for (char ch : from.toCharArray()) {
+            byteBuffer.put((byte)ch);
+        }
+        return ByteString.buildElement(byteBuffer.array());
+    }
+
+    public static ByteString nullString() {
+        return NULL_BYTE_STRING;
     }
 
     public byte[] getValue() {

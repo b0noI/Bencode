@@ -1,7 +1,9 @@
-package com.bencode.deserializator.primitive;
+package com.bencode.deserializator.referance;
 
 import com.bencode.common.FieldHelper;
 import com.bencode.common.TypeHelper;
+import com.bencode.deserializator.primitive.IPrimitiveDeserializator;
+import com.bencode.deserializator.primitive.PrimitiveArrayFieldDeserializator;
 import com.bencode.serialization.model.BencodeList;
 import com.bencode.serialization.model.ByteString;
 import com.bencode.serialization.model.Dict;
@@ -58,7 +60,7 @@ public class ReferanceDeserializator implements IReferanceDeserializator {
                 final IBEncodeElement fieldElement = instanceElement.getValue(field.getName());
                 if (field.getType().isPrimitive() || TypeHelper.typeCanBeUnboxedToPrimitive(field.getType())) {
                     if (field.getType() == byte.class || field.getType() == Byte.class) {
-                        final Byte value = (Byte)IPrimitiveDeserializator.Type.BYTE.getDeserializator().deserializator((ByteString)fieldElement);
+                        final Byte value = (Byte) IPrimitiveDeserializator.Type.BYTE.getDeserializator().deserializator((ByteString)fieldElement);
                         field.set(instnace, value);
                     }
                     if (field.getType() == short.class || field.getType() == Short.class) {
