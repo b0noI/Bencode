@@ -1,5 +1,6 @@
 package com.bencode.deserializator.primitive;
 
+import com.bencode.common.FieldHelper;
 import com.bencode.common.TypeHelper;
 import com.bencode.serialization.model.BencodeList;
 import com.bencode.serialization.model.ByteString;
@@ -52,6 +53,7 @@ public class ReferanceDeserializator implements IReferanceDeserializator {
             final T instnace = targetClass.newInstance();
             objects.put(key, instnace);
             for (Field field : targetClass.getDeclaredFields()) {
+                if (!FieldHelper.shouldBeSerialized(field)) continue;
                 field.setAccessible(true);
                 final IBEncodeElement fieldElement = instanceElement.getValue(field.getName());
                 if (field.getType().isPrimitive() || TypeHelper.typeCanBeUnboxedToPrimitive(field.getType())) {

@@ -3,14 +3,11 @@ package com.bencode.common;
 
 import com.sun.org.apache.xpath.internal.operations.Mod;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 public class FieldHelper {
-
-    public static boolean canBeSerialized(final Field field) {
-        return true;
-    }
 
     public static boolean shouldBeSerialized(final Field field) {
         return !isTransient(field) && !isStatic(field);

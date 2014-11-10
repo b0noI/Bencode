@@ -44,6 +44,10 @@ class RecursiveObjectSerealizator {
 
         if (instance == null) return -1;
 
+        if (!TypeHelper.canBeSerialized(instance.getClass())) {
+            throw new SerializationException("Non-serializable type");
+        }
+
         final ObjectKey objectKey = new ObjectKey(instance);
         final int       currentId = getCurrentId();
 

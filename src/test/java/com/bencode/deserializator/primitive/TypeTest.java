@@ -9,6 +9,9 @@ import com.bencode.serialization.serializator.primitive.IPrimitiveSerializator;
 import com.bencode.serialization.serializator.referance.ReferanceSerializer;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.testng.Assert.*;
 
 public class TypeTest {
@@ -293,6 +296,74 @@ public class TypeTest {
         // mocks verify
     }
 
+    @Test
+    public void testDesirializationOfObjectWith2DPrimitiveBoxedArrays() {
+        // input arguments
+        final MyTestObjectWith2DPrimitiveBoxedArray myClass = new MyTestObjectWith2DPrimitiveBoxedArray();
+        myClass.ref = new Integer[2][2];
+        myClass.ref[0][0] = 0;
+        myClass.ref[0][1] = 1;
+        myClass.ref[1][0] = 2;
+        myClass.ref[1][1] = 3;
+
+        // mocks
+
+        // expected results
+
+        // creating test instance
+        ISerializator serializator = new ReferanceSerializer();
+        IReferanceDeserializator referanceDeserializator = new ReferanceDeserializator();
+        IConverter converter = new RecursiveConverter();
+
+        // execution test
+        byte[] bytes = serializator.serialize(myClass).getElement();
+        IBEncodeElement deserStage1 = converter.convert(bytes, 0);
+        MyTestObjectWith2DPrimitiveBoxedArray afterSer = referanceDeserializator.deserialize((Dict)deserStage1);
+
+        // result assert
+        assertTrue(afterSer.ref[0][0] == 0);
+        assertTrue(afterSer.ref[0][1] == 1);
+        assertTrue(afterSer.ref[1][0] == 2);
+        assertTrue(afterSer.ref[1][1] == 3);
+
+        // mocks verify
+    }
+
+    @Test
+    public void testDesirializationOfObjectWithList() {
+        // input arguments
+        final MyTestObjectWithList myClass = new MyTestObjectWithList();
+        myClass.list = new ArrayList<>();
+        MyTestObject testObject = new MyTestObject();
+        testObject.i = 42;
+        testObject.y = 56;
+        myClass.list.add(testObject);
+        myClass.list.add(testObject);
+        MyTestObject testObject2 = new MyTestObject();
+        testObject.i = 422;
+        testObject.y = 566;
+        myClass.list.add(testObject2);
+
+        // mocks
+
+        // expected results
+
+        // creating test instance
+        ISerializator serializator = new ReferanceSerializer();
+        IReferanceDeserializator referanceDeserializator = new ReferanceDeserializator();
+        IConverter converter = new RecursiveConverter();
+
+        // execution test
+        byte[] bytes = serializator.serialize(myClass).getElement();
+        IBEncodeElement deserStage1 = converter.convert(bytes, 0);
+        MyTestObjectWithList afterSer = referanceDeserializator.deserialize((Dict)deserStage1);
+
+        // result assert
+        assertNotNull(afterSer);
+
+        // mocks verify
+    }
+
     public static class MyTestObject {
         public int i;
         public int y;
@@ -320,6 +391,10 @@ public class TypeTest {
         public int[][] ref;
     }
 
+    public static class MyTestObjectWith2DPrimitiveBoxedArray {
+        public Integer[][] ref;
+    }
+
     public static class MyTestObjectWithPrimitiveWithBoxedArray {
         public int i;
         public int y;
@@ -329,6 +404,10 @@ public class TypeTest {
     public static class MyTestObjectWithBoxedPrimitives {
         public Integer i;
         public Integer y;
+    }
+
+    public static class MyTestObjectWithList {
+        public List<MyTestObject> list;
     }
 
     private<T> void testSerAndDeser(final IPrimitiveSerializator<T> primitiveSerializator, final IPrimitiveDeserializator<T> primitiveDeserializator, final T target) throws Exception {
