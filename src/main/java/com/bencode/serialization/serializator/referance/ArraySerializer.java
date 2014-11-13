@@ -1,23 +1,20 @@
 package com.bencode.serialization.serializator.referance;
 
 
-import com.bencode.common.TypeHelper;
 import com.bencode.serialization.model.BencodeList;
 import com.bencode.serialization.model.IBEncodeElement;
-import com.bencode.serialization.serializator.ISerializator;
-import com.bencode.serialization.serializator.primitive.IPrimitiveSerializator;
+import com.bencode.serialization.serializator.ISerializer;
 import com.sun.xml.internal.ws.encoding.soap.SerializationException;
 
 import java.lang.reflect.Array;
-import java.lang.reflect.Field;
 
-class ArraySerializator implements ISerializator<Object>{
+class ArraySerializer implements ISerializer<Object> {
 
     private static  final String                    FIELD_IS_NOT_ARRAY_ERROR_STRING        = "Field is not array"      ;
 
-    private         final ISerializator<Object>     serializator                                                       ;
+    private         final ISerializer<Object> serializator                                                       ;
 
-    ArraySerializator(final ISerializator<Object> serializator) {
+    ArraySerializer(final ISerializer<Object> serializator) {
         this.serializator = serializator;
     }
 

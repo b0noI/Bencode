@@ -3,7 +3,7 @@ package com.bencode.serialization.serializator.primitive;
 
 import java.nio.ByteBuffer;
 
-class BooleanSerializator extends AbstractToByteStringSerializator<Boolean> {
+class BooleanSerializer extends AbstractToByteStringSerializer<Boolean> {
 
     private static final int BOOLEAN_SIZE_IN_BYTES = 1;
 

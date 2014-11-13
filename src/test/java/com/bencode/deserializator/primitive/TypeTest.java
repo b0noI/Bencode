@@ -5,8 +5,8 @@ import com.bencode.serialization.converter.IConverter;
 import com.bencode.serialization.converter.RecursiveConverter;
 import com.bencode.serialization.model.Dict;
 import com.bencode.serialization.model.IBEncodeElement;
-import com.bencode.serialization.serializator.ISerializator;
-import com.bencode.serialization.serializator.primitive.IPrimitiveSerializator;
+import com.bencode.serialization.serializator.ISerializer;
+import com.bencode.serialization.serializator.primitive.IPrimitiveSerializer;
 import com.bencode.serialization.serializator.referance.ReferanceSerializer;
 import org.testng.annotations.Test;
 
@@ -19,49 +19,49 @@ public class TypeTest {
 
     @Test
     public void testByte() throws Exception {
-        testSerAndDeser(IPrimitiveSerializator.Type.BYTE.getSerializator(),
+        testSerAndDeser(IPrimitiveSerializer.Type.BYTE.getSerializator(),
                 IPrimitiveDeserializator.Type.BYTE.getDeserializator(),
                 (byte)':');
     }
 
     @Test
     public void testShort() throws Exception {
-        testSerAndDeser(IPrimitiveSerializator.Type.SHORT.getSerializator(),
+        testSerAndDeser(IPrimitiveSerializer.Type.SHORT.getSerializator(),
                 IPrimitiveDeserializator.Type.SHORT.getDeserializator(),
                 (short)12);
     }
 
     @Test
     public void testInt() throws Exception {
-        testSerAndDeser(IPrimitiveSerializator.Type.INTEGER.getSerializator(),
+        testSerAndDeser(IPrimitiveSerializer.Type.INTEGER.getSerializator(),
                 IPrimitiveDeserializator.Type.INTEGER.getDeserializator(),
                 12999999);
     }
 
     @Test
     public void testChar() throws Exception {
-        testSerAndDeser(IPrimitiveSerializator.Type.CHAR.getSerializator(),
+        testSerAndDeser(IPrimitiveSerializer.Type.CHAR.getSerializator(),
                 IPrimitiveDeserializator.Type.CHAR.getDeserializator(),
                 'c');
     }
 
     @Test
     public void testLong() throws Exception {
-        testSerAndDeser(IPrimitiveSerializator.Type.LONG.getSerializator(),
+        testSerAndDeser(IPrimitiveSerializer.Type.LONG.getSerializator(),
                 IPrimitiveDeserializator.Type.LONG.getDeserializator(),
                 9999999999999l);
     }
 
     @Test
     public void testFloat() throws Exception {
-        testSerAndDeser(IPrimitiveSerializator.Type.FLOAT.getSerializator(),
+        testSerAndDeser(IPrimitiveSerializer.Type.FLOAT.getSerializator(),
                 IPrimitiveDeserializator.Type.FLOAT.getDeserializator(),
                 999.9999999999f);
     }
 
     @Test
     public void testDouble() throws Exception {
-        testSerAndDeser(IPrimitiveSerializator.Type.DOUBLE.getSerializator(),
+        testSerAndDeser(IPrimitiveSerializer.Type.DOUBLE.getSerializator(),
                 IPrimitiveDeserializator.Type.DOUBLE.getDeserializator(),
                 999.9999999999);
     }
@@ -78,7 +78,7 @@ public class TypeTest {
         // expected results
 
         // creating test instance
-        ISerializator serializator = new ReferanceSerializer();
+        ISerializer serializator = new ReferanceSerializer();
         IConverter converter = new RecursiveConverter();
 
         // execution test
@@ -108,7 +108,7 @@ public class TypeTest {
         // expected results
 
         // creating test instance
-        ISerializator serializator = new ReferanceSerializer();
+        ISerializer serializator = new ReferanceSerializer();
         IConverter converter = new RecursiveConverter();
 
         // execution test
@@ -145,7 +145,7 @@ public class TypeTest {
         // expected results
 
         // creating test instance
-        ISerializator serializator = new ReferanceSerializer();
+        ISerializer serializator = new ReferanceSerializer();
         IConverter converter = new RecursiveConverter();
 
         // execution test
@@ -180,7 +180,7 @@ public class TypeTest {
         // expected results
 
         // creating test instance
-        ISerializator serializator = new ReferanceSerializer();
+        ISerializer serializator = new ReferanceSerializer();
         IConverter converter = new RecursiveConverter();
 
         // execution test
@@ -213,7 +213,7 @@ public class TypeTest {
         // expected results
 
         // creating test instance
-        ISerializator serializator = new ReferanceSerializer();
+        ISerializer serializator = new ReferanceSerializer();
         IConverter converter = new RecursiveConverter();
 
         // execution test
@@ -243,7 +243,7 @@ public class TypeTest {
         // expected results
 
         // creating test instance
-        ISerializator serializator = new ReferanceSerializer();
+        ISerializer serializator = new ReferanceSerializer();
         IConverter converter = new RecursiveConverter();
 
         // execution test
@@ -273,7 +273,7 @@ public class TypeTest {
         // expected results
 
         // creating test instance
-        ISerializator serializator = new ReferanceSerializer();
+        ISerializer serializator = new ReferanceSerializer();
         IConverter converter = new RecursiveConverter();
 
         // execution test
@@ -305,7 +305,7 @@ public class TypeTest {
         // expected results
 
         // creating test instance
-        ISerializator serializator = new ReferanceSerializer();
+        ISerializer serializator = new ReferanceSerializer();
         IConverter converter = new RecursiveConverter();
 
         // execution test
@@ -342,7 +342,7 @@ public class TypeTest {
         // expected results
 
         // creating test instance
-        ISerializator serializator = new ReferanceSerializer();
+        ISerializer serializator = new ReferanceSerializer();
         IConverter converter = new RecursiveConverter();
 
         // execution test
@@ -402,7 +402,7 @@ public class TypeTest {
         public List<MyTestObject> list;
     }
 
-    private<T> void testSerAndDeser(final IPrimitiveSerializator<T> primitiveSerializator, final IPrimitiveDeserializator<T> primitiveDeserializator, final T target) throws Exception {
+    private<T> void testSerAndDeser(final IPrimitiveSerializer<T> primitiveSerializator, final IPrimitiveDeserializator<T> primitiveDeserializator, final T target) throws Exception {
         // input arguments
 
         // mocks

@@ -3,7 +3,7 @@ package com.bencode.serialization.serializator.primitive;
 
 import java.nio.ByteBuffer;
 
-class IntegerSerializator extends AbstractToByteStringSerializator<Integer> {
+class IntegerSerializer extends AbstractToByteStringSerializer<Integer> {
 
     private static final int INT_SIZE_IN_BYTES = 4;
 

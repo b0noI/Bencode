@@ -1,10 +1,8 @@
 package com.bencode.serialization.serializator.primitive;
 
-import com.bencode.serialization.serializator.primitive.AbstractToByteStringSerializator;
-
 import java.nio.ByteBuffer;
 
-class LongSerializator extends AbstractToByteStringSerializator<Long> {
+class LongSerializer extends AbstractToByteStringSerializer<Long> {
 
     private static final int LONG_SIZE_IN_BYTES = 8;
 

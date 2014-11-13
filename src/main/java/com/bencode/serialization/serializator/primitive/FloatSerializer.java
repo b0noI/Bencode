@@ -2,7 +2,7 @@ package com.bencode.serialization.serializator.primitive;
 
 import java.nio.ByteBuffer;
 
-class FloatSerializator extends AbstractToByteStringSerializator<Float> {
+class FloatSerializer extends AbstractToByteStringSerializer<Float> {
 
     private static final int FLOAT_SIZE_IN_BYTES = 4;
 

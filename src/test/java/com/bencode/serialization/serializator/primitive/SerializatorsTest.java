@@ -1,7 +1,6 @@
 package com.bencode.serialization.serializator.primitive;
 
 
-import com.bencode.serialization.serializator.primitive.*;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -13,18 +12,18 @@ public class SerializatorsTest {
     // format: <test_instance(extends AbstractToByteStringSerializator), input value, expected result>
     private static Object[][] serializatorProvider() {
         return new Object[][]{
-                {new ShortSerializator()  , (short)3000                     , new byte[]{11, -72}},
-                {new ByteSerializator()   , (byte)'?'                       , new byte[]{'?'}},
-                {new IntegerSerializator(), 300_000_000                     , new byte[]{17, -31, -93, 0}},
-                {new LongSerializator()   , 300_000_000_000_000_000l        , new byte[]{4, 41, -48, 105, 24, -98, 0, 0}},
-                {new CharSerializator()   , 'l'                             , new byte[]{0, 108}},
-                {new FloatSerializator()  , .99f                            , new byte[]{63, 125, 112, -92}},
-                {new DoubleSerializator() , .99                             , new byte[]{63, -17, -82, 20, 122, -31, 71, -82}},
+                {new ShortSerializer()  , (short)3000                     , new byte[]{11, -72}},
+                {new ByteSerializer()   , (byte)'?'                       , new byte[]{'?'}},
+                {new IntegerSerializer(), 300_000_000                     , new byte[]{17, -31, -93, 0}},
+                {new LongSerializer()   , 300_000_000_000_000_000l        , new byte[]{4, 41, -48, 105, 24, -98, 0, 0}},
+                {new CharSerializer()   , 'l'                             , new byte[]{0, 108}},
+                {new FloatSerializer()  , .99f                            , new byte[]{63, 125, 112, -92}},
+                {new DoubleSerializer() , .99                             , new byte[]{63, -17, -82, 20, 122, -31, 71, -82}},
         } ;
     }
 
     @Test(dataProvider = "serializators_provider")
-    public <T>void testSerializators(final AbstractToByteStringSerializator<T> testInstance, final T inputValue, final byte[] expectedResul) throws Exception {
+    public <T>void testSerializators(final AbstractToByteStringSerializer<T> testInstance, final T inputValue, final byte[] expectedResul) throws Exception {
         // input arguments
 
         // mocks

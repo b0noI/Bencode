@@ -1,9 +1,9 @@
 package com.bencode.serialization.serializator.primitive;
 
 
-class CharSerializator extends AbstractToByteStringSerializator<Character> {
+class CharSerializer extends AbstractToByteStringSerializer<Character> {
 
-    private static final ShortSerializator SHORT_SERIALIZATOR = new ShortSerializator();
+    private static final ShortSerializer SHORT_SERIALIZATOR = new ShortSerializer();
 
     @Override
     protected byte[] convertToBytes(final Character instance) {

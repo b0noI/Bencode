@@ -1,23 +1,19 @@
 package com.bencode.serialization.serializator.referance;
 
 
-import com.bencode.common.FieldHelper;
 import com.bencode.common.TypeHelper;
-import com.bencode.serialization.model.BencodeList;
 import com.bencode.serialization.model.ByteString;
 import com.bencode.serialization.model.Dict;
 import com.bencode.serialization.model.IBEncodeElement;
-import com.bencode.serialization.serializator.ISerializator;
-import com.bencode.serialization.serializator.primitive.IPrimitiveSerializator;
+import com.bencode.serialization.serializator.ISerializer;
+import com.bencode.serialization.serializator.primitive.IPrimitiveSerializer;
 import com.sun.xml.internal.ws.encoding.soap.SerializationException;
 
-import java.lang.reflect.Field;
-import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-class RecursiveObjectSerealizator implements ISerializator<Object> {
+class RecursiveObjectSerealizator implements ISerializer<Object> {
 
     private       Integer                        currentId                      = 0;
 
@@ -25,11 +21,11 @@ class RecursiveObjectSerealizator implements ISerializator<Object> {
 
     private final Map<Integer, IBEncodeElement>  serializedObjects              = new HashMap<>();
 
-    private final PrimitiveTypeSerializator      primitiveTypeSerializator      = new PrimitiveTypeSerializator();
+    private final PrimitiveTypeSerializer primitiveTypeSerializator      = new PrimitiveTypeSerializer();
 
-    private final ArraySerializator              arraySerializator              = new ArraySerializator(this);
+    private final ArraySerializer arraySerializator              = new ArraySerializer(this);
 
-    private final ObjectSerializator             objectSerializator             = new ObjectSerializator(this);
+    private final ObjectSerializer objectSerializator             = new ObjectSerializer(this);
 
     @Override
     public IBEncodeElement serialize(final Object instance) {
@@ -56,7 +52,7 @@ class RecursiveObjectSerealizator implements ISerializator<Object> {
 
         serializedObjectsIds.put(objectKey, currentId);
         serializedObjects.put(currentId, objectSerializator.serialize(instance));
-        return IPrimitiveSerializator.Type.INTEGER.getSerializator().serialize(currentId);
+        return IPrimitiveSerializer.Type.INTEGER.getSerializator().serialize(currentId);
     }
 
     public IBEncodeElement getSerializedElement() {
@@ -73,7 +69,7 @@ class RecursiveObjectSerealizator implements ISerializator<Object> {
         final ObjectKey fieldObjectKey = new ObjectKey(instance);
         if (serializedObjectsIds.containsKey(fieldObjectKey)) {
             final int objetId = serializedObjectsIds.get(fieldObjectKey);
-            return Optional.of(IPrimitiveSerializator.Type.INTEGER.getSerializator().serialize(objetId));
+            return Optional.of(IPrimitiveSerializer.Type.INTEGER.getSerializator().serialize(objetId));
         }
         return Optional.empty();
     }

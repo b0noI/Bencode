@@ -4,17 +4,17 @@ import com.bencode.common.FieldHelper;
 import com.bencode.serialization.model.ByteString;
 import com.bencode.serialization.model.Dict;
 import com.bencode.serialization.model.IBEncodeElement;
-import com.bencode.serialization.serializator.ISerializator;
+import com.bencode.serialization.serializator.ISerializer;
 import com.sun.xml.internal.ws.encoding.soap.SerializationException;
 
 import java.lang.reflect.Field;
 
 
-class ObjectSerializator implements ISerializator<Object> {
+class ObjectSerializer implements ISerializer<Object> {
 
     private         final RecursiveObjectSerealizator objectSerializator                  ;
 
-    ObjectSerializator(final RecursiveObjectSerealizator objectSerializator) {
+    ObjectSerializer(final RecursiveObjectSerealizator objectSerializator) {
         this.objectSerializator = objectSerializator;
     }
 

@@ -1,8 +1,6 @@
 package com.bencode.serialization.serializator.primitive;
 
 
-import com.bencode.serialization.serializator.primitive.AbstractToByteStringSerializator;
-import com.bencode.serialization.serializator.primitive.ByteSerializator;
 import org.testng.annotations.Test;
 
 import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;
@@ -20,7 +18,7 @@ public class AbstractToByteStringSerializatorTest {
         final byte[] expectedResult = new byte[]{1, ':','?'};
 
         // creating test instance
-        final AbstractToByteStringSerializator<Byte> testInstance = new ByteSerializator();
+        final AbstractToByteStringSerializer<Byte> testInstance = new ByteSerializer();
 
         // execution test
         final byte[] actualResult = testInstance.serialize(inputValue).getElement();

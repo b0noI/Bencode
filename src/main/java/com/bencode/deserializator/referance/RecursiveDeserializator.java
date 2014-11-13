@@ -7,7 +7,7 @@ import com.bencode.deserializator.primitive.IPrimitiveDeserializator;
 import com.bencode.serialization.model.ByteString;
 import com.bencode.serialization.model.Dict;
 import com.bencode.serialization.model.IBEncodeElement;
-import com.bencode.serialization.serializator.ISerializator;
+import com.bencode.serialization.serializator.ISerializer;
 import com.sun.xml.internal.ws.encoding.soap.SerializationException;
 
 import java.lang.reflect.Field;
@@ -58,7 +58,7 @@ public class RecursiveDeserializator {
     public static <T>T deserialize(final Dict dict) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         final ByteString key = ByteString.buildElement(new byte[]{0, 0, 0, 0});
         final Dict mainElement = (Dict)dict.getValue(key);
-        final ByteString typeNameByteString = (ByteString)mainElement.getValue(ISerializator.CLASS_TYPE_KEY_NAME);
+        final ByteString typeNameByteString = (ByteString)mainElement.getValue(ISerializer.CLASS_TYPE_KEY_NAME);
         final StringBuilder stringBuilder = new StringBuilder(typeNameByteString.getValue().length);
         for (byte ch : typeNameByteString.getValue()) {
             stringBuilder.append((char)ch);
@@ -71,7 +71,7 @@ public class RecursiveDeserializator {
 
     private Class getClass(final ByteString objectId) throws ClassNotFoundException {
         final Dict objectDict = (Dict)dict.getValue(objectId);
-        final ByteString classTypeKey = ByteString.buildElement(ISerializator.CLASS_TYPE_KEY_NAME);
+        final ByteString classTypeKey = ByteString.buildElement(ISerializer.CLASS_TYPE_KEY_NAME);
         final ByteString classNameByteString = (ByteString) objectDict.getValue(classTypeKey);
         final StringBuilder className = new StringBuilder(classNameByteString.getValue().length);
         for (byte ch : classNameByteString.getValue()) {

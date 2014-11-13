@@ -1,11 +1,9 @@
 package com.bencode.serialization.serializator.primitive;
 
 
-import com.bencode.serialization.serializator.primitive.AbstractToByteStringSerializator;
-
 import java.nio.ByteBuffer;
 
-class ShortSerializator extends AbstractToByteStringSerializator<Short> {
+class ShortSerializer extends AbstractToByteStringSerializer<Short> {
 
     private static final int SHORT_SIZE_IN_BYTES = 2;
 
