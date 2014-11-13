@@ -12,11 +12,9 @@ import java.lang.reflect.Field;
 
 class ObjectSerializator implements ISerializator<Object> {
 
-    private static  final String                CLASS_TYPE_KEY_NAME = "$CLASS_TYPE" ;
+    private         final RecursiveObjectSerealizator objectSerializator                  ;
 
-    private         final ISerializator<Object> objectSerializator                  ;
-
-    ObjectSerializator(ISerializator<Object> objectSerializator) {
+    ObjectSerializator(final RecursiveObjectSerealizator objectSerializator) {
         this.objectSerializator = objectSerializator;
     }
 
@@ -26,7 +24,6 @@ class ObjectSerializator implements ISerializator<Object> {
         final Field[] fields = instance.getClass().getDeclaredFields();
         for (Field field : fields) {
             field.setAccessible(true);
-
             if (!FieldHelper.shouldBeSerialized(field)) continue;
 
             final ByteString key = ByteString.buildElement(field.getName().getBytes());
@@ -38,7 +35,6 @@ class ObjectSerializator implements ISerializator<Object> {
                 throw new SerializationException(e);
             }
             result.putValue(key, serializedField);
-
         }
 
         serializeClassType(instance.getClass(), result);

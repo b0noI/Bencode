@@ -56,13 +56,13 @@ class RecursiveObjectSerealizator implements ISerializator<Object> {
 
         serializedObjectsIds.put(objectKey, currentId);
         serializedObjects.put(currentId, objectSerializator.serialize(instance));
-        return serializedObjects.get(currentId);
+        return IPrimitiveSerializator.Type.INTEGER.getSerializator().serialize(currentId);
     }
 
     public IBEncodeElement getSerializedElement() {
         final Dict result = new Dict();
         serializedObjects.keySet().forEach(key -> {
-            final ByteString keyString = ByteString.buildElement(new byte[]{(byte) (int) key});
+            final ByteString keyString = ByteString.buildElement(key);
             final IBEncodeElement value = serializedObjects.get(key);
             result.putValue(keyString, value);
         });

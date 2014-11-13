@@ -9,10 +9,10 @@ import java.util.Map;
  */
 public interface IReferanceDeserializator {
 
-    public <T> T deserialize(final Dict dict);
-
-    public <T> T deserialize(final Dict dict,
-                final Integer key,
-                final Map<Integer, Object> objects);
+//    public <T> T deserialize(final Dict dict);
+//
+//    public <T> T deserialize(final Dict dict,
+//                final Integer key,
+//                final Map<Integer, Object> objects);
 
 }

@@ -1,7 +1,6 @@
 package com.bencode.deserializator.primitive;
 
-import com.bencode.deserializator.referance.IReferanceDeserializator;
-import com.bencode.deserializator.referance.ReferanceDeserializator;
+import com.bencode.deserializator.referance.RecursiveDeserializator;
 import com.bencode.serialization.converter.IConverter;
 import com.bencode.serialization.converter.RecursiveConverter;
 import com.bencode.serialization.model.Dict;
@@ -68,7 +67,7 @@ public class TypeTest {
     }
 
     @Test
-    public void testDesirializationOfObject() {
+    public void testDesirializationOfObject() throws Exception {
         // input arguments
         final MyTestObject myClass = new MyTestObject();
         myClass.i = 12;
@@ -80,13 +79,12 @@ public class TypeTest {
 
         // creating test instance
         ISerializator serializator = new ReferanceSerializer();
-        IReferanceDeserializator referanceDeserializator = new ReferanceDeserializator();
         IConverter converter = new RecursiveConverter();
 
         // execution test
         byte[] bytes = serializator.serialize(myClass).getElement();
         IBEncodeElement deserStage1 = converter.convert(bytes, 0);
-        MyTestObject afterSer = referanceDeserializator.deserialize((Dict)deserStage1);
+        MyTestObject afterSer = RecursiveDeserializator.deserialize((Dict) deserStage1);
 
         // result assert
         assertTrue(afterSer.i == 12);
@@ -96,7 +94,7 @@ public class TypeTest {
     }
 
     @Test
-    public void testDesirializationOfObjectWithReferance() {
+    public void testDesirializationOfObjectWithReferance() throws Exception {
         // input arguments
         final MyTestObjectWithRef myClass = new MyTestObjectWithRef();
         myClass.i = 12;
@@ -111,13 +109,12 @@ public class TypeTest {
 
         // creating test instance
         ISerializator serializator = new ReferanceSerializer();
-        IReferanceDeserializator referanceDeserializator = new ReferanceDeserializator();
         IConverter converter = new RecursiveConverter();
 
         // execution test
         byte[] bytes = serializator.serialize(myClass).getElement();
         IBEncodeElement deserStage1 = converter.convert(bytes, 0);
-        MyTestObjectWithRef afterSer = referanceDeserializator.deserialize((Dict)deserStage1);
+        MyTestObjectWithRef afterSer = RecursiveDeserializator.deserialize((Dict)deserStage1);
 
         // result assert
         assertTrue(afterSer.i == 12);
@@ -130,7 +127,7 @@ public class TypeTest {
     }
 
     @Test
-    public void testDesirializationOfObjectWithArray() {
+    public void testDesirializationOfObjectWithArray() throws Exception {
         // input arguments
         final MyTestObjectWithRefArray myClass = new MyTestObjectWithRefArray();
         myClass.i = 12;
@@ -149,13 +146,12 @@ public class TypeTest {
 
         // creating test instance
         ISerializator serializator = new ReferanceSerializer();
-        IReferanceDeserializator referanceDeserializator = new ReferanceDeserializator();
         IConverter converter = new RecursiveConverter();
 
         // execution test
         byte[] bytes = serializator.serialize(myClass).getElement();
         IBEncodeElement deserStage1 = converter.convert(bytes, 0);
-        MyTestObjectWithRefArray afterSer = referanceDeserializator.deserialize((Dict)deserStage1);
+        MyTestObjectWithRefArray afterSer = RecursiveDeserializator.deserialize((Dict)deserStage1);
 
         // result assert
         assertTrue(afterSer.i == 12);
@@ -170,7 +166,7 @@ public class TypeTest {
     }
 
     @Test
-    public void testDesirializationOfObjectWithPrimitiveArray() {
+    public void testDesirializationOfObjectWithPrimitiveArray() throws Exception {
         // input arguments
         final MyTestObjectWithPrimitiveArray myClass = new MyTestObjectWithPrimitiveArray();
         myClass.i = 12;
@@ -185,13 +181,12 @@ public class TypeTest {
 
         // creating test instance
         ISerializator serializator = new ReferanceSerializer();
-        IReferanceDeserializator referanceDeserializator = new ReferanceDeserializator();
         IConverter converter = new RecursiveConverter();
 
         // execution test
         byte[] bytes = serializator.serialize(myClass).getElement();
         IBEncodeElement deserStage1 = converter.convert(bytes, 0);
-        MyTestObjectWithPrimitiveArray afterSer = referanceDeserializator.deserialize((Dict)deserStage1);
+        MyTestObjectWithPrimitiveArray afterSer = RecursiveDeserializator.deserialize((Dict)deserStage1);
 
         // result assert
         assertTrue(afterSer.i == 12);
@@ -204,7 +199,7 @@ public class TypeTest {
     }
 
     @Test
-    public void testDesirializationOfObjectWithPrimitiveBoxedArray() {
+    public void testDesirializationOfObjectWithPrimitiveBoxedArray() throws Exception {
         // input arguments
         final MyTestObjectWithPrimitiveWithBoxedArray myClass = new MyTestObjectWithPrimitiveWithBoxedArray();
         myClass.i = 12;
@@ -219,13 +214,12 @@ public class TypeTest {
 
         // creating test instance
         ISerializator serializator = new ReferanceSerializer();
-        IReferanceDeserializator referanceDeserializator = new ReferanceDeserializator();
         IConverter converter = new RecursiveConverter();
 
         // execution test
         final byte[] bytes = serializator.serialize(myClass).getElement();
         final IBEncodeElement deserStage1 = converter.convert(bytes, 0);
-        MyTestObjectWithPrimitiveWithBoxedArray afterSer = referanceDeserializator.deserialize((Dict)deserStage1);
+        MyTestObjectWithPrimitiveWithBoxedArray afterSer = RecursiveDeserializator.deserialize((Dict)deserStage1);
 
         // result assert
         assertTrue(afterSer.i == 12);
@@ -238,7 +232,7 @@ public class TypeTest {
     }
 
     @Test
-    public void testDesirializationOfObjectWithBoxedPrimitives() {
+    public void testDesirializationOfObjectWithBoxedPrimitives() throws Exception {
         // input arguments
         final MyTestObjectWithBoxedPrimitives myClass = new MyTestObjectWithBoxedPrimitives();
         myClass.i = 12;
@@ -250,13 +244,12 @@ public class TypeTest {
 
         // creating test instance
         ISerializator serializator = new ReferanceSerializer();
-        IReferanceDeserializator referanceDeserializator = new ReferanceDeserializator();
         IConverter converter = new RecursiveConverter();
 
         // execution test
         byte[] bytes = serializator.serialize(myClass).getElement();
         IBEncodeElement deserStage1 = converter.convert(bytes, 0);
-        MyTestObjectWithBoxedPrimitives afterSer = referanceDeserializator.deserialize((Dict)deserStage1);
+        MyTestObjectWithBoxedPrimitives afterSer = RecursiveDeserializator.deserialize((Dict)deserStage1);
 
         // result assert
         assertTrue(afterSer.i == 12);
@@ -266,7 +259,7 @@ public class TypeTest {
     }
 
     @Test
-    public void testDesirializationOfObjectWith2DPrimitiveArrays() {
+    public void testDesirializationOfObjectWith2DPrimitiveArrays() throws Exception {
         // input arguments
         final MyTestObjectWith2DPrimitiveArray myClass = new MyTestObjectWith2DPrimitiveArray();
         myClass.ref = new int[2][2];
@@ -281,13 +274,12 @@ public class TypeTest {
 
         // creating test instance
         ISerializator serializator = new ReferanceSerializer();
-        IReferanceDeserializator referanceDeserializator = new ReferanceDeserializator();
         IConverter converter = new RecursiveConverter();
 
         // execution test
         byte[] bytes = serializator.serialize(myClass).getElement();
         IBEncodeElement deserStage1 = converter.convert(bytes, 0);
-        MyTestObjectWith2DPrimitiveArray afterSer = referanceDeserializator.deserialize((Dict)deserStage1);
+        MyTestObjectWith2DPrimitiveArray afterSer = RecursiveDeserializator.deserialize((Dict)deserStage1);
 
         // result assert
         assertTrue(afterSer.ref[0][0] == 0);
@@ -299,7 +291,7 @@ public class TypeTest {
     }
 
     @Test
-    public void testDesirializationOfObjectWith2DPrimitiveBoxedArrays() {
+    public void testDesirializationOfObjectWith2DPrimitiveBoxedArrays() throws Exception {
         // input arguments
         final MyTestObjectWith2DPrimitiveBoxedArray myClass = new MyTestObjectWith2DPrimitiveBoxedArray();
         myClass.ref = new Integer[2][2];
@@ -314,13 +306,12 @@ public class TypeTest {
 
         // creating test instance
         ISerializator serializator = new ReferanceSerializer();
-        IReferanceDeserializator referanceDeserializator = new ReferanceDeserializator();
         IConverter converter = new RecursiveConverter();
 
         // execution test
         byte[] bytes = serializator.serialize(myClass).getElement();
         IBEncodeElement deserStage1 = converter.convert(bytes, 0);
-        MyTestObjectWith2DPrimitiveBoxedArray afterSer = referanceDeserializator.deserialize((Dict)deserStage1);
+        MyTestObjectWith2DPrimitiveBoxedArray afterSer = RecursiveDeserializator.deserialize((Dict)deserStage1);
 
         // result assert
         assertTrue(afterSer.ref[0][0] == 0);
@@ -332,7 +323,7 @@ public class TypeTest {
     }
 
     @Test
-    public void testDesirializationOfObjectWithList() {
+    public void testDesirializationOfObjectWithList() throws Exception {
         // input arguments
         final MyTestObjectWithList myClass = new MyTestObjectWithList();
         myClass.list = new ArrayList<>();
@@ -352,13 +343,12 @@ public class TypeTest {
 
         // creating test instance
         ISerializator serializator = new ReferanceSerializer();
-        IReferanceDeserializator referanceDeserializator = new ReferanceDeserializator();
         IConverter converter = new RecursiveConverter();
 
         // execution test
         byte[] bytes = serializator.serialize(myClass).getElement();
         IBEncodeElement deserStage1 = converter.convert(bytes, 0);
-        MyTestObjectWithList afterSer = referanceDeserializator.deserialize((Dict)deserStage1);
+        MyTestObjectWithList afterSer = RecursiveDeserializator.deserialize((Dict)deserStage1);
 
         // result assert
         assertNotNull(afterSer);

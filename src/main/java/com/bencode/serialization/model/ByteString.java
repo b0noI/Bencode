@@ -27,6 +27,12 @@ public class ByteString extends AbstractBEncodeElement implements Comparable<Byt
         return new ByteString(value);
     }
 
+    public static ByteString buildElement(final int value) {
+        final ByteBuffer byteBuffer = ByteBuffer.allocate(4);
+        byteBuffer.putInt(value);
+        return new ByteString(byteBuffer.array());
+    }
+
     public static ByteString buildElement(final String from) {
         ByteBuffer byteBuffer = ByteBuffer.allocate(from.length());
         for (char ch : from.toCharArray()) {
@@ -84,4 +90,5 @@ public class ByteString extends AbstractBEncodeElement implements Comparable<Byt
         }
         return sb.toString();
     }
+
 }
