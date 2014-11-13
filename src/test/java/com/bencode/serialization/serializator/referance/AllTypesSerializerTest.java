@@ -5,7 +5,7 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
 
-public class RecursiveObjectSerealizatorTest {
+public class AllTypesSerializerTest {
 
     @Test
     public void testSerialize() throws Exception {
@@ -20,7 +20,7 @@ public class RecursiveObjectSerealizatorTest {
         // creating test instance
 
         // execution test
-        final IBEncodeElement actualResult = new RecursiveObjectSerealizator().serialize(inputForSerialization);
+        final IBEncodeElement actualResult = new AllTypesSerializer().serialize(inputForSerialization);
 
         // result assert
         assertEquals(actualResult.getElement(), expectedResult);

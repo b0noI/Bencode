@@ -4,6 +4,8 @@ package com.bencode.serialization.serializator.primitive;
 import com.bencode.serialization.model.ByteString;
 import com.bencode.serialization.serializator.ISerializer;
 
+import java.util.Optional;
+
 public interface IPrimitiveSerializer<T> extends ISerializer<T> {
 
     @Override
@@ -19,28 +21,28 @@ public interface IPrimitiveSerializer<T> extends ISerializer<T> {
         DOUBLE  (new DoubleSerializer()   , Double.class,     double.class),
         BOOLEAN (new BooleanSerializer()  , Boolean.class,    boolean.class);
 
-        private final IPrimitiveSerializer primitiveSerializator;
+        private final IPrimitiveSerializer primitiveSerializer;
 
-        private final Class[]                   objectClasses;
+        private final Class[]               objectClasses;
 
-        Type(IPrimitiveSerializer primitiveSerializator, Class... objectClasses) {
-            this.primitiveSerializator = primitiveSerializator;
+        Type(IPrimitiveSerializer primitiveSerializer, Class... objectClasses) {
+            this.primitiveSerializer = primitiveSerializer;
             this.objectClasses = objectClasses;
         }
 
-        public static <T> IPrimitiveSerializer<T> findSerializator(final Class<T> targetClass) {
+        public static <T> Optional<IPrimitiveSerializer<T>> findSerializer(final Class<?> targetClass) {
             for (Type type: values()) {
                 for (Class typeClass : type.objectClasses) {
                     if (typeClass == targetClass) {
-                        return type.getSerializator();
+                        return Optional.of(type.getSerializer());
                     }
                 }
             }
-            return null;
+            return Optional.empty();
         }
 
-        public <T> IPrimitiveSerializer<T> getSerializator() {
-            return primitiveSerializator;
+        public <T> IPrimitiveSerializer<T> getSerializer() {
+            return primitiveSerializer;
         }
 
     }

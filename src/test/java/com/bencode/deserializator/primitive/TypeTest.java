@@ -19,49 +19,49 @@ public class TypeTest {
 
     @Test
     public void testByte() throws Exception {
-        testSerAndDeser(IPrimitiveSerializer.Type.BYTE.getSerializator(),
+        testSerAndDeser(IPrimitiveSerializer.Type.BYTE.getSerializer(),
                 IPrimitiveDeserializator.Type.BYTE.getDeserializator(),
                 (byte)':');
     }
 
     @Test
     public void testShort() throws Exception {
-        testSerAndDeser(IPrimitiveSerializer.Type.SHORT.getSerializator(),
+        testSerAndDeser(IPrimitiveSerializer.Type.SHORT.getSerializer(),
                 IPrimitiveDeserializator.Type.SHORT.getDeserializator(),
                 (short)12);
     }
 
     @Test
     public void testInt() throws Exception {
-        testSerAndDeser(IPrimitiveSerializer.Type.INTEGER.getSerializator(),
+        testSerAndDeser(IPrimitiveSerializer.Type.INTEGER.getSerializer(),
                 IPrimitiveDeserializator.Type.INTEGER.getDeserializator(),
                 12999999);
     }
 
     @Test
     public void testChar() throws Exception {
-        testSerAndDeser(IPrimitiveSerializer.Type.CHAR.getSerializator(),
+        testSerAndDeser(IPrimitiveSerializer.Type.CHAR.getSerializer(),
                 IPrimitiveDeserializator.Type.CHAR.getDeserializator(),
                 'c');
     }
 
     @Test
     public void testLong() throws Exception {
-        testSerAndDeser(IPrimitiveSerializer.Type.LONG.getSerializator(),
+        testSerAndDeser(IPrimitiveSerializer.Type.LONG.getSerializer(),
                 IPrimitiveDeserializator.Type.LONG.getDeserializator(),
                 9999999999999l);
     }
 
     @Test
     public void testFloat() throws Exception {
-        testSerAndDeser(IPrimitiveSerializer.Type.FLOAT.getSerializator(),
+        testSerAndDeser(IPrimitiveSerializer.Type.FLOAT.getSerializer(),
                 IPrimitiveDeserializator.Type.FLOAT.getDeserializator(),
                 999.9999999999f);
     }
 
     @Test
     public void testDouble() throws Exception {
-        testSerAndDeser(IPrimitiveSerializer.Type.DOUBLE.getSerializator(),
+        testSerAndDeser(IPrimitiveSerializer.Type.DOUBLE.getSerializer(),
                 IPrimitiveDeserializator.Type.DOUBLE.getDeserializator(),
                 999.9999999999);
     }

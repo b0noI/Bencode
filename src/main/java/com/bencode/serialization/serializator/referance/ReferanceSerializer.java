@@ -8,9 +8,9 @@ public class ReferanceSerializer implements ISerializer<Object> {
 
     @Override
     public IBEncodeElement serialize(final Object instance) {
-        final RecursiveObjectSerealizator recursiveObjectSerealizator = new RecursiveObjectSerealizator();
-        recursiveObjectSerealizator.serialize(instance);
-        return recursiveObjectSerealizator.getSerializedElement();
+        final AllTypesSerializer allTypesSerializer = new AllTypesSerializer();
+        allTypesSerializer.serialize(instance);
+        return allTypesSerializer.getSerializedElement();
     }
 
 }

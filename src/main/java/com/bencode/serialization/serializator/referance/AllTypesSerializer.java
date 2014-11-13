@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-class RecursiveObjectSerealizator implements ISerializer<Object> {
+class AllTypesSerializer implements ISerializer<Object> {
 
     private       Integer                        currentId                      = 0;
 
@@ -25,7 +25,7 @@ class RecursiveObjectSerealizator implements ISerializer<Object> {
 
     private final ArraySerializer arraySerializator              = new ArraySerializer(this);
 
-    private final ObjectSerializer objectSerializator             = new ObjectSerializer(this);
+    private final NonPrimitiveObjectSerializer objectSerializator             = new NonPrimitiveObjectSerializer(this);
 
     @Override
     public IBEncodeElement serialize(final Object instance) {
@@ -52,7 +52,7 @@ class RecursiveObjectSerealizator implements ISerializer<Object> {
 
         serializedObjectsIds.put(objectKey, currentId);
         serializedObjects.put(currentId, objectSerializator.serialize(instance));
-        return IPrimitiveSerializer.Type.INTEGER.getSerializator().serialize(currentId);
+        return IPrimitiveSerializer.Type.INTEGER.getSerializer().serialize(currentId);
     }
 
     public IBEncodeElement getSerializedElement() {
@@ -69,7 +69,7 @@ class RecursiveObjectSerealizator implements ISerializer<Object> {
         final ObjectKey fieldObjectKey = new ObjectKey(instance);
         if (serializedObjectsIds.containsKey(fieldObjectKey)) {
             final int objetId = serializedObjectsIds.get(fieldObjectKey);
-            return Optional.of(IPrimitiveSerializer.Type.INTEGER.getSerializator().serialize(objetId));
+            return Optional.of(IPrimitiveSerializer.Type.INTEGER.getSerializer().serialize(objetId));
         }
         return Optional.empty();
     }
