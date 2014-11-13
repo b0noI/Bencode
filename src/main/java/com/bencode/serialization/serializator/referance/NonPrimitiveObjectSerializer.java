@@ -23,6 +23,7 @@ class NonPrimitiveObjectSerializer implements ISerializer<Object> {
 
     @Override
     public IBEncodeElement serialize(final Object instance) {
+        validateClass(instance.getClass());
         final Dict result = new Dict();
         final Field[] fields = instance.getClass().getDeclaredFields();
         for (Field field : fields) {

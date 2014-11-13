@@ -3,7 +3,7 @@ package com.bencode.serialization.serializator.referance;
 import com.bencode.serialization.model.IBEncodeElement;
 import junit.framework.TestCase;
 
-public class ReferanceSerializerTest extends TestCase {
+public class ReferenceSerializerTest extends TestCase {
 
     public void testSerialize() throws Exception {
         // input arguments
@@ -14,7 +14,7 @@ public class ReferanceSerializerTest extends TestCase {
         // expected results
 
         // creating test instance
-        final ReferanceSerializer testInstance = new ReferanceSerializer();
+        final ReferenceSerializer testInstance = new ReferenceSerializer();
 
         // execution test
         final IBEncodeElement actualResult = testInstance.serialize(inputForSerialization);

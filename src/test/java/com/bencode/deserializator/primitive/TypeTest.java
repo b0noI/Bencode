@@ -7,7 +7,7 @@ import com.bencode.serialization.model.Dict;
 import com.bencode.serialization.model.IBEncodeElement;
 import com.bencode.serialization.serializator.ISerializer;
 import com.bencode.serialization.serializator.primitive.IPrimitiveSerializer;
-import com.bencode.serialization.serializator.referance.ReferanceSerializer;
+import com.bencode.serialization.serializator.referance.ReferenceSerializer;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
@@ -78,7 +78,7 @@ public class TypeTest {
         // expected results
 
         // creating test instance
-        ISerializer serializator = new ReferanceSerializer();
+        ISerializer serializator = new ReferenceSerializer();
         IConverter converter = new RecursiveConverter();
 
         // execution test
@@ -108,7 +108,7 @@ public class TypeTest {
         // expected results
 
         // creating test instance
-        ISerializer serializator = new ReferanceSerializer();
+        ISerializer serializator = new ReferenceSerializer();
         IConverter converter = new RecursiveConverter();
 
         // execution test
@@ -145,7 +145,7 @@ public class TypeTest {
         // expected results
 
         // creating test instance
-        ISerializer serializator = new ReferanceSerializer();
+        ISerializer serializator = new ReferenceSerializer();
         IConverter converter = new RecursiveConverter();
 
         // execution test
@@ -180,7 +180,7 @@ public class TypeTest {
         // expected results
 
         // creating test instance
-        ISerializer serializator = new ReferanceSerializer();
+        ISerializer serializator = new ReferenceSerializer();
         IConverter converter = new RecursiveConverter();
 
         // execution test
@@ -213,7 +213,7 @@ public class TypeTest {
         // expected results
 
         // creating test instance
-        ISerializer serializator = new ReferanceSerializer();
+        ISerializer serializator = new ReferenceSerializer();
         IConverter converter = new RecursiveConverter();
 
         // execution test
@@ -243,7 +243,7 @@ public class TypeTest {
         // expected results
 
         // creating test instance
-        ISerializer serializator = new ReferanceSerializer();
+        ISerializer serializator = new ReferenceSerializer();
         IConverter converter = new RecursiveConverter();
 
         // execution test
@@ -273,7 +273,7 @@ public class TypeTest {
         // expected results
 
         // creating test instance
-        ISerializer serializator = new ReferanceSerializer();
+        ISerializer serializator = new ReferenceSerializer();
         IConverter converter = new RecursiveConverter();
 
         // execution test
@@ -305,7 +305,7 @@ public class TypeTest {
         // expected results
 
         // creating test instance
-        ISerializer serializator = new ReferanceSerializer();
+        ISerializer serializator = new ReferenceSerializer();
         IConverter converter = new RecursiveConverter();
 
         // execution test
@@ -342,7 +342,7 @@ public class TypeTest {
         // expected results
 
         // creating test instance
-        ISerializer serializator = new ReferanceSerializer();
+        ISerializer serializator = new ReferenceSerializer();
         IConverter converter = new RecursiveConverter();
 
         // execution test

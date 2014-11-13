@@ -1,6 +1,7 @@
 package com.bencode.serialization.serializator.referance;
 
 
+import com.bencode.common.Type;
 import com.bencode.common.TypeHelper;
 import com.bencode.serialization.model.ByteString;
 import com.bencode.serialization.model.Dict;
@@ -15,17 +16,19 @@ import java.util.Optional;
 
 class AllTypesSerializer implements ISerializer<Object> {
 
-    private       Integer                        currentId                      = 0;
+    private static  final    String                         NON_SERIALIZABLE_TYPE_ERROR_STRING  = "Non-serializable type";
 
-    private final Map<ObjectKey, Integer>        serializedObjectsIds           = new HashMap<>();
+    private                  Integer                        nextId                              = 0;
 
-    private final Map<Integer, IBEncodeElement>  serializedObjects              = new HashMap<>();
+    private         final    Map<ObjectKey, Integer>        serializedObjectsIds                = new HashMap<>();
 
-    private final PrimitiveTypeSerializer primitiveTypeSerializator      = new PrimitiveTypeSerializer();
+    private         final Map<Integer, IBEncodeElement>     serializedObjects                   = new HashMap<>();
 
-    private final ArraySerializer arraySerializator              = new ArraySerializer(this);
+    private         final PrimitiveTypeSerializer           primitiveTypeSerializer             = new PrimitiveTypeSerializer();
 
-    private final NonPrimitiveObjectSerializer objectSerializator             = new NonPrimitiveObjectSerializer(this);
+    private         final ArraySerializer                   arraySerializer                     = new ArraySerializer(this);
+
+    private         final NonPrimitiveObjectSerializer      objectSerializer                    = new NonPrimitiveObjectSerializer(this);
 
     @Override
     public IBEncodeElement serialize(final Object instance) {
@@ -33,29 +36,31 @@ class AllTypesSerializer implements ISerializer<Object> {
         if (instance == null) return ByteString.nullString();
 
         if (!TypeHelper.canBeSerialized(instance.getClass())) {
-            throw new SerializationException("Non-serializable type");
+            throw new SerializationException(NON_SERIALIZABLE_TYPE_ERROR_STRING);
         }
 
-        if (instance.getClass().isPrimitive() || TypeHelper.typeCanBeUnboxedToPrimitive(instance.getClass())) {
-            return primitiveTypeSerializator.serialize(instance);
-        } else if (instance.getClass().isArray()) {
-            return arraySerializator.serialize(instance);
-        } else {
-            final Optional<IBEncodeElement> bEncodeElementFromCache = getSerializedObjectFromMap(instance);
-        if (bEncodeElementFromCache.isPresent()) {
-                return bEncodeElementFromCache.get();
-            }
+        final Type objectType = Type.getType(instance);
+        switch (objectType) {
+            case ARRAY:
+                return arraySerializer.serialize(instance);
+            case PRIMITIVE:
+                return primitiveTypeSerializer.serialize(instance);
+            case REF:
+            default:
+                final Optional<IBEncodeElement> bEncodeElementFromCache = getSerializedObjectFromMap(instance);
+                if (bEncodeElementFromCache.isPresent()) {
+                    return bEncodeElementFromCache.get();
+                }
+                final ObjectKey objectKey = new ObjectKey(instance);
+                final int       currentId = getNextId();
+
+                serializedObjectsIds.put(objectKey, currentId);
+                serializedObjects.put(currentId, objectSerializer.serialize(instance));
+                return IPrimitiveSerializer.Type.INTEGER.getSerializer().serialize(currentId);
         }
-
-        final ObjectKey objectKey = new ObjectKey(instance);
-        final int       currentId = getCurrentId();
-
-        serializedObjectsIds.put(objectKey, currentId);
-        serializedObjects.put(currentId, objectSerializator.serialize(instance));
-        return IPrimitiveSerializer.Type.INTEGER.getSerializer().serialize(currentId);
     }
 
-    public IBEncodeElement getSerializedElement() {
+    public IBEncodeElement getResultOfSerialization() {
         final Dict result = new Dict();
         serializedObjects.keySet().forEach(key -> {
             final ByteString keyString = ByteString.buildElement(key);
@@ -68,14 +73,14 @@ class AllTypesSerializer implements ISerializer<Object> {
     private Optional<IBEncodeElement> getSerializedObjectFromMap(final Object instance) {
         final ObjectKey fieldObjectKey = new ObjectKey(instance);
         if (serializedObjectsIds.containsKey(fieldObjectKey)) {
-            final int objetId = serializedObjectsIds.get(fieldObjectKey);
-            return Optional.of(IPrimitiveSerializer.Type.INTEGER.getSerializer().serialize(objetId));
+            final int objectId = serializedObjectsIds.get(fieldObjectKey);
+            return Optional.of(IPrimitiveSerializer.Type.INTEGER.getSerializer().serialize(objectId));
         }
         return Optional.empty();
     }
 
-    private int getCurrentId() {
-        return currentId++;
+    private int getNextId() {
+        return nextId++;
     }
 
     private static class ObjectKey {
