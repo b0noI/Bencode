@@ -26,9 +26,9 @@ class AllTypesSerializer implements ISerializer<Object> {
 
     private         final PrimitiveTypeSerializer           primitiveTypeSerializer             = new PrimitiveTypeSerializer();
 
-    private         final ArraySerializer                   arraySerializer                     = new ArraySerializer(this);
+    private         final ArrayTypeSerializer               arrayTypeSerializer                 = new ArrayTypeSerializer(this);
 
-    private         final NonPrimitiveObjectSerializer      objectSerializer                    = new NonPrimitiveObjectSerializer(this);
+    private         final NonPrimitiveTypeSerializer        objectSerializer                    = new NonPrimitiveTypeSerializer(this);
 
     @Override
     public IBEncodeElement serialize(final Object instance) {
@@ -42,7 +42,7 @@ class AllTypesSerializer implements ISerializer<Object> {
         final Type objectType = Type.getType(instance);
         switch (objectType) {
             case ARRAY:
-                return arraySerializer.serialize(instance);
+                return arrayTypeSerializer.serialize(instance);
             case PRIMITIVE:
                 return primitiveTypeSerializer.serialize(instance);
             case REF:

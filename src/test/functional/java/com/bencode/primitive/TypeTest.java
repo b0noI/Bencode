@@ -1,5 +1,6 @@
-package com.bencode.deserializator.primitive;
+package com.bencode.primitive;
 
+import com.bencode.deserializator.primitive.IPrimitiveDeserializator;
 import com.bencode.deserializator.referance.RecursiveDeserializator;
 import com.bencode.serialization.converter.IConverter;
 import com.bencode.serialization.converter.RecursiveConverter;

@@ -11,13 +11,13 @@ import com.sun.xml.internal.ws.encoding.soap.SerializationException;
 import java.lang.reflect.Field;
 
 
-class NonPrimitiveObjectSerializer implements ISerializer<Object> {
+class NonPrimitiveTypeSerializer implements ISerializer<Object> {
 
     private static  final String                TYPE_IS_PRIMITIVE_ERROR_STRING = "Type is primitive";
 
     private         final ISerializer<Object>   objectSerializer                                    ;
 
-    NonPrimitiveObjectSerializer(final ISerializer<Object> objectSerializer) {
+    NonPrimitiveTypeSerializer(final ISerializer<Object> objectSerializer) {
         this.objectSerializer = objectSerializer;
     }
 

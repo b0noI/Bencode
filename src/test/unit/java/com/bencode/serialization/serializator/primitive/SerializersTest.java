@@ -9,7 +9,7 @@ import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;
 public class SerializersTest {
 
     @DataProvider(name = "serializators_provider")
-    // format: <test_instance(extends AbstractToByteStringSerializator), input value, expected result>
+    // format: <test_instance(extends AbstractToByteStringSerializer), input value, expected result>
     private static Object[][] serializatorProvider() {
         return new Object[][]{
                 {new ShortSerializer()  , (short)3000                     , new byte[]{11, -72}},

@@ -9,13 +9,13 @@ import com.sun.xml.internal.ws.encoding.soap.SerializationException;
 
 import java.lang.reflect.Array;
 
-class ArraySerializer implements ISerializer<Object> {
+class ArrayTypeSerializer implements ISerializer<Object> {
 
     private static  final String                    FIELD_IS_NOT_ARRAY_ERROR_STRING        = "Field is not array"   ;
 
     private         final ISerializer<Object>       objectsSerializer                                               ;
 
-    ArraySerializer(final ISerializer<Object> objectsSerializer) {
+    ArrayTypeSerializer(final ISerializer<Object> objectsSerializer) {
         this.objectsSerializer = objectsSerializer;
     }
 
