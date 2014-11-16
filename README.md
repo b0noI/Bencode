@@ -41,16 +41,13 @@ For using this lib xustom Maven repo shuld be added to project:
  >  \</repositories\>
 
 And add dependency like this:
-
-\<dependency\>
-
-    \<groupId\>com.bencode\</groupId\>
-    
-    \<artifactId\>serialization\</artifactId\>
-    
-    \<version\>1.0-SNAPSHOT\</version\>
-    
-\</dependency\>
+```xml
+<dependency>
+    <groupId\>com.bencode\</groupId>
+    <artifactId\>serialization\</artifactId>
+    <version\>1.0-SNAPSHOT\</version>
+</dependency>
+```
 
 Usage
 =======
