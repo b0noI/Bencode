@@ -2,7 +2,7 @@ package com.bencode.primitive;
 
 import com.bencode.deserializator.primitive.IPrimitiveDeserializer;
 import com.bencode.deserializator.referance.IDeserializer;
-import com.bencode.serialization.converter.IConverter;
+import com.bencode.deserializator.converter.IConverter;
 import com.bencode.serialization.model.Dict;
 import com.bencode.serialization.model.IBEncodeElement;
 import com.bencode.serialization.serializator.ISerializer;

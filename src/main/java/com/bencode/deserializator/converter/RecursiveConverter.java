@@ -1,13 +1,8 @@
-package com.bencode.serialization.converter;
+package com.bencode.deserializator.converter;
 
 
-import com.bencode.serialization.model.BencodeList;
-import com.bencode.serialization.model.ByteString;
-import com.bencode.serialization.model.Dict;
 import com.bencode.serialization.model.IBEncodeElement;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
-import javax.naming.OperationNotSupportedException;
 
 class RecursiveConverter implements IConverter<IBEncodeElement> {
 

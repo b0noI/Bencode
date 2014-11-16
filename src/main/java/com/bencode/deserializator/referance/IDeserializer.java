@@ -1,5 +1,6 @@
 package com.bencode.deserializator.referance;
 
+import com.bencode.deserializator.converter.IConverter;
 import com.bencode.serialization.model.ByteString;
 import com.bencode.serialization.model.Dict;
 import com.bencode.serialization.model.IBEncodeElement;
@@ -14,6 +15,14 @@ import java.util.Map;
 public interface IDeserializer {
 
     public <T> T deserialize(final IBEncodeElement element, final Class<?> type);
+
+    public static <T>T deserialize(final byte[] bytes) {
+        final IBEncodeElement rootElement = IConverter.getConverter().convert(bytes, 0);
+        if (!(rootElement instanceof Dict)) {
+            throw new SerializationException("Element ot supported");
+        }
+        return deserialize((Dict)rootElement);
+    }
 
     public static <T>T deserialize(final Dict dict) {
         final ByteString key = ByteString.buildElement(new byte[]{0, 0, 0, 0});

@@ -1,4 +1,4 @@
-package com.bencode.serialization.converter;
+package com.bencode.deserializator.converter;
 
 
 import com.bencode.serialization.model.BencodeList;

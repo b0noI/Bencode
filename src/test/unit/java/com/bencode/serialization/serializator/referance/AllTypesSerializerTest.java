@@ -1,7 +1,7 @@
 package com.bencode.serialization.serializator.referance;
 
 import com.bencode.deserializator.referance.IDeserializer;
-import com.bencode.serialization.converter.IConverter;
+import com.bencode.deserializator.converter.IConverter;
 import com.bencode.serialization.model.Dict;
 import com.bencode.serialization.model.IBEncodeElement;
 import org.testng.annotations.Test;
