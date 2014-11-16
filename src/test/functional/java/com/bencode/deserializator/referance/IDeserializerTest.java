@@ -8,6 +8,7 @@ import com.bencode.serialization.serializator.referance.ReferenceSerializer;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.testng.Assert.*;
@@ -274,7 +275,7 @@ public class IDeserializerTest {
     public void testDesirializationOfObjectWithList() throws Exception {
         // input arguments
         final MyTestObjectWithList myClass = new MyTestObjectWithList();
-        myClass.list = new ArrayList<>();
+        myClass.list = new LinkedList<>();
         MyTestObject testObject = new MyTestObject();
         testObject.i = 42;
         testObject.y = 56;
@@ -290,13 +291,12 @@ public class IDeserializerTest {
         // expected results
 
         // creating test instance
-        ISerializer serializator = new ReferenceSerializer();
+        ISerializer serializer = new ReferenceSerializer();
         IConverter converter = IConverter.getConverter();
 
         // execution test
-        byte[] bytes = serializator.serialize(myClass).getElement();
-        IBEncodeElement deserStage1 = converter.convert(bytes, 0);
-        MyTestObjectWithList afterSer = IDeserializer.deserialize((Dict) deserStage1);
+        byte[] bytes = serializer.serialize(myClass).getElement();
+        MyTestObjectWithList afterSer = IDeserializer.deserialize(bytes);
 
         // result assert
         assertNotNull(afterSer);
