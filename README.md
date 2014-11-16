@@ -49,21 +49,36 @@ Usage
 Example of serialization of POJO to Bencode:
 
 // imports
+
 import com.bencode.serialization.serializator.ISerializer;
+
 import com.bencode.serialization.serializator.referance.ReferenceSerializer;
+
 import com.bencode.deserializator.referance.IDeserializer;
 
+
 // Pojo for serialization
+
 public static class Pojo {
+
   public Integer[][] ref;
+  
 }
 
+
 // ...
+
 Pojo pojo = new Pojo();
+
 ISerializer serializer = new ReferenceSerializer();
+
 // bytes - POJO in Bencode format
+
 byte[] bytes = serializer.serialize(pojo).getElement();
 
+
 // deserializing from BEncode format
+
 Pojo pojo2 = IDeserializer.deserialize(bytes);
+
 // ...
