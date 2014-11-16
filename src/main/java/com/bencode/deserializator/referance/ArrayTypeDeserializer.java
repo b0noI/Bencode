@@ -8,11 +8,11 @@ import org.apache.commons.lang3.SerializationException;
 import java.lang.reflect.Array;
 
 
-class ArrayDeserializer implements IDeserializer {
+class ArrayTypeDeserializer implements IDeserializer {
 
     private final IDeserializer mainDeserializer;
 
-    ArrayDeserializer(final IDeserializer mainDeserializer) {
+    ArrayTypeDeserializer(final IDeserializer mainDeserializer) {
         this.mainDeserializer = mainDeserializer;
     }
 

@@ -8,15 +8,15 @@ import org.apache.commons.lang3.SerializationException;
 import java.util.Optional;
 
 
-class PrimitiveDeserializer implements IDeserializer {
+class PrimitiveTypeDeserializer implements IDeserializer {
 
-    private static final IDeserializer  INSTANCE                            = new PrimitiveDeserializer();
+    private static final IDeserializer  INSTANCE                            = new PrimitiveTypeDeserializer();
 
     private static final String         PRIMITIVE_TYPE_NOT_SUPPORTED_ERROR  = "Primitive type not supported";
 
     private static final String         BENCODE_TYPE_ERROR                  = "BENcode type ERROR";
 
-    private PrimitiveDeserializer(){}
+    private PrimitiveTypeDeserializer(){}
 
     public static IDeserializer getInstance() {
         return INSTANCE;

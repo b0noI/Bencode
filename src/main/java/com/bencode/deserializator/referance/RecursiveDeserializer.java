@@ -18,13 +18,15 @@ import java.util.Optional;
 
 class RecursiveDeserializer implements IDeserializer{
 
-    private static  final IDeserializer PRIMITIVE_TYPE_DESERIALIZER = PrimitiveDeserializer.getInstance();
+    private static  final IDeserializer         PRIMITIVE_TYPE_DESERIALIZER = PrimitiveTypeDeserializer.getInstance();
 
-    private         final IDeserializer arrayDeserializer           = new ArrayDeserializer(this);
+    private static  final String                TYPE_NOT_SUPPORTED_ERROR    = "Type not supported";
 
-    private         final Map<Integer, Object> deserializedObjects  = new HashMap<>();
+    private         final IDeserializer         arrayDeserializer           = new ArrayTypeDeserializer(this);
 
-    private         final Dict dict;
+    private         final Map<Integer, Object>  deserializedObjects         = new HashMap<>();
+
+    private         final Dict                  dict;
 
     public RecursiveDeserializer(Dict dict) {
         this.dict = dict;
@@ -39,12 +41,20 @@ class RecursiveDeserializer implements IDeserializer{
                 return PRIMITIVE_TYPE_DESERIALIZER.deserialize(element, type);
             case ARRAY:
                 return arrayDeserializer.deserialize(element, type.getComponentType());
+            case REF:
+                return deserializeNonPrimitive(element, type);
+            default:
+                throw new SerializationException(TYPE_NOT_SUPPORTED_ERROR);
         }
 
+    }
+
+    private <T> T deserializeNonPrimitive(final IBEncodeElement element, final Class<?> type) {
         final ByteString elementIdString = (ByteString) element;
         final int elementId = (int) IPrimitiveDeserializer.Type.INTEGER.getDeserializer().deserialize(elementIdString);
-        if (deserializedObjects.containsKey(elementId)) {
-            return (T)deserializedObjects.get(elementId);
+        final Optional<T> elementFromCache = getDeserializedObjectFromMap(elementId);
+        if (elementFromCache.isPresent()) {
+            return elementFromCache.get();
         }
         final Dict elementDict = (Dict)dict.getValue(elementIdString);
         final Object instance;
@@ -75,6 +85,13 @@ class RecursiveDeserializer implements IDeserializer{
 
         }
         return (T)instance;
+    }
+
+    private <T>Optional<T> getDeserializedObjectFromMap(final int elementId) {
+        if (deserializedObjects.containsKey(elementId)) {
+            return Optional.of((T)deserializedObjects.get(elementId));
+        }
+        return Optional.empty();
     }
 
     private Class getClass(final ByteString objectId) throws ClassNotFoundException {
