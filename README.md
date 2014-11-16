@@ -13,16 +13,7 @@ JBSF
 =======
 This format describes how POJO should be serialized and deserialized to Bencode format.
 
-Result of POJO serializaiton should be Bencode dictionary ( __root dictionary__ ). Each key of this dictionary should have ID of serilizaed object. Value is bencoded value for this object. Each value should have Nencode dictionary type.
-
-Each value in root dictinary should be dictinory that stores serialized values of speceific instance. This dictinary called __instance dictinary__
-Keys of instance dictionary represents fileds names of POJO + 1 special key with name "$CLASS_TYPE" that store Class type of this instance. 
-Each value of the instance dictinary could be:
-* ByteString in case if:
-  * field is primitive or can be unboxed to primitive;
-  * field is referance to other object. In this case ByteString stores Id of toher object in RootDictinary;
-* BecnodeList in case if:
-  * field is array;
+For details see wiki: https://github.com/b0noI/Bencode/wiki/Java-Bencode-Serialization-Format-(JBSF)
   
 Adding library to project
 =======
@@ -40,9 +31,9 @@ For using this lib xustom Maven repo shuld be added to project:
 And add dependency like this:
 ```xml
 <dependency>
-    <groupId\>com.bencode\</groupId>
-    <artifactId\>serialization\</artifactId>
-    <version\>1.0-SNAPSHOT\</version>
+    <groupId>com.bencode</groupId>
+    <artifactId>serialization</artifactId>
+    <version>1.0-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -53,8 +44,8 @@ Example of serialization of POJO to Bencode:
 
 ```Java
 // imports
-import com.bencode.serialization.serializator.ISerializer;
-import com.bencode.serialization.serializator.referance.ReferenceSerializer;
+import com.bencode.serializator.ISerializer;
+import com.bencode.serializator.referance.ReferenceSerializer;
 import com.bencode.deserializator.referance.IDeserializer;
 
 
@@ -78,3 +69,9 @@ Pojo pojo2 = IDeserializer.deserialize(bytes);
 
 // ...
 ```
+
+Links
+======
+
+* Project wiki: https://github.com/b0noI/Bencode/wiki
+* Issue tracker: https://github.com/b0noI/Bencode/issues
