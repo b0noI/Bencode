@@ -31,9 +31,9 @@ For using this lib xustom Maven repo shuld be added to project:
 And add dependency like this:
 ```xml
 <dependency>
-    <groupId\>com.bencode\</groupId>
-    <artifactId\>serialization\</artifactId>
-    <version\>1.0-SNAPSHOT\</version>
+    <groupId>com.bencode</groupId>
+    <artifactId>serialization</artifactId>
+    <version>1.0-SNAPSHOT</version>
 </dependency>
 ```
 
