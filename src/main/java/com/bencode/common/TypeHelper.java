@@ -19,9 +19,4 @@ public class TypeHelper {
                 type == Character.class;
     }
 
-    public static Class getComponentType(final Class type) {
-        if (!type.isArray()) return type;
-        return getComponentType(type.getComponentType());
-    }
-
 }
