@@ -15,20 +15,21 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class RecursiveDeserializator {
+public class RecursiveDeserializer implements IDeserializer{
 
-    private static final String PRIMITIVE_TYPE_NOT_SUPPORTED_ERROR = "Primitive type not supported";
-    private final ArrayDeserializator arrayDeserializator = new ArrayDeserializator(this);
+    private static  final String PRIMITIVE_TYPE_NOT_SUPPORTED_ERROR = "Primitive type not supported";
 
-    private final Map<Integer, Object> deserializedObjects = new HashMap<>();
+    private         final IDeserializer arrayDeserializer = new ArrayDeserializer(this);
 
-    private final Dict dict;
+    private         final Map<Integer, Object> deserializedObjects = new HashMap<>();
 
-    public RecursiveDeserializator(Dict dict) {
+    private         final Dict dict;
+
+    public RecursiveDeserializer(Dict dict) {
         this.dict = dict;
     }
 
-    public <T>T deserialize(final IBEncodeElement element, final Class<?> type) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+        public <T>T deserialize(final IBEncodeElement element, final Class<?> type) {
         if (type.isPrimitive() || TypeHelper.typeCanBeUnboxedToPrimitive(type)) {
             if (!(element instanceof ByteString)) throw new SerializationException("Type ERROR");
             final Optional<IPrimitiveDeserializer<T>> deserializerOptional = IPrimitiveDeserializer.Type.findDeserializer(type);
@@ -39,7 +40,7 @@ public class RecursiveDeserializator {
             return deserializer.deserialize((ByteString) element);
         }
         if (type.isArray()) {
-            return arrayDeserializator.deserialize(element, type.getComponentType());
+            return arrayDeserializer.deserialize(element, type.getComponentType());
         }
         final ByteString elementIdString = (ByteString) element;
         final int elementId = (int) IPrimitiveDeserializer.Type.INTEGER.getDeserializer().deserialize(elementIdString);
@@ -47,15 +48,30 @@ public class RecursiveDeserializator {
             return (T)deserializedObjects.get(elementId);
         }
         final Dict elementDict = (Dict)dict.getValue(elementIdString);
-        final Object instance = type.newInstance();
+        final Object instance;
+        try {
+            instance = type.newInstance();
+        } catch (InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+            throw new SerializationException(e);
+        }
         deserializedObjects.put(elementId, instance);
         for (Field field : type.getDeclaredFields()) {
             if (!FieldHelper.shouldBeSerialized(field)) continue;
             field.setAccessible(true);
             if (field.getType().isPrimitive() || field.getType().isArray() || TypeHelper.typeCanBeUnboxedToPrimitive(field.getType())) {
-                field.set(instance, deserialize(elementDict.getValue(field.getName()), field.getType()));
+                try {
+                    field.set(instance, deserialize(elementDict.getValue(field.getName()), field.getType()));
+                } catch (IllegalAccessException e) {
+                    throw new SerializationException(e);
+                }
             } else {
-                field.set(instance, deserialize(elementDict.getValue(field.getName()), getClass((ByteString)elementDict.getValue(field.getName()))));
+                try {
+                    field.set(instance, deserialize(elementDict.getValue(field.getName()), getClass((ByteString)elementDict.getValue(field.getName()))));
+                } catch (IllegalAccessException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                    throw new SerializationException(e);
+                }
             }
 
         }
@@ -72,8 +88,8 @@ public class RecursiveDeserializator {
         }
         final String typeName = stringBuilder.toString();
         final Class<?> type = Class.forName(typeName);
-        final RecursiveDeserializator recursiveDeserializator = new RecursiveDeserializator(dict);
-        return recursiveDeserializator.deserialize(key, type);
+        final RecursiveDeserializer recursiveDeserializer = new RecursiveDeserializer(dict);
+        return recursiveDeserializer.deserialize(key, type);
     }
 
     private Class getClass(final ByteString objectId) throws ClassNotFoundException {

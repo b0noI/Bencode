@@ -1,6 +1,6 @@
 package com.bencode.serialization.serializator.referance;
 
-import com.bencode.deserializator.referance.RecursiveDeserializator;
+import com.bencode.deserializator.referance.RecursiveDeserializer;
 import com.bencode.serialization.converter.IConverter;
 import com.bencode.serialization.model.Dict;
 import com.bencode.serialization.model.IBEncodeElement;
@@ -27,7 +27,7 @@ public class AllTypesSerializerTest {
 
         final IBEncodeElement actualResult = referenceSerializer.serialize(inputForSerialization);
         IBEncodeElement deserStage1 = converter.convert(actualResult.getElement(), 0);
-        final String afterSer = RecursiveDeserializator.deserialize((Dict)deserStage1);
+        final String afterSer = RecursiveDeserializer.deserialize((Dict) deserStage1);
 
         // result assert
         assertEquals(inputForSerialization, afterSer);
