@@ -53,8 +53,8 @@ Example of serialization of POJO to Bencode:
 
 ```Java
 // imports
-import com.bencode.serialization.serializator.ISerializer;
-import com.bencode.serialization.serializator.referance.ReferenceSerializer;
+import com.bencode.serializator.ISerializer;
+import com.bencode.serializator.referance.ReferenceSerializer;
 import com.bencode.deserializator.referance.IDeserializer;
 
 
