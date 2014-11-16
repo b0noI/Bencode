@@ -2,7 +2,7 @@ package com.bencode.serialization.serializator.referance;
 
 import com.bencode.common.TypeHelper;
 import com.bencode.common.VisibilityReducedForTestPurposeOnly;
-import com.bencode.serialization.model.IBEncodeElement;
+import com.bencode.model.IBEncodeElement;
 import com.bencode.serialization.serializator.ISerializer;
 import com.bencode.serialization.serializator.primitive.IPrimitiveSerializer;
 import org.apache.commons.lang3.SerializationException;

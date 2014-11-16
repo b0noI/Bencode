@@ -1,8 +1,8 @@
 package com.bencode.deserializator.converter;
 
 
-import com.bencode.serialization.model.BencodeList;
-import com.bencode.serialization.model.IBEncodeElement;
+import com.bencode.model.BencodeList;
+import com.bencode.model.IBEncodeElement;
 
 class ListConverter implements IConverter<BencodeList> {
 

@@ -1,13 +1,11 @@
 package com.bencode.deserializator.referance;
 
 import com.bencode.deserializator.converter.IConverter;
-import com.bencode.serialization.model.ByteString;
-import com.bencode.serialization.model.Dict;
-import com.bencode.serialization.model.IBEncodeElement;
+import com.bencode.model.ByteString;
+import com.bencode.model.Dict;
+import com.bencode.model.IBEncodeElement;
 import com.bencode.serialization.serializator.ISerializer;
 import org.apache.commons.lang3.SerializationException;
-
-import java.util.Map;
 
 /**
  * Created by b0noI on 08/11/14.

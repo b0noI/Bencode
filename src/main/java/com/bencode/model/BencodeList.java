@@ -1,10 +1,8 @@
-package com.bencode.serialization.model;
+package com.bencode.model;
 
 
-import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.List;
 
 public class BencodeList extends ArrayList<IBEncodeElement> implements IBEncodeElement {
 

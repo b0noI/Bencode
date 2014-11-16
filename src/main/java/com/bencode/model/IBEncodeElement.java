@@ -1,4 +1,4 @@
-package com.bencode.serialization.model;
+package com.bencode.model;
 
 public interface IBEncodeElement {
 

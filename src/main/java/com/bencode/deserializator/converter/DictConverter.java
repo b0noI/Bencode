@@ -1,9 +1,9 @@
 package com.bencode.deserializator.converter;
 
 
-import com.bencode.serialization.model.ByteString;
-import com.bencode.serialization.model.Dict;
-import com.bencode.serialization.model.IBEncodeElement;
+import com.bencode.model.ByteString;
+import com.bencode.model.Dict;
+import com.bencode.model.IBEncodeElement;
 
 class DictConverter implements IConverter<Dict> {
 

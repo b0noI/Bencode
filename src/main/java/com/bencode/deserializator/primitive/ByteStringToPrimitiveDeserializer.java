@@ -1,6 +1,6 @@
 package com.bencode.deserializator.primitive;
 
-import com.bencode.serialization.model.ByteString;
+import com.bencode.model.ByteString;
 
 import java.nio.ByteBuffer;
 import java.util.function.Function;

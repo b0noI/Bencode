@@ -1,6 +1,6 @@
 package com.bencode.serialization.serializator.primitive;
 
-import com.bencode.serialization.model.ByteString;
+import com.bencode.model.ByteString;
 
 
 abstract class AbstractToByteStringSerializer<T> implements IPrimitiveSerializer<T> {

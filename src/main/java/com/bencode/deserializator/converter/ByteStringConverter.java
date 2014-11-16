@@ -1,6 +1,6 @@
 package com.bencode.deserializator.converter;
 
-import com.bencode.serialization.model.ByteString;
+import com.bencode.model.ByteString;
 import org.apache.commons.lang3.SerializationException;
 
 import java.nio.ByteBuffer;

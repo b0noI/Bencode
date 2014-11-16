@@ -1,6 +1,6 @@
 package com.bencode.deserializator.converter;
 
-import com.bencode.serialization.model.IBEncodeElement;
+import com.bencode.model.IBEncodeElement;
 
 
 public interface IConverter<T extends IBEncodeElement> {

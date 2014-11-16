@@ -1,17 +1,10 @@
 package com.bencode.primitive;
 
 import com.bencode.deserializator.primitive.IPrimitiveDeserializer;
-import com.bencode.deserializator.referance.IDeserializer;
-import com.bencode.deserializator.converter.IConverter;
-import com.bencode.serialization.model.Dict;
-import com.bencode.serialization.model.IBEncodeElement;
-import com.bencode.serialization.serializator.ISerializer;
+import com.bencode.model.Dict;
+import com.bencode.model.IBEncodeElement;
 import com.bencode.serialization.serializator.primitive.IPrimitiveSerializer;
-import com.bencode.serialization.serializator.referance.ReferenceSerializer;
 import org.testng.annotations.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.testng.Assert.*;
 

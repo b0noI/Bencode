@@ -1,13 +1,12 @@
 package com.bencode.deserializator.referance;
 
 import com.bencode.deserializator.converter.IConverter;
-import com.bencode.serialization.model.Dict;
-import com.bencode.serialization.model.IBEncodeElement;
+import com.bencode.model.Dict;
+import com.bencode.model.IBEncodeElement;
 import com.bencode.serialization.serializator.ISerializer;
 import com.bencode.serialization.serializator.referance.ReferenceSerializer;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 

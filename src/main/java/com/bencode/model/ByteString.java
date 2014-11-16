@@ -1,4 +1,4 @@
-package com.bencode.serialization.model;
+package com.bencode.model;
 
 import java.nio.ByteBuffer;
 import java.util.Arrays;

@@ -3,9 +3,9 @@ package com.bencode.serialization.serializator.referance;
 
 import com.bencode.common.Type;
 import com.bencode.common.TypeHelper;
-import com.bencode.serialization.model.ByteString;
-import com.bencode.serialization.model.Dict;
-import com.bencode.serialization.model.IBEncodeElement;
+import com.bencode.model.ByteString;
+import com.bencode.model.Dict;
+import com.bencode.model.IBEncodeElement;
 import com.bencode.serialization.serializator.ISerializer;
 import com.bencode.serialization.serializator.primitive.IPrimitiveSerializer;
 import org.apache.commons.lang3.SerializationException;

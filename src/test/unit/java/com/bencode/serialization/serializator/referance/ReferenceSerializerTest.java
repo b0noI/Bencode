@@ -1,6 +1,6 @@
 package com.bencode.serialization.serializator.referance;
 
-import com.bencode.serialization.model.IBEncodeElement;
+import com.bencode.model.IBEncodeElement;
 import junit.framework.TestCase;
 
 public class ReferenceSerializerTest extends TestCase {

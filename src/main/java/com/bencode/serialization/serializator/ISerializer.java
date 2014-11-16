@@ -1,7 +1,7 @@
 package com.bencode.serialization.serializator;
 
 
-import com.bencode.serialization.model.IBEncodeElement;
+import com.bencode.model.IBEncodeElement;
 
 public interface ISerializer<T> {
 

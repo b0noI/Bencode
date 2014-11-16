@@ -1,8 +1,8 @@
 package com.bencode.deserializator.referance;
 
 import com.bencode.deserializator.primitive.IPrimitiveDeserializer;
-import com.bencode.serialization.model.ByteString;
-import com.bencode.serialization.model.IBEncodeElement;
+import com.bencode.model.ByteString;
+import com.bencode.model.IBEncodeElement;
 import org.apache.commons.lang3.SerializationException;
 
 import java.util.Optional;

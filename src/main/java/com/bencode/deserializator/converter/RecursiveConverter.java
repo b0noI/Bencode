@@ -1,7 +1,7 @@
 package com.bencode.deserializator.converter;
 
 
-import com.bencode.serialization.model.IBEncodeElement;
+import com.bencode.model.IBEncodeElement;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 class RecursiveConverter implements IConverter<IBEncodeElement> {
