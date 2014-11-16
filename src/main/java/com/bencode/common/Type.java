@@ -6,10 +6,10 @@ public enum Type {
     ARRAY,
     REF;
 
-    public static Type getType(final Object instance) {
-        if (instance.getClass().isPrimitive() || TypeHelper.typeCanBeUnboxedToPrimitive(instance.getClass())) {
+    public static Type getType(final Class<?> type) {
+        if (type.isPrimitive() || TypeHelper.typeCanBeUnboxedToPrimitive(type)) {
             return PRIMITIVE;
-        } else if (instance.getClass().isArray()) {
+        } else if (type.isArray()) {
             return ARRAY;
         }
         return REF;

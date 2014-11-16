@@ -39,7 +39,7 @@ class AllTypesSerializer implements ISerializer<Object> {
             throw new SerializationException(NON_SERIALIZABLE_TYPE_ERROR_STRING);
         }
 
-        final Type objectType = Type.getType(instance);
+        final Type objectType = Type.getType(instance.getClass());
         switch (objectType) {
             case ARRAY:
                 return arrayTypeSerializer.serialize(instance);

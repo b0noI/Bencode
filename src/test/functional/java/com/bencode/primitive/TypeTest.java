@@ -1,7 +1,7 @@
 package com.bencode.primitive;
 
 import com.bencode.deserializator.primitive.IPrimitiveDeserializer;
-import com.bencode.deserializator.referance.RecursiveDeserializer;
+import com.bencode.deserializator.referance.IDeserializer;
 import com.bencode.serialization.converter.IConverter;
 import com.bencode.serialization.model.Dict;
 import com.bencode.serialization.model.IBEncodeElement;
@@ -84,7 +84,7 @@ public class TypeTest {
         // execution test
         byte[] bytes = serializator.serialize(myClass).getElement();
         IBEncodeElement deserStage1 = converter.convert(bytes, 0);
-        MyTestObject afterSer = RecursiveDeserializer.deserialize((Dict) deserStage1);
+        MyTestObject afterSer = IDeserializer.deserialize((Dict) deserStage1);
 
         // result assert
         assertTrue(afterSer.i == 12);
@@ -114,7 +114,7 @@ public class TypeTest {
         // execution test
         byte[] bytes = serializator.serialize(myClass).getElement();
         IBEncodeElement deserStage1 = converter.convert(bytes, 0);
-        MyTestObjectWithRef afterSer = RecursiveDeserializer.deserialize((Dict) deserStage1);
+        MyTestObjectWithRef afterSer = IDeserializer.deserialize((Dict) deserStage1);
 
         // result assert
         assertTrue(afterSer.i == 12);
@@ -151,7 +151,7 @@ public class TypeTest {
         // execution test
         byte[] bytes = serializator.serialize(myClass).getElement();
         IBEncodeElement deserStage1 = converter.convert(bytes, 0);
-        MyTestObjectWithRefArray afterSer = RecursiveDeserializer.deserialize((Dict) deserStage1);
+        MyTestObjectWithRefArray afterSer = IDeserializer.deserialize((Dict) deserStage1);
 
         // result assert
         assertTrue(afterSer.i == 12);
@@ -186,7 +186,7 @@ public class TypeTest {
         // execution test
         byte[] bytes = serializator.serialize(myClass).getElement();
         IBEncodeElement deserStage1 = converter.convert(bytes, 0);
-        MyTestObjectWithPrimitiveArray afterSer = RecursiveDeserializer.deserialize((Dict) deserStage1);
+        MyTestObjectWithPrimitiveArray afterSer = IDeserializer.deserialize((Dict) deserStage1);
 
         // result assert
         assertTrue(afterSer.i == 12);
@@ -219,7 +219,7 @@ public class TypeTest {
         // execution test
         final byte[] bytes = serializator.serialize(myClass).getElement();
         final IBEncodeElement deserStage1 = converter.convert(bytes, 0);
-        MyTestObjectWithPrimitiveWithBoxedArray afterSer = RecursiveDeserializer.deserialize((Dict) deserStage1);
+        MyTestObjectWithPrimitiveWithBoxedArray afterSer = IDeserializer.deserialize((Dict) deserStage1);
 
         // result assert
         assertTrue(afterSer.i == 12);
@@ -249,7 +249,7 @@ public class TypeTest {
         // execution test
         byte[] bytes = serializator.serialize(myClass).getElement();
         IBEncodeElement deserStage1 = converter.convert(bytes, 0);
-        MyTestObjectWithBoxedPrimitives afterSer = RecursiveDeserializer.deserialize((Dict) deserStage1);
+        MyTestObjectWithBoxedPrimitives afterSer = IDeserializer.deserialize((Dict) deserStage1);
 
         // result assert
         assertTrue(afterSer.i == 12);
@@ -279,7 +279,7 @@ public class TypeTest {
         // execution test
         byte[] bytes = serializator.serialize(myClass).getElement();
         IBEncodeElement deserStage1 = converter.convert(bytes, 0);
-        MyTestObjectWith2DPrimitiveArray afterSer = RecursiveDeserializer.deserialize((Dict) deserStage1);
+        MyTestObjectWith2DPrimitiveArray afterSer = IDeserializer.deserialize((Dict) deserStage1);
 
         // result assert
         assertTrue(afterSer.ref[0][0] == 0);
@@ -311,7 +311,7 @@ public class TypeTest {
         // execution test
         byte[] bytes = serializator.serialize(myClass).getElement();
         IBEncodeElement deserStage1 = converter.convert(bytes, 0);
-        MyTestObjectWith2DPrimitiveBoxedArray afterSer = RecursiveDeserializer.deserialize((Dict) deserStage1);
+        MyTestObjectWith2DPrimitiveBoxedArray afterSer = IDeserializer.deserialize((Dict) deserStage1);
 
         // result assert
         assertTrue(afterSer.ref[0][0] == 0);
@@ -348,7 +348,7 @@ public class TypeTest {
         // execution test
         byte[] bytes = serializator.serialize(myClass).getElement();
         IBEncodeElement deserStage1 = converter.convert(bytes, 0);
-        MyTestObjectWithList afterSer = RecursiveDeserializer.deserialize((Dict) deserStage1);
+        MyTestObjectWithList afterSer = IDeserializer.deserialize((Dict) deserStage1);
 
         // result assert
         assertNotNull(afterSer);

@@ -2,6 +2,7 @@ package com.bencode.deserializator.referance;
 
 
 import com.bencode.common.FieldHelper;
+import com.bencode.common.Type;
 import com.bencode.common.TypeHelper;
 import com.bencode.deserializator.primitive.IPrimitiveDeserializer;
 import com.bencode.serialization.model.ByteString;
@@ -15,13 +16,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class RecursiveDeserializer implements IDeserializer{
+class RecursiveDeserializer implements IDeserializer{
 
-    private static  final String PRIMITIVE_TYPE_NOT_SUPPORTED_ERROR = "Primitive type not supported";
+    private static  final IDeserializer PRIMITIVE_TYPE_DESERIALIZER = PrimitiveDeserializer.getInstance();
 
-    private         final IDeserializer arrayDeserializer = new ArrayDeserializer(this);
+    private         final IDeserializer arrayDeserializer           = new ArrayDeserializer(this);
 
-    private         final Map<Integer, Object> deserializedObjects = new HashMap<>();
+    private         final Map<Integer, Object> deserializedObjects  = new HashMap<>();
 
     private         final Dict dict;
 
@@ -29,19 +30,17 @@ public class RecursiveDeserializer implements IDeserializer{
         this.dict = dict;
     }
 
-        public <T>T deserialize(final IBEncodeElement element, final Class<?> type) {
-        if (type.isPrimitive() || TypeHelper.typeCanBeUnboxedToPrimitive(type)) {
-            if (!(element instanceof ByteString)) throw new SerializationException("Type ERROR");
-            final Optional<IPrimitiveDeserializer<T>> deserializerOptional = IPrimitiveDeserializer.Type.findDeserializer(type);
-            if (!deserializerOptional.isPresent()) {
-                throw new SerializationException(PRIMITIVE_TYPE_NOT_SUPPORTED_ERROR);
-            }
-            final IPrimitiveDeserializer<T> deserializer = deserializerOptional.get();
-            return deserializer.deserialize((ByteString) element);
+    public <T>T deserialize(final IBEncodeElement element, final Class<?> type) {
+
+        final Type classType = Type.getType(type);
+
+        switch (classType) {
+            case PRIMITIVE:
+                return PRIMITIVE_TYPE_DESERIALIZER.deserialize(element, type);
+            case ARRAY:
+                return arrayDeserializer.deserialize(element, type.getComponentType());
         }
-        if (type.isArray()) {
-            return arrayDeserializer.deserialize(element, type.getComponentType());
-        }
+
         final ByteString elementIdString = (ByteString) element;
         final int elementId = (int) IPrimitiveDeserializer.Type.INTEGER.getDeserializer().deserialize(elementIdString);
         if (deserializedObjects.containsKey(elementId)) {
@@ -76,20 +75,6 @@ public class RecursiveDeserializer implements IDeserializer{
 
         }
         return (T)instance;
-    }
-
-    public static <T>T deserialize(final Dict dict) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
-        final ByteString key = ByteString.buildElement(new byte[]{0, 0, 0, 0});
-        final Dict mainElement = (Dict)dict.getValue(key);
-        final ByteString typeNameByteString = (ByteString)mainElement.getValue(ISerializer.CLASS_TYPE_KEY_NAME);
-        final StringBuilder stringBuilder = new StringBuilder(typeNameByteString.getValue().length);
-        for (byte ch : typeNameByteString.getValue()) {
-            stringBuilder.append((char)ch);
-        }
-        final String typeName = stringBuilder.toString();
-        final Class<?> type = Class.forName(typeName);
-        final RecursiveDeserializer recursiveDeserializer = new RecursiveDeserializer(dict);
-        return recursiveDeserializer.deserialize(key, type);
     }
 
     private Class getClass(final ByteString objectId) throws ClassNotFoundException {
