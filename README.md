@@ -82,5 +82,5 @@ Pojo pojo2 = IDeserializer.deserialize(bytes);
 Links
 ======
 
-Project wiki: https://github.com/b0noI/Bencode/wiki
-Issue tracker: https://github.com/b0noI/Bencode/issues
+* Project wiki: https://github.com/b0noI/Bencode/wiki
+* Issue tracker: https://github.com/b0noI/Bencode/issues
