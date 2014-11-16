@@ -1,9 +1,9 @@
-package com.bencode.serialization.serializator.referance;
+package com.bencode.serializator.referance;
 
 
 import com.bencode.model.BencodeList;
 import com.bencode.model.IBEncodeElement;
-import com.bencode.serialization.serializator.ISerializer;
+import com.bencode.serializator.ISerializer;
 import org.apache.commons.lang3.SerializationException;
 
 import java.lang.reflect.Array;

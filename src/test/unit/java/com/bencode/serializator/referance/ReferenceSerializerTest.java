@@ -1,4 +1,4 @@
-package com.bencode.serialization.serializator.referance;
+package com.bencode.serializator.referance;
 
 import com.bencode.model.IBEncodeElement;
 import junit.framework.TestCase;

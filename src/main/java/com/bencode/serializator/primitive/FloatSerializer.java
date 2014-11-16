@@ -1,4 +1,4 @@
-package com.bencode.serialization.serializator.primitive;
+package com.bencode.serializator.primitive;
 
 import java.nio.ByteBuffer;
 

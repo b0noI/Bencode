@@ -3,7 +3,7 @@ package com.bencode.primitive;
 import com.bencode.deserializator.primitive.IPrimitiveDeserializer;
 import com.bencode.model.Dict;
 import com.bencode.model.IBEncodeElement;
-import com.bencode.serialization.serializator.primitive.IPrimitiveSerializer;
+import com.bencode.serializator.primitive.IPrimitiveSerializer;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;

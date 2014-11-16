@@ -1,8 +1,8 @@
-package com.bencode.serialization.serializator.referance;
+package com.bencode.serializator.referance;
 
 
 import com.bencode.model.IBEncodeElement;
-import com.bencode.serialization.serializator.ISerializer;
+import com.bencode.serializator.ISerializer;
 
 public class ReferenceSerializer implements ISerializer<Object> {
 

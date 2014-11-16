@@ -1,4 +1,4 @@
-package com.bencode.serialization.serializator;
+package com.bencode.serializator;
 
 
 import com.bencode.model.IBEncodeElement;

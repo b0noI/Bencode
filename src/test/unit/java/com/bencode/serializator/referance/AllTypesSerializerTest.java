@@ -1,4 +1,4 @@
-package com.bencode.serialization.serializator.referance;
+package com.bencode.serializator.referance;
 
 import com.bencode.deserializator.referance.IDeserializer;
 import com.bencode.deserializator.converter.IConverter;

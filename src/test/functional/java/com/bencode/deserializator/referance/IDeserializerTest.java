@@ -3,8 +3,8 @@ package com.bencode.deserializator.referance;
 import com.bencode.deserializator.converter.IConverter;
 import com.bencode.model.Dict;
 import com.bencode.model.IBEncodeElement;
-import com.bencode.serialization.serializator.ISerializer;
-import com.bencode.serialization.serializator.referance.ReferenceSerializer;
+import com.bencode.serializator.ISerializer;
+import com.bencode.serializator.referance.ReferenceSerializer;
 import org.testng.annotations.Test;
 
 import java.util.LinkedList;
