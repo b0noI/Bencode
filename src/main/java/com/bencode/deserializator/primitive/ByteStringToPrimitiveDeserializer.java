@@ -6,20 +6,20 @@ import java.nio.ByteBuffer;
 import java.util.function.Function;
 
 
-class ByteStringToPrimitiveDeserializator<T> implements IPrimitiveDeserializator<T> {
+class ByteStringToPrimitiveDeserializer<T> implements IPrimitiveDeserializer<T> {
 
     private final Function<ByteBuffer, T> toPrimitiveConverter;
 
-    ByteStringToPrimitiveDeserializator(final Function<ByteBuffer, T> toPrimitiveConverter) {
+    ByteStringToPrimitiveDeserializer(final Function<ByteBuffer, T> toPrimitiveConverter) {
         this.toPrimitiveConverter = toPrimitiveConverter;
     }
 
     @Override
-    public T deserializator(final ByteString from) {
+    public T deserialize(final ByteString from) {
         final byte[] bytes = from.getElement();
-        final int indexOfDevider = indexOf(bytes, (byte)':');
-        final ByteBuffer result = ByteBuffer.allocate(bytes.length - indexOfDevider - 1);
-        for (int i = indexOfDevider + 1; i < bytes.length; i++) {
+        final int indexOfDivider = indexOf(bytes, (byte)':');
+        final ByteBuffer result = ByteBuffer.allocate(bytes.length - indexOfDivider - 1);
+        for (int i = indexOfDivider + 1; i < bytes.length; i++) {
             result.put(bytes[i]);
         }
 

@@ -3,7 +3,7 @@ package com.bencode.deserializator.referance;
 
 import com.bencode.common.FieldHelper;
 import com.bencode.common.TypeHelper;
-import com.bencode.deserializator.primitive.IPrimitiveDeserializator;
+import com.bencode.deserializator.primitive.IPrimitiveDeserializer;
 import com.bencode.serialization.model.ByteString;
 import com.bencode.serialization.model.Dict;
 import com.bencode.serialization.model.IBEncodeElement;
@@ -13,9 +13,11 @@ import org.apache.commons.lang3.SerializationException;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class RecursiveDeserializator {
 
+    private static final String PRIMITIVE_TYPE_NOT_SUPPORTED_ERROR = "Primitive type not supported";
     private final ArrayDeserializator arrayDeserializator = new ArrayDeserializator(this);
 
     private final Map<Integer, Object> deserializedObjects = new HashMap<>();
@@ -29,13 +31,18 @@ public class RecursiveDeserializator {
     public <T>T deserialize(final IBEncodeElement element, final Class<?> type) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
         if (type.isPrimitive() || TypeHelper.typeCanBeUnboxedToPrimitive(type)) {
             if (!(element instanceof ByteString)) throw new SerializationException("Type ERROR");
-            return (T) IPrimitiveDeserializator.Type.findDeserializator(type).deserializator((ByteString)element);
+            final Optional<IPrimitiveDeserializer<T>> deserializerOptional = IPrimitiveDeserializer.Type.findDeserializer(type);
+            if (!deserializerOptional.isPresent()) {
+                throw new SerializationException(PRIMITIVE_TYPE_NOT_SUPPORTED_ERROR);
+            }
+            final IPrimitiveDeserializer<T> deserializer = deserializerOptional.get();
+            return deserializer.deserialize((ByteString) element);
         }
         if (type.isArray()) {
             return arrayDeserializator.deserialize(element, type.getComponentType());
         }
         final ByteString elementIdString = (ByteString) element;
-        final int elementId = (int)IPrimitiveDeserializator.Type.INTEGER.getDeserializator().deserializator(elementIdString);
+        final int elementId = (int) IPrimitiveDeserializer.Type.INTEGER.getDeserializer().deserialize(elementIdString);
         if (deserializedObjects.containsKey(elementId)) {
             return (T)deserializedObjects.get(elementId);
         }
