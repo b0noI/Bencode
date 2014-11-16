@@ -28,17 +28,14 @@ Adding library to project
 =======
 For using this lib xustom Maven repo shuld be added to project:
 
- >  \<repositories\>
- >
- >       \<repository\>
- >
- >           \<id\>aif.com\</id\>
- >
- >           \<url\>http://192.241.238.122:8081/artifactory/libs-snapshot-local/\</url\>
- >
- >       \</repository\>
- >
- >  \</repositories\>
+```xml
+ <repositories>
+   <repository>
+   <id>aif.com</id>
+   <url>http://192.241.238.122:8081/artifactory/libs-snapshot-local/</url>
+   </repository>
+ </repositories>
+ ```
 
 And add dependency like this:
 ```xml
@@ -54,17 +51,14 @@ Usage
 
 Example of serialization of POJO to Bencode:
 
+```Java
 // imports
-
 import com.bencode.serialization.serializator.ISerializer;
-
 import com.bencode.serialization.serializator.referance.ReferenceSerializer;
-
 import com.bencode.deserializator.referance.IDeserializer;
 
 
 // Pojo for serialization
-
 public static class Pojo {
 
   public Integer[][] ref;
@@ -73,18 +67,14 @@ public static class Pojo {
 
 
 // ...
-
 Pojo pojo = new Pojo();
-
 ISerializer serializer = new ReferenceSerializer();
 
 // bytes - POJO in Bencode format
-
 byte[] bytes = serializer.serialize(pojo).getElement();
 
-
 // deserializing from BEncode format
-
 Pojo pojo2 = IDeserializer.deserialize(bytes);
 
 // ...
+```
