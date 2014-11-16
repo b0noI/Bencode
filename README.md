@@ -28,20 +28,20 @@ Adding library to project
 =======
 For using this lib xustom Maven repo shuld be added to project:
 
-   <repositories>
-        <repository>
-            <id>aif.com</id>
-            <url>http://192.241.238.122:8081/artifactory/libs-snapshot-local/</url>
-        </repository>
-    </repositories>
+   \<repositories\>
+        \<repository\>
+            \<id\>aif.com\</id\>
+            \<url\>http://192.241.238.122:8081/artifactory/libs-snapshot-local/\</url\>
+        \</repository\>
+    \</repositories\>
 
 And add dependency like this:
 
-<dependency>
-    <groupId>com.bencode</groupId>
-    <artifactId>serialization</artifactId>
-    <version>1.0-SNAPSHOT</version>
-</dependency>
+\<dependency\>
+    \<groupId\>com.bencode\</groupId\>
+    \<artifactId\>serialization\</artifactId\>
+    \<version\>1.0-SNAPSHOT\</version\>
+\</dependency\>
 
 Usage
 =======
