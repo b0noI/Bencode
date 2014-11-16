@@ -304,6 +304,63 @@ public class IDeserializerTest {
         // mocks verify
     }
 
+    @Test
+    public void testAllTypesClass() throws Exception {
+        // input arguments
+        final AllTypesTest testInstance = new AllTypesTest();
+        testInstance.bNP = true;
+        testInstance.bP = true;
+        testInstance.byteNP = 12;
+        testInstance.byteP = 13;
+        testInstance.doubleNP = .2;
+        testInstance.doubleP = .3;
+        testInstance.floatNP = .4f;
+        testInstance.floatP = .5f;
+        testInstance.intNP = 14;
+        testInstance.intP = 15;
+        testInstance.longNP = 16l;
+        testInstance.longP = 17l;
+        testInstance.shortNP = 18;
+        testInstance.shortP = 19;
+        testInstance.ref = new MyTestObjectWithPrimitiveWithBoxedArray[2];
+        testInstance.ref[0] = new MyTestObjectWithPrimitiveWithBoxedArray();
+        testInstance.ref[1] = new MyTestObjectWithPrimitiveWithBoxedArray();
+        testInstance.dd = new MyTestObjectWithPrimitiveWithBoxedArray[1][2][];
+        testInstance.dd[0][0] = testInstance.ref;
+
+        // mocks
+
+        // expected results
+
+        // creating test instance
+        ISerializer serializer = new ReferenceSerializer();
+
+        // execution test
+        byte[] bytes = serializer.serialize(testInstance).getElement();
+        AllTypesTest afterSer = IDeserializer.deserialize(bytes);
+
+        // result assert
+        assertTrue(afterSer.bNP);
+        assertTrue(afterSer.bP);
+        assertEquals(testInstance.byteNP, (Byte) (byte) 12);
+        assertEquals(testInstance.byteP, (byte) 13);
+        assertEquals(testInstance.doubleNP, .2);
+        assertEquals(testInstance.doubleP, .3);
+        assertEquals(testInstance.floatNP, .4f);
+        assertEquals(testInstance.floatP, .5f);
+        assertEquals(testInstance.intNP, (Integer)14);
+        assertEquals(testInstance.intP, 15);
+        assertEquals(testInstance.longNP, (Long)16l);
+        assertEquals(testInstance.longP, 17l);
+        assertEquals(testInstance.shortNP, (Short)(short)18);
+        assertEquals(testInstance.shortP, 19);
+        assertNull(testInstance.dd[0][1]);
+        assertEquals(testInstance.dd[0][0][0], testInstance.ref[0]);
+        assertEquals(testInstance.dd[0][0][1], testInstance.ref[1]);
+
+        // mocks verify
+    }
+
     public static class MyTestObject {
         public int i;
         public int y;
@@ -348,6 +405,42 @@ public class IDeserializerTest {
 
     public static class MyTestObjectWithList {
         public List<MyTestObject> list;
+    }
+
+    public static class AllTypesTest {
+
+        public Boolean bNP;
+
+        public boolean bP;
+
+        public Byte byteNP;
+
+        public byte byteP;
+
+        public Short shortNP;
+
+        public short shortP;
+
+        public Integer intNP;
+
+        public int intP;
+
+        public Long longNP;
+
+        public long longP;
+
+        public Float floatNP;
+
+        public float floatP;
+
+        public Double doubleNP;
+
+        public double doubleP;
+
+        public MyTestObjectWithPrimitiveWithBoxedArray[] ref;
+
+        public MyTestObjectWithPrimitiveWithBoxedArray[][][] dd;
+
     }
 
 }

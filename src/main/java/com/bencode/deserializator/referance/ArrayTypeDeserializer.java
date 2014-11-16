@@ -2,6 +2,7 @@ package com.bencode.deserializator.referance;
 
 
 import com.bencode.serialization.model.BencodeList;
+import com.bencode.serialization.model.ByteString;
 import com.bencode.serialization.model.IBEncodeElement;
 import org.apache.commons.lang3.SerializationException;
 
@@ -10,14 +11,23 @@ import java.lang.reflect.Array;
 
 class ArrayTypeDeserializer implements IDeserializer {
 
-    private final IDeserializer mainDeserializer;
+    private static  final String ELEMENT_IS_NOT_ARRAY_ERROR_STRING = "element is not array!";
+
+    private         final IDeserializer mainDeserializer;
 
     ArrayTypeDeserializer(final IDeserializer mainDeserializer) {
         this.mainDeserializer = mainDeserializer;
     }
 
     public <T>T deserialize(final IBEncodeElement element, final Class<?> type) {
-        if (!(element instanceof BencodeList)) throw new SerializationException("element is not array!");
+        if (!(element instanceof BencodeList)) {
+            if (element instanceof ByteString) {
+                final ByteString byteString = (ByteString) element;
+                if (byteString.equals(ByteString.nullString()))
+                    return null;
+            }
+            throw new SerializationException(ELEMENT_IS_NOT_ARRAY_ERROR_STRING);
+        }
         final BencodeList list = (BencodeList) element;
         final Object array = Array.newInstance(type, list.size());
         for (int i = 0; i < list.size(); i++) {

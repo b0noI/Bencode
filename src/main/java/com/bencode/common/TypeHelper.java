@@ -16,7 +16,8 @@ public class TypeHelper {
                 type == Long.class ||
                 type == Float.class  ||
                 type == Double.class ||
-                type == Character.class;
+                type == Character.class ||
+                type == Boolean.class;
     }
 
 }
