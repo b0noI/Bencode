@@ -15,7 +15,7 @@ public class AbstractToByteStringSerializatorTest {
         // mocks
 
         // expected results
-        final byte[] expectedResult = new byte[]{1, ':','?'};
+        final byte[] expectedResult = new byte[]{0, 0, 0, 1, ':','?'};
 
         // creating test instance
         final AbstractToByteStringSerializer<Byte> testInstance = new ByteSerializer();

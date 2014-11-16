@@ -5,7 +5,7 @@ import com.bencode.common.VisibilityReducedForTestPurposeOnly;
 import com.bencode.serialization.model.IBEncodeElement;
 import com.bencode.serialization.serializator.ISerializer;
 import com.bencode.serialization.serializator.primitive.IPrimitiveSerializer;
-import com.sun.xml.internal.ws.encoding.soap.SerializationException;
+import org.apache.commons.lang3.SerializationException;
 
 import java.util.Optional;
 

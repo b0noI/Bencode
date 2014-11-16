@@ -3,7 +3,6 @@ package com.bencode.primitive;
 import com.bencode.deserializator.primitive.IPrimitiveDeserializator;
 import com.bencode.deserializator.referance.RecursiveDeserializator;
 import com.bencode.serialization.converter.IConverter;
-import com.bencode.serialization.converter.RecursiveConverter;
 import com.bencode.serialization.model.Dict;
 import com.bencode.serialization.model.IBEncodeElement;
 import com.bencode.serialization.serializator.ISerializer;
@@ -80,7 +79,7 @@ public class TypeTest {
 
         // creating test instance
         ISerializer serializator = new ReferenceSerializer();
-        IConverter converter = new RecursiveConverter();
+        IConverter converter = IConverter.getConverter();
 
         // execution test
         byte[] bytes = serializator.serialize(myClass).getElement();
@@ -110,7 +109,7 @@ public class TypeTest {
 
         // creating test instance
         ISerializer serializator = new ReferenceSerializer();
-        IConverter converter = new RecursiveConverter();
+        IConverter converter = IConverter.getConverter();
 
         // execution test
         byte[] bytes = serializator.serialize(myClass).getElement();
@@ -147,7 +146,7 @@ public class TypeTest {
 
         // creating test instance
         ISerializer serializator = new ReferenceSerializer();
-        IConverter converter = new RecursiveConverter();
+        IConverter converter = IConverter.getConverter();
 
         // execution test
         byte[] bytes = serializator.serialize(myClass).getElement();
@@ -182,7 +181,7 @@ public class TypeTest {
 
         // creating test instance
         ISerializer serializator = new ReferenceSerializer();
-        IConverter converter = new RecursiveConverter();
+        IConverter converter = IConverter.getConverter();
 
         // execution test
         byte[] bytes = serializator.serialize(myClass).getElement();
@@ -215,7 +214,7 @@ public class TypeTest {
 
         // creating test instance
         ISerializer serializator = new ReferenceSerializer();
-        IConverter converter = new RecursiveConverter();
+        IConverter converter = IConverter.getConverter();
 
         // execution test
         final byte[] bytes = serializator.serialize(myClass).getElement();
@@ -245,7 +244,7 @@ public class TypeTest {
 
         // creating test instance
         ISerializer serializator = new ReferenceSerializer();
-        IConverter converter = new RecursiveConverter();
+        IConverter converter = IConverter.getConverter();
 
         // execution test
         byte[] bytes = serializator.serialize(myClass).getElement();
@@ -275,7 +274,7 @@ public class TypeTest {
 
         // creating test instance
         ISerializer serializator = new ReferenceSerializer();
-        IConverter converter = new RecursiveConverter();
+        IConverter converter = IConverter.getConverter();
 
         // execution test
         byte[] bytes = serializator.serialize(myClass).getElement();
@@ -307,7 +306,7 @@ public class TypeTest {
 
         // creating test instance
         ISerializer serializator = new ReferenceSerializer();
-        IConverter converter = new RecursiveConverter();
+        IConverter converter = IConverter.getConverter();
 
         // execution test
         byte[] bytes = serializator.serialize(myClass).getElement();
@@ -344,7 +343,7 @@ public class TypeTest {
 
         // creating test instance
         ISerializer serializator = new ReferenceSerializer();
-        IConverter converter = new RecursiveConverter();
+        IConverter converter = IConverter.getConverter();
 
         // execution test
         byte[] bytes = serializator.serialize(myClass).getElement();

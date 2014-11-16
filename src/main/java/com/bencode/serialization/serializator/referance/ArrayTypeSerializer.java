@@ -1,11 +1,10 @@
 package com.bencode.serialization.serializator.referance;
 
 
-import com.bencode.common.TypeHelper;
 import com.bencode.serialization.model.BencodeList;
 import com.bencode.serialization.model.IBEncodeElement;
 import com.bencode.serialization.serializator.ISerializer;
-import com.sun.xml.internal.ws.encoding.soap.SerializationException;
+import org.apache.commons.lang3.SerializationException;
 
 import java.lang.reflect.Array;
 

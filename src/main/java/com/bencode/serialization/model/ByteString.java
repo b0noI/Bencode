@@ -1,16 +1,14 @@
 package com.bencode.serialization.model;
 
-import com.sun.xml.internal.messaging.saaj.packaging.mime.util.BEncoderStream;
-
-import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 
+
 public class ByteString extends AbstractBEncodeElement implements Comparable<ByteString> {
 
-    private static  final ByteString NULL_BYTE_STRING                = ByteString.buildElement(new byte[]{-1});
+    public  static  final byte       BYTE_STRING_SEPARATOR           = ':';
 
-    private static  final byte       BYTE_STRING_SEPARATOR           = ':';
+    private static  final ByteString NULL_BYTE_STRING                = ByteString.buildElement(new byte[]{-1});
 
     private static  final String     ILLEGAL_ARGUMENT_ERROR_STRING   = "Instance length in bytes to long!";
 
@@ -51,13 +49,11 @@ public class ByteString extends AbstractBEncodeElement implements Comparable<Byt
 
     @Override
     public byte[] getElement() {
-        final byte[] result = new byte[getValue().length + 2];
-        // this will work little bit more faster then ByteBuffer using
-        System.arraycopy(getValue(), 0, result, 2, getValue().length);
-
-        result[0] = (byte)getValue().length;
-        result[1] = BYTE_STRING_SEPARATOR;
-        return result;
+        final ByteBuffer byteBuffer = ByteBuffer.allocate(getValue().length + 5);
+        byteBuffer.putInt(getValue().length);
+        byteBuffer.put(BYTE_STRING_SEPARATOR);
+        byteBuffer.put(getValue());
+        return byteBuffer.array();
     }
 
     @Override

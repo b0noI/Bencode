@@ -9,44 +9,38 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.naming.OperationNotSupportedException;
 
-public class RecursiveConverter implements IConverter<IBEncodeElement> {
+class RecursiveConverter implements IConverter<IBEncodeElement> {
 
-    private final static ByteStringConverter BYTE_STRING_CONVERTER = new ByteStringConverter();
+    private static  final IConverter<IBEncodeElement>   INSTANCE                = new RecursiveConverter();
+
+    private static  final ByteStringConverter           BYTE_STRING_CONVERTER   = ByteStringConverter.getInstance();
+
+    private static  final char                          INTEGER_FIRST_BYTE      = 'i';
+
+    private         final DictConverter                 dictConverter           = new DictConverter(this);
+
+    private         final ListConverter                 listConverter           = new ListConverter(this);
+
+    private RecursiveConverter(){}
+
+    public static IConverter<IBEncodeElement> getInstance() {
+        return INSTANCE;
+    }
 
     @Override
     public IBEncodeElement convert(final byte[] bytes, final int position) {
         final byte firstByte = bytes[position];
 
-
         switch (firstByte) {
-
-            case 'd': {
-
-                int newPosition = position + 1;
-                final Dict dict = new Dict();
-                while (bytes[newPosition] != 'e') {
-                    final ByteString key = (ByteString) convert(bytes, newPosition);
-                    newPosition += key.getElement().length;
-                    final IBEncodeElement value = convert(bytes, newPosition);
-                    newPosition += value.getElement().length;
-                    dict.putValue(key, value);
-                }
-                return dict;
-            }
-            case 'l': {
-                int newPosition = position + 1;
-                final BencodeList list = new BencodeList();
-                while (bytes[newPosition] != 'e') {
-                    final IBEncodeElement element = convert(bytes, newPosition);
-                    newPosition += element.getElement().length;
-                    list.add(element);
-                }
-                return list;
-            }
-            case 'i':
+            case DictConverter.DICTIONARY_FIRST_BYTE:
+                return dictConverter.convert(bytes, position);
+            case ListConverter.LIST_FIRST_BYTE:
+                return listConverter.convert(bytes, position);
+            case INTEGER_FIRST_BYTE:
                 throw new NotImplementedException();
             default:
                 return BYTE_STRING_CONVERTER.convert(bytes, position);
         }
     }
+
 }

@@ -15,7 +15,8 @@ public class TypeHelper {
                 type == Integer.class ||
                 type == Long.class ||
                 type == Float.class  ||
-                type == Double.class;
+                type == Double.class ||
+                type == Character.class;
     }
 
     public static Class getComponentType(final Class type) {

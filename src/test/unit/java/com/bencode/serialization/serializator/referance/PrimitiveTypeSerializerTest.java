@@ -3,7 +3,7 @@ package com.bencode.serialization.serializator.referance;
 import com.bencode.serialization.model.IBEncodeElement;
 import com.bencode.serialization.serializator.ISerializer;
 import com.bencode.serialization.serializator.primitive.IPrimitiveSerializer;
-import com.sun.xml.internal.ws.encoding.soap.SerializationException;
+import org.apache.commons.lang3.SerializationException;
 import org.testng.annotations.Test;
 
 import static org.mockito.Mockito.mock;

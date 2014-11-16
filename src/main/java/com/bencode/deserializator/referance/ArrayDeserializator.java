@@ -3,9 +3,10 @@ package com.bencode.deserializator.referance;
 
 import com.bencode.serialization.model.BencodeList;
 import com.bencode.serialization.model.IBEncodeElement;
-import com.sun.xml.internal.ws.encoding.soap.SerializationException;
+import org.apache.commons.lang3.SerializationException;
 
 import java.lang.reflect.Array;
+
 
 public class ArrayDeserializator {
 
