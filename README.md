@@ -24,7 +24,7 @@ Each value of the instance dictinary could be:
 * BecnodeList in case if:
   * field is array;
   
-Usage
+Adding library to project
 =======
 For using this lib xustom Maven repo shuld be added to project:
 
@@ -43,4 +43,27 @@ And add dependency like this:
     <version>1.0-SNAPSHOT</version>
 </dependency>
 
+Usage
+=======
 
+Example of serialization of POJO to Bencode:
+
+// imports
+import com.bencode.serialization.serializator.ISerializer;
+import com.bencode.serialization.serializator.referance.ReferenceSerializer;
+import com.bencode.deserializator.referance.IDeserializer;
+
+// Pojo for serialization
+public static class Pojo {
+  public Integer[][] ref;
+}
+
+// ...
+Pojo pojo = new Pojo();
+ISerializer serializer = new ReferenceSerializer();
+// bytes - POJO in Bencode format
+byte[] bytes = serializer.serialize(pojo).getElement();
+
+// deserializing from BEncode format
+Pojo pojo2 = IDeserializer.deserialize(bytes);
+// ...
