@@ -1,6 +1,7 @@
 package com.bencode.deserializator.referance;
 
 
+import com.bencode.common.BencodeHelper;
 import com.bencode.common.FieldHelper;
 import com.bencode.common.Type;
 import com.bencode.common.TypeHelper;
@@ -50,6 +51,7 @@ class RecursiveDeserializer implements IDeserializer{
     }
 
     private <T> T deserializeNonPrimitive(final IBEncodeElement element, final Class<?> type) {
+        if (BencodeHelper.isNullElement(element)) return null;
         final ByteString elementIdString = (ByteString) element;
         final int elementId = (int) IPrimitiveDeserializer.Type.INTEGER.getDeserializer().deserialize(elementIdString);
         final Optional<T> elementFromCache = getDeserializedObjectFromMap(elementId);

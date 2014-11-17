@@ -360,6 +360,29 @@ public class IDeserializerTest {
         // mocks verify
     }
 
+    @Test
+    public void testObjectWithNull() throws Exception {
+        // input arguments
+        final ClassWithNullObject testInstance = new ClassWithNullObject();
+        testInstance.shouldBeNull = null;
+
+        // mocks
+
+        // expected results
+
+        // creating test instance
+        ISerializer serializer = new ReferenceSerializer();
+
+        // execution test
+        final byte[] bytes = serializer.serialize(testInstance).getElement();
+        final ClassWithNullObject afterSer = IDeserializer.deserialize(bytes);
+
+        // result assert
+        assertNull(afterSer.shouldBeNull);
+
+        // mocks verify
+    }
+
     public static class MyTestObject {
         public int i;
         public int y;
@@ -400,6 +423,10 @@ public class IDeserializerTest {
     public static class MyTestObjectWithBoxedPrimitives {
         public Integer i;
         public Integer y;
+    }
+
+    public static class ClassWithNullObject {
+        public Integer shouldBeNull;
     }
 
     public static class MyTestObjectWithList {

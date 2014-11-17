@@ -1,6 +1,7 @@
 package com.bencode.deserializator.referance;
 
 
+import com.bencode.common.BencodeHelper;
 import com.bencode.model.BencodeList;
 import com.bencode.model.ByteString;
 import com.bencode.model.IBEncodeElement;
@@ -20,12 +21,8 @@ class ArrayTypeDeserializer implements IDeserializer {
     }
 
     public <T>T deserialize(final IBEncodeElement element, final Class<?> type) {
+        if (BencodeHelper.isNullElement(element)) return null;
         if (!(element instanceof BencodeList)) {
-            if (element instanceof ByteString) {
-                final ByteString byteString = (ByteString) element;
-                if (byteString.equals(ByteString.nullString()))
-                    return null;
-            }
             throw new SerializationException(ELEMENT_IS_NOT_ARRAY_ERROR_STRING);
         }
         final BencodeList list = (BencodeList) element;

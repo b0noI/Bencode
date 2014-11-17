@@ -1,5 +1,6 @@
 package com.bencode.deserializator.referance;
 
+import com.bencode.common.BencodeHelper;
 import com.bencode.deserializator.primitive.IPrimitiveDeserializer;
 import com.bencode.model.ByteString;
 import com.bencode.model.IBEncodeElement;
@@ -24,6 +25,7 @@ class PrimitiveTypeDeserializer implements IDeserializer {
 
     @Override
     public <T> T deserialize(IBEncodeElement element, Class<?> type) {
+        if (BencodeHelper.isNullElement(element)) return null;
         if (!(element instanceof ByteString)) throw new SerializationException(BENCODE_TYPE_ERROR);
         final Optional<IPrimitiveDeserializer<T>> deserializerOptional = IPrimitiveDeserializer.Type.findDeserializer(type);
         if (!deserializerOptional.isPresent()) {
