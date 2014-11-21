@@ -5,8 +5,8 @@ import java.io.Serializable;
 
 public class TypeHelper {
 
-    public static boolean canBeSerialized(final Class type) {
-        return type instanceof Serializable;
+    public static boolean canBeSerialized(final Object instance) {
+        return instance instanceof Serializable;
     }
 
     public static boolean typeCanBeUnboxedToPrimitive(final Class type) {

@@ -7,6 +7,7 @@ import com.bencode.serializator.ISerializer;
 import com.bencode.serializator.referance.ReferenceSerializer;
 import org.testng.annotations.Test;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -383,57 +384,57 @@ public class IDeserializerTest {
         // mocks verify
     }
 
-    public static class MyTestObject {
+    public static class MyTestObject implements Serializable {
         public int i;
         public int y;
     }
 
-    public static class MyTestObjectWithRef {
+    public static class MyTestObjectWithRef implements Serializable {
         public int i;
         public int y;
         public MyTestObject ref;
     }
 
-    public static class MyTestObjectWithRefArray {
+    public static class MyTestObjectWithRefArray implements Serializable {
         public int i;
         public int y;
         public MyTestObject[] ref;
     }
 
-    public static class MyTestObjectWithPrimitiveArray {
+    public static class MyTestObjectWithPrimitiveArray implements Serializable {
         public int i;
         public int y;
         public int[] ref;
     }
 
-    public static class MyTestObjectWith2DPrimitiveArray {
+    public static class MyTestObjectWith2DPrimitiveArray implements Serializable {
         public int[][] ref;
     }
 
-    public static class MyTestObjectWith2DPrimitiveBoxedArray {
+    public static class MyTestObjectWith2DPrimitiveBoxedArray implements Serializable {
         public Integer[][] ref;
     }
 
-    public static class MyTestObjectWithPrimitiveWithBoxedArray {
+    public static class MyTestObjectWithPrimitiveWithBoxedArray implements Serializable {
         public int i;
         public int y;
         public Integer[] ref;
     }
 
-    public static class MyTestObjectWithBoxedPrimitives {
+    public static class MyTestObjectWithBoxedPrimitives implements Serializable {
         public Integer i;
         public Integer y;
     }
 
-    public static class ClassWithNullObject {
+    public static class ClassWithNullObject implements Serializable {
         public Integer shouldBeNull;
     }
 
-    public static class MyTestObjectWithList {
+    public static class MyTestObjectWithList implements Serializable {
         public List<MyTestObject> list;
     }
 
-    public static class AllTypesTest {
+    public static class AllTypesTest implements Serializable {
 
         public Boolean bNP;
 

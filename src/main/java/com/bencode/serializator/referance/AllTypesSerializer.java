@@ -35,7 +35,7 @@ class AllTypesSerializer implements ISerializer<Object> {
 
         if (instance == null) return ByteString.nullString();
 
-        if (!TypeHelper.canBeSerialized(instance.getClass())) {
+        if (!TypeHelper.canBeSerialized(instance)) {
             throw new SerializationException(NON_SERIALIZABLE_TYPE_ERROR_STRING);
         }
 
