@@ -2,7 +2,7 @@ package com.bencode.serializator.primitive;
 
 
 import com.bencode.model.ByteString;
-import com.bencode.serializator.ISerializer;
+import com.bencode.serializator.referance.ISerializer;
 
 import java.util.Optional;
 

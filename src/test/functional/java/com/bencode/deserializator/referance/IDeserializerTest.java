@@ -3,8 +3,7 @@ package com.bencode.deserializator.referance;
 import com.bencode.deserializator.converter.IConverter;
 import com.bencode.model.Dict;
 import com.bencode.model.IBEncodeElement;
-import com.bencode.serializator.ISerializer;
-import com.bencode.serializator.referance.ReferenceSerializer;
+import com.bencode.serializator.referance.ISerializer;
 import org.testng.annotations.Test;
 
 import java.io.Serializable;
@@ -27,7 +26,7 @@ public class IDeserializerTest {
         // expected results
 
         // creating test instance
-        ISerializer serializator = new ReferenceSerializer();
+        ISerializer serializator = ISerializer.getSerializer();
         IConverter converter = IConverter.getConverter();
 
         // execution test
@@ -57,7 +56,7 @@ public class IDeserializerTest {
         // expected results
 
         // creating test instance
-        ISerializer serializator = new ReferenceSerializer();
+        ISerializer serializator = ISerializer.getSerializer();
         IConverter converter = IConverter.getConverter();
 
         // execution test
@@ -94,7 +93,7 @@ public class IDeserializerTest {
         // expected results
 
         // creating test instance
-        ISerializer serializator = new ReferenceSerializer();
+        ISerializer serializator = ISerializer.getSerializer();
         IConverter converter = IConverter.getConverter();
 
         // execution test
@@ -129,7 +128,7 @@ public class IDeserializerTest {
         // expected results
 
         // creating test instance
-        ISerializer serializator = new ReferenceSerializer();
+        ISerializer serializator = ISerializer.getSerializer();
         IConverter converter = IConverter.getConverter();
 
         // execution test
@@ -162,7 +161,7 @@ public class IDeserializerTest {
         // expected results
 
         // creating test instance
-        ISerializer serializator = new ReferenceSerializer();
+        ISerializer serializator = ISerializer.getSerializer();
         IConverter converter = IConverter.getConverter();
 
         // execution test
@@ -192,7 +191,7 @@ public class IDeserializerTest {
         // expected results
 
         // creating test instance
-        ISerializer serializator = new ReferenceSerializer();
+        ISerializer serializator = ISerializer.getSerializer();
         IConverter converter = IConverter.getConverter();
 
         // execution test
@@ -222,7 +221,7 @@ public class IDeserializerTest {
         // expected results
 
         // creating test instance
-        ISerializer serializator = new ReferenceSerializer();
+        ISerializer serializator = ISerializer.getSerializer();
         IConverter converter = IConverter.getConverter();
 
         // execution test
@@ -254,7 +253,7 @@ public class IDeserializerTest {
         // expected results
 
         // creating test instance
-        ISerializer serializator = new ReferenceSerializer();
+        ISerializer serializator = ISerializer.getSerializer();
         IConverter converter = IConverter.getConverter();
 
         // execution test
@@ -291,7 +290,7 @@ public class IDeserializerTest {
         // expected results
 
         // creating test instance
-        ISerializer serializer = new ReferenceSerializer();
+        ISerializer serializer = ISerializer.getSerializer();
         IConverter converter = IConverter.getConverter();
 
         // execution test
@@ -333,7 +332,7 @@ public class IDeserializerTest {
         // expected results
 
         // creating test instance
-        ISerializer serializer = new ReferenceSerializer();
+        ISerializer serializer = ISerializer.getSerializer();
 
         // execution test
         byte[] bytes = serializer.serialize(testInstance).getElement();
@@ -372,7 +371,7 @@ public class IDeserializerTest {
         // expected results
 
         // creating test instance
-        ISerializer serializer = new ReferenceSerializer();
+        ISerializer serializer = ISerializer.getSerializer();
 
         // execution test
         final byte[] bytes = serializer.serialize(testInstance).getElement();

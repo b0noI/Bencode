@@ -5,7 +5,6 @@ import com.bencode.common.TypeHelper;
 import com.bencode.model.ByteString;
 import com.bencode.model.Dict;
 import com.bencode.model.IBEncodeElement;
-import com.bencode.serializator.ISerializer;
 import org.apache.commons.lang3.SerializationException;
 
 import java.lang.reflect.Field;

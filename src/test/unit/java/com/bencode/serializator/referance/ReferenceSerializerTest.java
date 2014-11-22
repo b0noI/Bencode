@@ -3,6 +3,8 @@ package com.bencode.serializator.referance;
 import com.bencode.model.IBEncodeElement;
 import junit.framework.TestCase;
 
+import java.io.Serializable;
+
 public class ReferenceSerializerTest extends TestCase {
 
     public void testSerialize() throws Exception {
@@ -14,7 +16,7 @@ public class ReferenceSerializerTest extends TestCase {
         // expected results
 
         // creating test instance
-        final ReferenceSerializer testInstance = new ReferenceSerializer();
+        final ISerializer testInstance = ISerializer.getSerializer();
 
         // execution test
         final IBEncodeElement actualResult = testInstance.serialize(inputForSerialization);
@@ -25,7 +27,7 @@ public class ReferenceSerializerTest extends TestCase {
         // mocks verify
     }
 
-    private static class TestClass {
+    private static class TestClass implements Serializable {
 
         private short a = 2;
 

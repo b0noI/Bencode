@@ -2,9 +2,16 @@ package com.bencode.serializator.referance;
 
 
 import com.bencode.model.IBEncodeElement;
-import com.bencode.serializator.ISerializer;
 
-public class ReferenceSerializer implements ISerializer<Object> {
+class ReferenceSerializer implements ISerializer<Object> {
+
+    private static final ISerializer<Object> INSTANCE = new ReferenceSerializer();
+
+    private ReferenceSerializer(){}
+
+    public static ISerializer<Object> getInstance() {
+        return INSTANCE;
+    }
 
     @Override
     public IBEncodeElement serialize(final Object instance) {

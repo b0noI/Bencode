@@ -20,7 +20,7 @@ public class AllTypesSerializerTest {
         // expected results
 
         // creating test instance
-        final ReferenceSerializer referenceSerializer = new ReferenceSerializer();
+        final ISerializer referenceSerializer = ISerializer.getSerializer();
         IConverter converter = IConverter.getConverter();
 
         // execution test
