@@ -1,8 +1,10 @@
 package com.bencode.deserializator.primitive;
 
 import com.bencode.model.ByteString;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.function.Function;
 
 
@@ -17,7 +19,7 @@ class ByteStringToPrimitiveDeserializer<T> implements IPrimitiveDeserializer<T> 
     @Override
     public T deserialize(final ByteString from) {
         final byte[] bytes = from.getElement();
-        final int indexOfDivider = indexOf(bytes, (byte)':');
+        final int indexOfDivider = ArrayUtils.indexOf(bytes, ByteString.BYTE_STRING_SEPARATOR);
         final ByteBuffer result = ByteBuffer.allocate(bytes.length - indexOfDivider - 1);
         for (int i = indexOfDivider + 1; i < bytes.length; i++) {
             result.put(bytes[i]);
@@ -26,15 +28,6 @@ class ByteStringToPrimitiveDeserializer<T> implements IPrimitiveDeserializer<T> 
         result.position(0);
 
         return toPrimitiveConverter.apply(result);
-    }
-
-    private int indexOf(final byte[] bytes, final byte target) {
-        for (int i = 0; i < bytes.length; i++) {
-            if (bytes[i] == target) {
-                return i;
-            }
-        }
-        return -1;
     }
 
 }
