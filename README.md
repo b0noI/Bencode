@@ -44,8 +44,7 @@ Example of serialization of POJO to Bencode:
 
 ```Java
 // imports
-import com.bencode.serializator.ISerializer;
-import com.bencode.serializator.referance.ReferenceSerializer;
+import com.bencode.serializator.referance.ISerializer;
 import com.bencode.deserializator.referance.IDeserializer;
 
 
@@ -59,13 +58,13 @@ public static class Pojo {
 
 // ...
 Pojo pojo = new Pojo();
-ISerializer serializer = new ReferenceSerializer();
+final ISerializer serializer = ISerializer.getSerializer();
 
 // bytes - POJO in Bencode format
-byte[] bytes = serializer.serialize(pojo).getElement();
+final byte[] bytes = serializer.serialize(pojo).getElement();
 
 // deserializing from BEncode format
-Pojo pojo2 = IDeserializer.deserialize(bytes);
+final Pojo pojo2 = IDeserializer.deserialize(bytes);
 
 // ...
 ```
