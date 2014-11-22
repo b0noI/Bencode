@@ -27,6 +27,7 @@ public class DictConverterTest {
         final IConverter<ByteString> byteStringConverter = mock(ByteStringConverter.class);
         final ByteString mockKey = mock(ByteString.class);
         final ByteString mockValue = mock(ByteString.class);
+        final TwoCharactersBencodeElementInputValidator validator = mock(TwoCharactersBencodeElementInputValidator.class);
         when(mockKey.getElement()).thenReturn(new byte[]{1});
         when(mockValue.getElement()).thenReturn(new byte[]{1});
         when(byteStringConverter.convert(inputBytes, 1)).thenReturn(mockKey);
@@ -35,7 +36,7 @@ public class DictConverterTest {
         // expected results
 
         // creating test instance
-        final DictConverter testInstance = new DictConverter(generalConverterMock, byteStringConverter);
+        final DictConverter testInstance = new DictConverter(generalConverterMock, byteStringConverter, validator);
 
         // execution test
         final Dict dict = testInstance.convert(inputBytes);
@@ -53,6 +54,8 @@ public class DictConverterTest {
         verifyNoMoreInteractions(mockKey);
         verify(mockValue, times(1)).getElement();
         verifyNoMoreInteractions(mockValue);
+        verify(validator, times(1)).validate(inputBytes, 0);
+        verifyNoMoreInteractions(validator);
     }
 
 

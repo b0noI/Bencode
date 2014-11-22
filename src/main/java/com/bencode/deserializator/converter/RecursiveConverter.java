@@ -1,6 +1,7 @@
 package com.bencode.deserializator.converter;
 
 
+import com.bencode.common.ConstructorForTestPurposeOnly;
 import com.bencode.model.IBEncodeElement;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -8,15 +9,31 @@ class RecursiveConverter implements IConverter<IBEncodeElement> {
 
     private static  final IConverter<IBEncodeElement>   INSTANCE                = new RecursiveConverter();
 
-    private static  final ByteStringConverter           BYTE_STRING_CONVERTER   = ByteStringConverter.getInstance();
+    private         final DictConverter                 dictConverter;
 
-    private static  final char                          INTEGER_FIRST_BYTE      = 'i';
+    private         final ListConverter                 listConverter;
 
-    private         final DictConverter                 dictConverter           = new DictConverter(this);
+    private         final ByteStringConverter           byteStringConverter;
 
-    private         final ListConverter                 listConverter           = new ListConverter(this);
+    private         final IntegerConverter              integerConverter;
 
-    private RecursiveConverter(){}
+    private RecursiveConverter(){
+        this.dictConverter = new DictConverter(this);
+        this.listConverter = new ListConverter(this);
+        this.byteStringConverter = ByteStringConverter.getInstance();
+        this.integerConverter = new IntegerConverter();
+    }
+
+    @ConstructorForTestPurposeOnly
+    RecursiveConverter(final DictConverter dictConverter,
+                       final ListConverter listConverter,
+                       final ByteStringConverter byteStringConverter,
+                       final IntegerConverter integerConverter) {
+        this.dictConverter = dictConverter;
+        this.listConverter = listConverter;
+        this.byteStringConverter = byteStringConverter;
+        this.integerConverter = integerConverter;
+    }
 
     public static IConverter<IBEncodeElement> getInstance() {
         return INSTANCE;
@@ -25,16 +42,15 @@ class RecursiveConverter implements IConverter<IBEncodeElement> {
     @Override
     public IBEncodeElement convert(final byte[] bytes, final int position) {
         final byte firstByte = bytes[position];
-
         switch (firstByte) {
             case DictConverter.DICTIONARY_FIRST_BYTE:
                 return dictConverter.convert(bytes, position);
             case ListConverter.LIST_FIRST_BYTE:
                 return listConverter.convert(bytes, position);
-            case INTEGER_FIRST_BYTE:
-                throw new NotImplementedException();
+            case IntegerConverter.INTEGER_FIRST_BYTE:
+                return integerConverter.convert(bytes, position);
             default:
-                return BYTE_STRING_CONVERTER.convert(bytes, position);
+                return byteStringConverter.convert(bytes, position);
         }
     }
 
